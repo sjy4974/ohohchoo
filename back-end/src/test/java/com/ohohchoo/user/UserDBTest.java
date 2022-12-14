@@ -30,4 +30,11 @@ public class UserDBTest {
         if(user.isEmpty()) System.out.println("해당 email을 가진 사용자는 없습니다.");
         else System.out.println(user);
     }
+
+    //DELETE test
+    @Test
+    void deleteByIdTest() {
+        int id = 1;
+        userService.deleteById(id);
+    }
 }

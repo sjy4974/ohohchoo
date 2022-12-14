@@ -13,10 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -24,7 +21,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/oauth")
+@RequestMapping("/user")
 public class UserController {
     private final UserService userService;
     /**
@@ -44,7 +41,7 @@ public class UserController {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", "32b01baf85e405c00cffe1d59f22fd1b");
-        params.add("redirect_uri", "http://localhost:9999/oauth/kakao");
+        params.add("redirect_uri", "http://localhost:9999/user/kakao");
         params.add("code", code);
         //HttpHeader와 HttpBody를 HttpEntity에 담기
         HttpEntity<MultiValueMap<String, String>> kakaoRequest = new HttpEntity<>(params, headers);
@@ -98,4 +95,14 @@ public class UserController {
         result.put("current-user", loginUser);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    //유저 삭제 요청을 받아, ID로 삭제를 진행
+    @DeleteMapping
+    public ResponseEntity<?> deleteUser(@RequestBody User user) {
+        int id = user.getId();
+        userService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }
