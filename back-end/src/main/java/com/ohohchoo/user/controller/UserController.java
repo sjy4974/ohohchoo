@@ -115,4 +115,10 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //온도민감도 변경
+    @PutMapping
+    public ResponseEntity<Void> updateSensitivity(@RequestBody User user) {
+        userService.updateSensitivity(user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

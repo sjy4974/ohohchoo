@@ -19,6 +19,12 @@ public class UserService {
         return user;
     }
 
+    //ID를 통한 사용자 조회
+    public Optional<User> findById(Integer id) {
+        Optional<User> user = userRepository.findById(id);
+        return user;
+    }
+
     //ID를 통해 사용자를 삭제한다.
     public void deleteById(Integer id){
         userRepository.deleteById(id);
@@ -30,5 +36,9 @@ public class UserService {
         return user;
     }
 
+    //온도민감도 변경
+    public void updateSensitivity(User user) {
+        userRepository.save(user);
+    }
 
 }
