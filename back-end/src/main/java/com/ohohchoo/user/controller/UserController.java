@@ -10,12 +10,14 @@ import com.google.gson.JsonParser;
 import com.ohohchoo.user.entity.User;
 import com.ohohchoo.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -97,12 +99,20 @@ public class UserController {
     }
 
     //유저 삭제 요청을 받아, ID로 삭제를 진행
+    //로그아웃도 같이 진행
     @DeleteMapping
-    public ResponseEntity<?> deleteUser(@RequestBody User user) {
+    public ResponseEntity<?> deleteUser(@RequestBody User user, HttpSession session) {
         int id = user.getId();
         userService.deleteById(id);
+        session.invalidate();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //로그아웃
+    @PostMapping("/logout")
+    public ResponseEntity<Void> doLogout(HttpSession session) {
+        session.invalidate();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }
