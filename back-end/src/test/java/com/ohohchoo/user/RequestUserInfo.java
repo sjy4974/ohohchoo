@@ -2,6 +2,7 @@ package com.ohohchoo.user;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
@@ -18,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @SpringBootTest
 public class RequestUserInfo {
-    @Test
+    @Test @DisplayName("사용자 정보 요청")
     void KakaoUserInfo() {
         RestTemplate rt = new RestTemplate();
 

@@ -1,5 +1,8 @@
 package com.ohohchoo.user;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -12,8 +15,10 @@ import org.springframework.web.client.RestTemplate;
  * 카카오에서 받은 인가 코드를 통해
  * 엑세스 토큰을 요청
  */
+@SpringBootTest
 public class RequestAccessToken {
-    public static void main(String[] args) {
+    @Test @DisplayName("엑세스 토큰 요청")
+    void requestAccessToken() {
         //카카오에서 받은 인가 코드
         String code = "GeTjbIYx6uoFeUllRptrP4pAsWp5dWn4r0pEmw12PLxRDZqWQXjlsYoPnG-d5VGj52y3jwo9dJgAAAGFEHYLEQ";
         //카카오 서버에 POST 방식으로 엑세스 토큰을 요청

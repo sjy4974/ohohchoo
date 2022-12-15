@@ -1,7 +1,8 @@
 package com.ohohchoo.user;
 
-import com.ohohchoo.user.entity.User;
-import com.ohohchoo.user.service.UserService;
+import com.ohohchoo.domain.user.entity.User;
+import com.ohohchoo.domain.user.service.UserService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,25 +17,23 @@ public class UserDBTest {
     @Autowired
     private UserService userService;
 
-    //INSERT test
-    @Test
+
+    @Test @DisplayName("INSERT test")
     void saveUserTest() {
-        User user = new User("tempName", "tempEmail@temp.com", "male", 1);
+        User user = new User("tempName", "tempEmail@temp.com", "male");
         userService.save(user);
     }
 
-    //SELECT test
-    @Test
+    @Test @DisplayName("SELECT test")
     void findByEmailTest() {
         Optional<User> user = userService.findByEmail("tempEmail@temp.com");
         if(user.isEmpty()) System.out.println("해당 email을 가진 사용자는 없습니다.");
         else System.out.println(user);
     }
 
-    //DELETE test
-    @Test
+    @Test @DisplayName("DELETE test")
     void deleteByIdTest() {
         int id = 1;
-        userService.deleteById(id);
+        userService.deleteByUserId(id);
     }
 }
