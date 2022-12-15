@@ -34,6 +34,24 @@ class UserRepositoryTest {
         assertEquals(user.getId(), findUser.getId());
     }
 
+    @Test
+    @DisplayName(" 회원 성별 수정 ")
+//    @Rollback(false)
+    public void 성별수정() throws Exception {
+        //given
+        User user = createUser();
+        Long userId = user.getId();
+        String gender = "female";
+
+        //when
+        user.changeGender(gender);
+        em.flush();
+        em.clear();
+        User findUser = userRepository.findOne(userId);
+
+        //then
+        assertEquals(gender, findUser.getGender());
+    }
 
     private User createUser() {
         String email = "test@naver.com";
