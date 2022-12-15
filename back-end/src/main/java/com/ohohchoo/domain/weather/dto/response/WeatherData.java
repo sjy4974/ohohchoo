@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class WeatherData {
 
-    private Integer fcstDate;
-    private Integer fcstTime;
+    private String fcstDate;
+    private String fcstTime;
     private Integer pty;
     private Integer sky;
     private Double tmp;

@@ -22,16 +22,16 @@ public class Weather {
     private Integer locationCode;
 
     @Column(name="base_date")
-    private Integer baseDate;
+    private String baseDate;
 
     @Column(name="base_time")
-    private Integer baseTime;
+    private String baseTime;
 
     @Column(name="fcst_date")
-    private Integer fcstDate;
+    private String fcstDate;
 
     @Column(name="fcst_time")
-    private Integer fcstTime;
+    private String fcstTime;
 
     private Integer pty;
     private Integer sky;

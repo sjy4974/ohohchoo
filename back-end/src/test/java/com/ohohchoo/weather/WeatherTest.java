@@ -16,7 +16,7 @@ public class WeatherTest {
     @Test
     @DisplayName("날씨 정보 저장하기")
     void insertWeather() {
-        Weather weather = new Weather(1, 20221215, 0500, 20221216, 1200, 1, 1, 1.8, 1.8, 1.8);
+        Weather weather = new Weather(1, "20221215", "0500", "20221216", "1200", 1, 1, 1.8, 1.8, 1.8);
         weatherRepository.save(weather);
     }
 

@@ -12,8 +12,8 @@ public class WeatherRequest {
     @NotNull
     private Integer locationCode;
     @NotNull
-    private Integer baseDate;
+    private String baseDate;
     @NotNull
-    private Integer baseTime;
+    private String baseTime;
 
 }
