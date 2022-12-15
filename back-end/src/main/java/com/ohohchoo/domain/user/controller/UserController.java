@@ -1,4 +1,4 @@
-package com.ohohchoo.user.controller;
+package com.ohohchoo.domain.user.controller;
 
 /**
  * 회원 관리 Controller
@@ -7,17 +7,16 @@ package com.ohohchoo.user.controller;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.ohohchoo.user.entity.User;
-import com.ohohchoo.user.service.UserService;
+import com.ohohchoo.domain.user.entity.User;
+import com.ohohchoo.domain.user.service.UserService;
+import com.ohohchoo.domain.user.dto.UpdateUserDto;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,7 +81,7 @@ public class UserController {
         if(userAccountObject.get("has_gender").getAsBoolean()) {
             gender = userAccountObject.get("gender").getAsString();
         }
-        User user = new User(nickname, email, gender, 1);
+        User user = new User(nickname, email, gender);
 
         //해당 nickname으로 가입된 사용자가 있다면, 로그인을 진행하고
         //없다면, DB에 저장하는 과정을 거쳐 로그인을 진행한다.
@@ -99,26 +98,16 @@ public class UserController {
     }
 
     //유저 삭제 요청을 받아, ID로 삭제를 진행
-    //로그아웃도 같이 진행
     @DeleteMapping
-    public ResponseEntity<?> deleteUser(@RequestBody User user, HttpSession session) {
-        int id = user.getId();
-        userService.deleteById(id);
-        session.invalidate();
+    public ResponseEntity<?> deleteUser(@RequestParam Integer userId) {
+        userService.deleteByUserId(userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //로그아웃
-    @PostMapping("/logout")
-    public ResponseEntity<Void> doLogout(HttpSession session) {
-        session.invalidate();
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    //온도민감도 변경
-    @PutMapping
-    public ResponseEntity<Void> updateSensitivity(@RequestBody User user) {
-        userService.updateSensitivity(user);
+    //유저 정보 변경
+    @PutMapping("/update/{userId}")
+    public ResponseEntity<Void> updateUser(@PathVariable int userId, @RequestBody UpdateUserDto updateUserDto) {
+        userService.updateUser(userId, updateUserDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

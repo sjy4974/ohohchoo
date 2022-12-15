@@ -1,11 +1,12 @@
-package com.ohohchoo.user.repository;
+package com.ohohchoo.domain.user.repository;
 
-import com.ohohchoo.user.entity.User;
+import com.ohohchoo.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
-    public Optional<User> findById(Integer id);
+    public void deleteByUserId(Integer userId);
+    public Optional<User> findByUserId(Integer userId);
     public Optional<User> findByEmail(String email);
 }
