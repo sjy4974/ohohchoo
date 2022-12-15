@@ -33,7 +33,12 @@ public class UserDBTest {
 
     @Test @DisplayName("DELETE test")
     void deleteByIdTest() {
-        int id = 1;
-        userService.deleteByUserId(id);
+        Integer userId = 1;
+        userService.deleteByUserId(userId);
+    }
+
+    @Test @DisplayName("UPDATE test")
+    void updateTest() {
+
     }
 }
