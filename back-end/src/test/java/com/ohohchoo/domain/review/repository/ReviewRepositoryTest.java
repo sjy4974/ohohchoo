@@ -49,6 +49,19 @@ class ReviewRepositoryTest {
         vf.close();
     }
 
+    @Test
+    @DisplayName("리뷰작성 테스트")
+//    @Rollback(false)
+    public void 리뷰작성() throws Exception {
+        //given
+
+        Review review = createReview();
+        //when
+        Review findReview = reviewRepository.save(review);
+        //then
+        assertEquals(review.getId(), findReview.getId());
+    }
+
 
     // 리뷰 생성 메서드
     private Review createReview() {
