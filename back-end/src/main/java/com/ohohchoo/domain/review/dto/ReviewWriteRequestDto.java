@@ -24,11 +24,6 @@ public class ReviewWriteRequestDto {
         this.content = content;
         this.address = address;
     }
+    
 
-    public Review toEntity() {
-        return Review.builder()
-                .content(content)
-                .address(address)
-                .build();
-    }
 }

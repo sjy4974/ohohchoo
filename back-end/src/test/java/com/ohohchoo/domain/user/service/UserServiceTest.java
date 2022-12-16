@@ -39,6 +39,7 @@ class UserServiceTest {
         //when
 
         Long savedId = userService.join(dto);
+        System.out.println(savedId + "asdasdasd");
         em.clear(); // 영속성 컨텍스트 초기화
         Optional<User> findUser = userService.findById(savedId);
         //then
