@@ -36,8 +36,9 @@ public class UserService {
      * @param userJoinRequestDto
      */
     private void validateDuplicateUser(UserJoinRequestDto userJoinRequestDto) {
-        if (userRepository.findByEmail(userJoinRequestDto.getEmail()) != null) {
-            throw new IllegalStateException("이미 존재 하는 회원 입니다. email =" + userJoinRequestDto.getEmail());
+
+        if (userRepository.findByEmail(userJoinRequestDto.getEmail()).isPresent()) {
+            throw new IllegalStateException("이미 존재 하는 회원 입니다. email = " + userJoinRequestDto.getEmail());
         }
     }
 
@@ -47,7 +48,7 @@ public class UserService {
      * @param id
      * @return
      */
-    public Optional<User> findById(Integer id) {
+    public Optional<User> findById(Long id) {
         Optional<User> user = Optional.ofNullable(userRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("해당 유저가 존재하지 않습니다. id = " + id)));
         return user;
