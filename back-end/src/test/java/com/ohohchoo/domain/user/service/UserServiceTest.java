@@ -106,5 +106,29 @@ class UserServiceTest {
         assertEquals(sensitivity, findUser.get().getSensitivity());
     }
 
+    @Test
+    @DisplayName(" 회원수정 예외 발생 테스트")
+    public void 회원수정_예외발생테스트()throws Exception {
+        //given
+        UserJoinRequestDto dto = UserJoinRequestDto.builder()
+                .email("test@gmail.com")
+                .nickname("test")
+                .gender("male")
+                .build();
+        Long savedId = userService.join(dto);
+        em.clear();
+
+        // 넘어온 값이 모두 null인 경우 예외 발생
+        UserUpdateRequestDto updateDto = UserUpdateRequestDto
+                .builder()
+                .gender(null)
+                .sensitivity(null)
+                .build();
+
+        //when , then
+        assertThrows(IllegalArgumentException.class, () ->
+                userService.update(savedId, updateDto), " 넘어온 값이 모두 null이면 예외가 발생해야 한다.");
+    }
+
 
 }

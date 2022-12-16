@@ -79,9 +79,8 @@ public class UserService {
                 new UserNotFoundException("해당 유저를 찾을 수 없습니다. id = " + id)));
 
         if(userUpdateRequestDto.getGender() == null && userUpdateRequestDto.getSensitivity() == null){
-            new IllegalArgumentException("성별이나 온도 민감도 둘중 하나는 선택해야 합니다.");
+            throw new IllegalArgumentException("성별이나 온도 민감도 둘중 하나는 선택해야 합니다.");
         }
-
         User user = findUser.get();
         if(userUpdateRequestDto.getGender() != null){
             user.changeGender(userUpdateRequestDto.getGender());
