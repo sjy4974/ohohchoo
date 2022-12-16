@@ -42,15 +42,17 @@ class UserRepositoryTest {
         User user = createUser();
         Long userId = user.getId();
         String gender = "female";
-
-        //when
-        user.changeGender(gender);
-        em.flush();
         em.clear();
         User findUser = em.find(User.class, userId);
+        //when
+        findUser.changeGender(gender);
+        em.flush();
+        em.clear();
+
+        User findUser2 = em.find(User.class, userId);
 
         //then
-        assertEquals(gender, findUser.getGender());
+        assertEquals(gender, findUser2.getGender());
     }
 
 

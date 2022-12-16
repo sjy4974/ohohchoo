@@ -1,23 +1,11 @@
 package com.ohohchoo.domain.user.repository;
 
 import com.ohohchoo.domain.user.entity.User;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.persistence.EntityManager;
+import java.util.Optional;
 
-@Repository
-@RequiredArgsConstructor
-public class UserRepository {
-
-    private final EntityManager em;
-
-    public void save(User user) {
-        em.persist(user);
-    }
-
-    public User findOne(Long id) {
-        return em.find(User.class, id);
-    }
-
+public interface UserRepository extends JpaRepository<User, Long> {
+    public Optional<User> findById(Long id);
+    public Optional<User> findByEmail(String email);
 }
