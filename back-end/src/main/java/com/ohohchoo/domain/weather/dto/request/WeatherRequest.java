@@ -15,5 +15,9 @@ public class WeatherRequest {
     private String baseDate;
     @NotNull
     private String baseTime;
+    @NotNull
+    private String nx;
+    @NotNull
+    private String ny;
 
 }

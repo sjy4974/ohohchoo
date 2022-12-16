@@ -13,7 +13,7 @@ public class LocationService {
 
     private final LocationRepository locationRepository;
 
-    // city, town 값을 기준으로 location 정보 반환.S
+    // city, town 값을 기준으로 location 정보 반환.
     public LocationData getLocationData(LocationRequest locReq) {
         Location loc = locationRepository.findByCityAndTown(locReq.getCity(), locReq.getTown());
         return new LocationData(loc.getLocationCode(), loc.getNx(), loc.getNy());

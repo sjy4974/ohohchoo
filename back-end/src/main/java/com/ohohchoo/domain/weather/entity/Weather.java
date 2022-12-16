@@ -1,23 +1,22 @@
 package com.ohohchoo.domain.weather.entity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.lang.Nullable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "weather")
 @Entity
 public class Weather {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="weather_id")
+    private Integer weatherId;
+
     @Column(name="location_code")
     private Integer locationCode;
 
@@ -36,7 +35,10 @@ public class Weather {
     private Integer pty;
     private Integer sky;
     private Double tmp;
+
+    @Nullable
     private Double tmn;
+    @Nullable
     private Double tmx;
 
 }

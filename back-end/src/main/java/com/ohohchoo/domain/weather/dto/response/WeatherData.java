@@ -12,7 +12,4 @@ public class WeatherData {
     private Integer pty;
     private Integer sky;
     private Double tmp;
-    private Double tmn;
-    private Double tmx;
-
 }
