@@ -12,4 +12,7 @@ public class UserLocationsService {
     public void addLocation(UserLocations userLocations) {
         userLocationsRepository.save(userLocations);
     }
+    public void deleteLocation(UserLocations userLocations) {
+        userLocationsRepository.delete(userLocations);
+    }
 }
