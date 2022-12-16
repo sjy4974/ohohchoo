@@ -17,8 +17,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "user_locations")
-@IdClass(userLocation.class)
-public class userLocation implements Serializable {
+@IdClass(UserLocations.class)
+public class UserLocations implements Serializable {
     @Id
     private Integer userId;
     @Id
