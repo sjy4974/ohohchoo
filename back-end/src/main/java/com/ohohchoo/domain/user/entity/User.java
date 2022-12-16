@@ -3,8 +3,6 @@ package com.ohohchoo.domain.user.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -31,27 +29,34 @@ public class User {
     @Column(columnDefinition = "INT default 1")
     private Integer sensitivity;
 
+    @Column(columnDefinition = "INT NOT NULL default 0900")
+    private Integer timeGoOut;
+
+    @Column(columnDefinition = "INT NOT NULL default 1800")
+    private Integer timeGoIn;
+
     @Builder
-    public User(String nickname, String email, String gender, Integer sensitivity) {
+    public User(String nickname, String email, String gender) {
         this.nickname = nickname;
         this.email = email;
         this.gender = gender;
-        this.sensitivity = sensitivity;
     }
 
     /**
      * 성별 수정
+     *
      * @param gender
      */
-    public void changeGender(String gender){
+    public void changeGender(String gender) {
         this.gender = gender;
     }
 
     /**
      * 온도 민감도 수정
+     *
      * @param sensitivity
      */
-    public void changeSensitivity(Integer sensitivity){
+    public void changeSensitivity(Integer sensitivity) {
         this.sensitivity = sensitivity;
     }
 }

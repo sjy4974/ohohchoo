@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Embedded;
 import javax.persistence.EntityManager;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,20 +20,19 @@ class UserRepositoryTest {
     @Autowired
     EntityManager em;
 
-    @Autowired
-    private UserRepository userRepository;
-
     @Test
-    @DisplayName(" 회원 가입 검증 ")
-//    @Rollback(false)
-    public void 회원가입() throws Exception {
+    @DisplayName(" id로 회원 조회 ")
+    @Rollback(false)
+    public void 아이디로회원조회() throws Exception {
         //given
         User user = createUser();
         //when
-        User findUser = userRepository.findOne(user.getId());
+        em.clear(); // 영속성 컨텍스트 초기화
+        User findUser = em.find(User.class, user.getId());
         //then
         assertEquals(user.getId(), findUser.getId());
     }
+
 
     @Test
     @DisplayName(" 회원 성별 수정 ")
@@ -47,12 +47,14 @@ class UserRepositoryTest {
         user.changeGender(gender);
         em.flush();
         em.clear();
-        User findUser = userRepository.findOne(userId);
+        User findUser = em.find(User.class, userId);
 
         //then
         assertEquals(gender, findUser.getGender());
     }
 
+
+    // 회원 생성 메서드
     private User createUser() {
         String email = "test@naver.com";
         String nickname = "sun";
@@ -61,7 +63,6 @@ class UserRepositoryTest {
                 .email(email)
                 .nickname(nickname)
                 .gender("male")
-                .sensitivity(1)
                 .build();
         em.persist(user);
         return user;
