@@ -10,6 +10,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/shelf/2022-12-15__6_25__________.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/2022-12-15__6_25__________.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/controller/ReviewRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/controller/ReviewRestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/dto/ReviewWriteRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/dto/ReviewWriteRequestDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/service/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/service/ReviewService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/user/controller/UserRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/user/controller/UserRestController.java" afterDir="false" />

@@ -28,16 +28,20 @@ public class ReviewRestController {
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
 
+    // 리뷰 작성
     @PostMapping("/review")
     public ResponseEntity<?> write(@Validated @RequestBody ReviewWriteRequestDto reviewDto,
                                    HttpServletRequest req) {
 
+        // 요청 헤더의 토큰을 가져온 후 복호화해서
+        // userId만 저장
         String token = req.getHeader(HEADER_AUTH);
         Long userId = jwtUtil.getTokenInfo(token);
 
         try {
             reviewService.write(userId,reviewDto);
         } catch (Exception e){
+            // validation 통과하지 못하거나, userId가 잘못된경우 해당 에러메세지를 리턴
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<String>(SUCCESS, HttpStatus.CREATED);
