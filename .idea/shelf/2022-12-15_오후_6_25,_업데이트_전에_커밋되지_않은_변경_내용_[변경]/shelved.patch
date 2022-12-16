@@ -1,0 +1,12 @@
+Index: back-end/src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/back-end/src/main/resources/application.properties b/back-end/src/main/resources/application.properties
+--- a/back-end/src/main/resources/application.properties	(revision fe1a6ec312b3ce688c7dba9b78c228e3a823b22e)
++++ b/back-end/src/main/resources/application.properties	(date 1670827153019)
+@@ -1,1 +1,0 @@
+-
