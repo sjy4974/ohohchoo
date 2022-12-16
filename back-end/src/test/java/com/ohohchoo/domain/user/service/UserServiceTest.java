@@ -2,6 +2,7 @@ package com.ohohchoo.domain.user.service;
 
 import com.ohohchoo.domain.user.dto.UserJoinRequestDto;
 import com.ohohchoo.domain.user.entity.User;
+import com.ohohchoo.domain.user.exception.UserNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,20 @@ class UserServiceTest {
         //when , then
         assertThrows(IllegalStateException.class, () ->
                 userService.join(dto), "같은 아이디로 가입하면 예외가 발생해야 한다.");
+    }
+
+    @Test
+    @DisplayName(" 회원 조회 중 없는 id, email 로 조회시 예외 발생")
+    public void 회원조회_예외발생테스트()throws Exception {
+        //given
+        String email = "exception@gmail.com";
+        Long id = 100L;
+        //when then
+        assertThrows(UserNotFoundException.class, () ->
+                userService.findById(id), "없는 id로 조회 하면 예외가 발생해야 한다.");
+        assertThrows(UserNotFoundException.class, () ->
+                userService.findByEmail(email), "없는 email로 조회 하면 예외가 발생해야 한다.");
+
     }
 
 
