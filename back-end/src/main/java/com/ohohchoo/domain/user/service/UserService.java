@@ -41,7 +41,7 @@ public class UserService {
     private void validateDuplicateUser(UserJoinRequestDto userJoinRequestDto) {
 
         if (userRepository.findByEmail(userJoinRequestDto.getEmail()).isPresent()) {
-            throw new IllegalStateException("이미 존재 하는 회원 입니다. email = " + userJoinRequestDto.getEmail());
+            throw new IllegalStateException("already exist user. email = " + userJoinRequestDto.getEmail());
         }
     }
 
@@ -53,7 +53,7 @@ public class UserService {
      */
     public Optional<User> findById(Long id) {
         Optional<User> user = Optional.ofNullable(userRepository.findById(id).orElseThrow(() ->
-                new UserNotFoundException("해당 유저를 찾을 수 없습니다. id = "+id)));
+                new UserNotFoundException("user not found. id = "+id)));
         return user;
     }
 
@@ -65,7 +65,7 @@ public class UserService {
      */
     public Optional<User> findByEmail(String email) {
         Optional<User> user = Optional.ofNullable(userRepository.findByEmail(email).orElseThrow(() ->
-                new UserNotFoundException("해당 유저를 찾을 수 없습니다. email = "+email)));
+                new UserNotFoundException("user not found. email = "+email)));
         return user;
     }
 
@@ -76,10 +76,10 @@ public class UserService {
      */
     public void update(Long id,UserUpdateRequestDto userUpdateRequestDto){
         Optional<User> findUser = Optional.ofNullable(userRepository.findById(id).orElseThrow(() ->
-                new UserNotFoundException("해당 유저를 찾을 수 없습니다. id = " + id)));
+                new UserNotFoundException("user not found. id = " + id)));
 
         if(userUpdateRequestDto.getGender() == null && userUpdateRequestDto.getSensitivity() == null){
-            throw new IllegalArgumentException("성별이나 온도 민감도 둘중 하나는 선택해야 합니다.");
+            throw new IllegalArgumentException("Either gender or sensitivity must be selected.");
         }
         User user = findUser.get();
         if(userUpdateRequestDto.getGender() != null){
