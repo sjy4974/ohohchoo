@@ -1,9 +1,6 @@
 package com.ohohchoo.domain.userLocations.Entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -23,4 +20,9 @@ public class UserLocations implements Serializable {
     private Integer userId;
     @Id
     private Integer locationCode;
+    @Builder
+    public UserLocations(Integer userId, Integer locationCode) {
+        this.userId = userId;
+        this.locationCode = locationCode;
+    }
 }
