@@ -24,9 +24,9 @@ public class UserRestController {
 
         try {
             userService.update(userId, userUpdateRequestDto);
-        } catch (UserNotFoundException e) {
+        } catch (UserNotFoundException e) { // 해당 유저를 찾을 수 없는경우
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) { // 온도민감도, 성별 모두 null로 넘어온경우
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(SUCCESS, HttpStatus.OK);

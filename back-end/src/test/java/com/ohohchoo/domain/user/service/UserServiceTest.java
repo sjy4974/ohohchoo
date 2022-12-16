@@ -1,6 +1,7 @@
 package com.ohohchoo.domain.user.service;
 
 import com.ohohchoo.domain.user.dto.UserJoinRequestDto;
+import com.ohohchoo.domain.user.dto.UserUpdateRequestDto;
 import com.ohohchoo.domain.user.entity.User;
 import com.ohohchoo.domain.user.exception.UserNotFoundException;
 import org.junit.jupiter.api.DisplayName;
@@ -73,6 +74,36 @@ class UserServiceTest {
         assertThrows(UserNotFoundException.class, () ->
                 userService.findByEmail(email), "없는 email로 조회 하면 예외가 발생해야 한다.");
 
+    }
+
+    @Test
+    @DisplayName(" 성별 or 온도민감도 변경 테스트")
+    public void 회원수정()throws Exception {
+        //given
+        // 유저 생성
+        UserJoinRequestDto dto = UserJoinRequestDto.builder()
+                .email("test@gmail.com")
+                .nickname("test")
+                .gender("male")
+                .build();
+        Long savedId = userService.join(dto);
+        em.clear();
+        String gender = "female";
+        Integer sensitivity = 2;
+        UserUpdateRequestDto updateDto = UserUpdateRequestDto
+                .builder()
+                .gender(gender)
+                .sensitivity(sensitivity)
+                .build();
+        //when
+        System.out.println("userid = "+ savedId);
+        userService.update(savedId, updateDto);
+        em.flush(); // 변경 사항을 db에 적용
+        em.clear(); // 실제 db에서 가져오기 위해 영속성 컨텍스트 초기화
+        Optional<User> findUser = userService.findById(savedId);
+        //then
+        assertEquals(gender, findUser.get().getGender());
+        assertEquals(sensitivity, findUser.get().getSensitivity());
     }
 
 
