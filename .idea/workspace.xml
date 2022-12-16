@@ -10,6 +10,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/shelf/2022-12-15__6_25__________.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/2022-12-15__6_25__________.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/ohohchoo/domain/review/repository/ReviewRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/ohohchoo/domain/review/repository/ReviewRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

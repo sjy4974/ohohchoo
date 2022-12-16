@@ -62,6 +62,47 @@ class ReviewRepositoryTest {
         assertEquals(review.getId(), findReview.getId());
     }
 
+    @Test
+    @DisplayName(" 리뷰 내용 검증 테스트 테스트")
+    public void 리뷰입력검증()throws Exception {
+        //given
+        // 검증할 에러 메세지
+        String message = "The number of characters must be 200 characters or less.";
+        String message2 = "Content is required.";
+        String content = "200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200200";
+
+        // 200자 이하 테스트
+        ReviewWriteRequestDto dto = ReviewWriteRequestDto
+                .builder()
+                .content(content)
+                .address(new Address("서울", "강서구"))
+                .build();
+
+        // 빈 문자열 테스트
+        ReviewWriteRequestDto dto2 = ReviewWriteRequestDto
+                .builder()
+                .content("")
+                .address(new Address("서울", "강서구"))
+                .build();
+        //when
+        // 유효하지 않은경우 violations 값 존재
+        Set<ConstraintViolation<ReviewWriteRequestDto>> violations = validator.validate(dto);
+        Set<ConstraintViolation<ReviewWriteRequestDto>> violations2 = validator.validate(dto2);
+
+        //then
+        // 에러 메세지가 존재하는지 검증
+        assertTrue(!(violations.isEmpty()));
+        assertTrue(!(violations2.isEmpty()));
+        // 존재하는 에러메세지 검증
+        violations.forEach(err -> {
+           assertEquals(err.getMessage(), message);
+        });
+        violations2.forEach(err -> {
+            assertEquals(err.getMessage(), message2);
+        });
+
+    }
+
 
     // 리뷰 생성 메서드
     private Review createReview() {
