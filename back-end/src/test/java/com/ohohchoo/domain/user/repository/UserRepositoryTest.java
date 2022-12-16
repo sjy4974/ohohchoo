@@ -35,7 +35,7 @@ class UserRepositoryTest {
 
 
     @Test
-    @DisplayName(" 회원 성별 수정 ")
+    @DisplayName(" 회원 성별 수정 테스트 ")
 //    @Rollback(false)
     public void 성별수정() throws Exception {
         //given
@@ -53,6 +53,25 @@ class UserRepositoryTest {
 
         //then
         assertEquals(gender, findUser2.getGender());
+    }
+    
+    @Test
+    @DisplayName(" 온도 민감도 수정 테스트 ")
+    public void 온도민감도수정()throws Exception {
+        //given
+        User user = createUser();
+        Long userId = user.getId();
+        Integer sensitivity = 2;
+        em.clear(); // 영속성 컨텍스트 초기화
+        User findUser1 = em.find(User.class, userId);
+        //when
+        findUser1.changeSensitivity(sensitivity);
+        em.flush();
+        em.clear();
+
+        User findUser2 = em.find(User.class, userId);
+        //then
+        assertEquals(sensitivity, findUser2.getSensitivity());
     }
 
 
