@@ -20,12 +20,20 @@ public class JpaRepositoryTest {
     private UserLocationsRepository userLocationsRepository;
 
     @Test @DisplayName("INSERT test")
-    void saveTestSuccess() {
+    void saveTest() {
         UserLocations userLocations = UserLocations.builder()
                 .userId(1)
                 .locationCode(13)
                 .build();
         userLocationsRepository.save(userLocations);
+    }
+    @Test @DisplayName("DELETE test")
+    void deleteTest() {
+        UserLocations userLocations = UserLocations.builder()
+                .userId(1)
+                .locationCode(13)
+                .build();
+        userLocationsRepository.delete(userLocations);
     }
 
 }
