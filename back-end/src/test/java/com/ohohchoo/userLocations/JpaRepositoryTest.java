@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 /**
  * JpaRepository인 UserlocationsRepository에 대한
  * test 파일입니다.
@@ -22,7 +24,7 @@ public class JpaRepositoryTest {
     @Test @DisplayName("INSERT test")
     void saveTest() {
         UserLocations userLocations = UserLocations.builder()
-                .userId(1)
+                .userId(3)
                 .locationCode(13)
                 .build();
         userLocationsRepository.save(userLocations);
@@ -36,4 +38,11 @@ public class JpaRepositoryTest {
         userLocationsRepository.delete(userLocations);
     }
 
+    @Test @DisplayName("SELECT test")
+    void selectTest() {
+        int userId = 1;
+        List<UserLocations> list = null;
+        list = userLocationsRepository.findAllByUserId(userId);
+        System.out.println(list);
+    }
 }
