@@ -17,12 +17,12 @@ import io.jsonwebtoken.UnsupportedJwtException;
 @Component
 public class JwtUtil {
 
-    private static final String SALT = "SSAFIT";
+    private static final String SALT = "ohohchoo";
     private static final long TOKEN_VALID_TIME = 60 * 60 * 1000L;
 
     // 토큰 생성
     public String createToken(String claimId, Long userId) throws UnsupportedEncodingException {
-        // 유효기간 30분
+        // 유효기간 2시간
         Date now = new Date();
         return Jwts.builder().setHeaderParam("alg", "HS256").setHeaderParam("typ", "JWT").claim(claimId, userId)
                 .setExpiration(new Date(now.getTime() + TOKEN_VALID_TIME))
