@@ -23,7 +23,7 @@ public class Location {
 
     private String city;
     private String town;
-    private Integer nx;
-    private Integer ny;
+    private String nx;
+    private String ny;
 
 }

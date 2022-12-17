@@ -5,10 +5,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class LocationData {
-
-    private Integer locationCode;
-    private String nx;
-    private String ny;
-
+public class WeatherRangeData {
+    private Double tmn;
+    private Double tmx;
 }
