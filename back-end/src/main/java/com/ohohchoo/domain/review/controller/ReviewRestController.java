@@ -56,12 +56,9 @@ public class ReviewRestController {
         Long userId = jwtUtil.getTokenInfo(token);
 
         // delete 로직 실행중 예외가 발생하면
-        // 해당 예외 메세지, HttpStatus 상태를 변경해서 return
+        // 예외 메세지, HttpStatus 상태를 변경해서 return
         try {
-            reviewService.delete(reviewId, userId);
-        } catch (ReviewNotFoundException e) {
-            message = e.getMessage();
-            status = HttpStatus.BAD_REQUEST;
+            reviewService.delete(userId, reviewId);
         } catch (Exception e){
             message = e.getMessage();
             status = HttpStatus.BAD_REQUEST;

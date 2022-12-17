@@ -51,10 +51,10 @@ public class ReviewService {
      * @param reviewId
      */
     @Transactional
-    public void delete(Long reviewId, Long userId) {
+    public void delete(Long userId, Long reviewId) {
 
         // 해당 reviewId가 유효한지, 리뷰작성자의 userId와 넘어온 userId가 동일한지 검증
-        validationCheck(reviewId, userId);
+        validationCheck(userId, reviewId);
 
         reviewRepository.deleteById(reviewId);
 
@@ -66,15 +66,16 @@ public class ReviewService {
      * @param reviewId
      * @param userId
      */
-    public void validationCheck(Long reviewId, Long userId) {
+    public void validationCheck(Long userId, Long reviewId) {
+
+        // 해당 유저가 존재 하는지 검증
+        Optional<User> getUser = Optional.ofNullable(userRepository.findById(userId).orElseThrow(() ->
+                new UserNotFoundException("user not found. id = " + userId)));
 
         // 해당 리뷰가 존재하는지 검증
         Optional<Review> review = Optional.ofNullable(reviewRepository.findById(reviewId).orElseThrow(() ->
                 new ReviewNotFoundException("review not found. reviewId = " + reviewId)));
 
-        // 해당 유저가 존재 하는지 검증
-        Optional<User> getUser = Optional.ofNullable(userRepository.findById(userId).orElseThrow(() ->
-                new UserNotFoundException("user not found. id = " + userId)));
 
         // 넘어온 userId가 리뷰 작성자의 userId와 같은지 검증
         if (review.get().getUser().getId() != getUser.get().getId()) {

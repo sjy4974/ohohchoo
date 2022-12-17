@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d584598-2682-4b8e-9b7e-59934c33af27" name="변경" comment="✨ feat : add reviewDelete feature&#10;&#10;리뷰삭제 기능과, 예외 추가">
+    <list default="true" id="1d584598-2682-4b8e-9b7e-59934c33af27" name="변경" comment="♻ refactor: refactor reviewDelete feature&#10;&#10;리뷰삭제 기능 수정, validationCheck 기능 추가">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/controller/ReviewRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/controller/ReviewRestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/service/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/service/ReviewService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/ohohchoo/domain/review/service/ReviewServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/ohohchoo/domain/review/service/ReviewServiceTest.java" afterDir="false" />
@@ -101,20 +100,7 @@
       <recent name="com.ohohchoo.domain.user.repository" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.ReviewServiceTest.리뷰삭제">
-    <configuration name="BackEndApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.ohohchoo.BackEndApplication" />
-      <module name="back-end.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.ohohchoo.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Gradle.ReviewServiceTest.리뷰삭제검증_권한없는유저_예외발생">
     <configuration name="ReviewServiceTest.리뷰삭제" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -138,7 +124,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="UserRepositoryTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="ReviewServiceTest.리뷰작성" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/back-end" />
@@ -151,7 +137,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;com.ohohchoo.domain.user.repository.UserRepositoryTest&quot;" />
+            <option value="&quot;com.ohohchoo.domain.review.service.ReviewServiceTest.리뷰작성&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -161,7 +147,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="UserRepositoryTest.회원가입" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="ReviewServiceTest.리뷰삭제검증_리뷰아이디가없음_예외발생" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/back-end" />
@@ -174,7 +160,53 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;com.ohohchoo.domain.user.repository.UserRepositoryTest.회원가입&quot;" />
+            <option value="&quot;com.ohohchoo.domain.review.service.ReviewServiceTest.리뷰삭제검증_리뷰아이디가없음_예외발생&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="ReviewServiceTest.리뷰삭제검증_유저아이디없음_예외발생" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/back-end" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.ohohchoo.domain.review.service.ReviewServiceTest.리뷰삭제검증_유저아이디없음_예외발생&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="ReviewServiceTest.리뷰삭제검증_권한없는유저_예외발생" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/back-end" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.ohohchoo.domain.review.service.ReviewServiceTest.리뷰삭제검증_권한없는유저_예외발생&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -232,11 +264,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.ReviewServiceTest.리뷰삭제검증_권한없는유저_예외발생" />
+        <item itemvalue="Gradle.ReviewServiceTest.리뷰삭제검증_유저아이디없음_예외발생" />
+        <item itemvalue="Gradle.ReviewServiceTest.리뷰삭제검증_리뷰아이디가없음_예외발생" />
+        <item itemvalue="Gradle.ReviewServiceTest.리뷰작성" />
         <item itemvalue="Gradle.ReviewServiceTest.리뷰삭제" />
-        <item itemvalue="애플리케이션.BackEndApplication" />
-        <item itemvalue="Gradle.UserRepositoryTest.회원가입" />
-        <item itemvalue="Gradle.UserRepositoryTest" />
-        <item itemvalue="애플리케이션.BackEndApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -305,7 +337,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671284977784</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="♻ refactor: refactor reviewDelete feature&#10;&#10;리뷰삭제 기능 수정, validationCheck 기능 추가">
+      <created>1671293555935</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1671293555935</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -340,6 +379,7 @@
     <MESSAGE value="⚡ update : update User entity" />
     <MESSAGE value="⚡ update : update .idea" />
     <MESSAGE value="✨ feat : add reviewDelete feature&#10;&#10;리뷰삭제 기능과, 예외 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="✨ feat : add reviewDelete feature&#10;&#10;리뷰삭제 기능과, 예외 추가" />
+    <MESSAGE value="♻ refactor: refactor reviewDelete feature&#10;&#10;리뷰삭제 기능 수정, validationCheck 기능 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="♻ refactor: refactor reviewDelete feature&#10;&#10;리뷰삭제 기능 수정, validationCheck 기능 추가" />
   </component>
 </project>
