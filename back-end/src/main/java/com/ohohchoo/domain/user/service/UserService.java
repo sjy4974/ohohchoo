@@ -1,52 +1,95 @@
 package com.ohohchoo.domain.user.service;
 
-import com.ohohchoo.domain.user.dto.UpdateUserDto;
+import com.ohohchoo.domain.user.dto.UserJoinRequestDto;
+import com.ohohchoo.domain.user.dto.UserUpdateRequestDto;
 import com.ohohchoo.domain.user.entity.User;
+import com.ohohchoo.domain.user.exception.UserNotFoundException;
 import com.ohohchoo.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class UserService {
+
     private final UserRepository userRepository;
 
-    //Email을 통해 사용자를 Optional 클래스로 반환
-    //있는 경우, User가 담기고, 없는 경우, 비어있는 Optional 객체가 반환된다.
-    public Optional<User> findByEmail(String email){
-        Optional<User> user = userRepository.findByEmail(email);
-        return user;
-    }
-
-    //ID를 통한 사용자 조회
-    public Optional<User> findByUserId(Integer userId) {
-        Optional<User> user = userRepository.findByUserId(userId);
-        return user;
-    }
-
-    //ID를 통해 사용자를 삭제한다.
-    public void deleteByUserId(Integer userId){
-        userRepository.deleteByUserId(userId);
-    }
-
-    //사용자를 등록한다.
-    public User save(User user) {
+    /**
+     * 회원 가입
+     *
+     * @param userJoinRequestDto
+     * @return userId
+     */
+    @Transactional
+    public Long join(UserJoinRequestDto userJoinRequestDto) {
+        // 중복 회원 검증
+        validateDuplicateUser(userJoinRequestDto);
+        User user = userJoinRequestDto.toEntity();
         userRepository.save(user);
+        return user.getId();
+    }
+
+    /**
+     * 중복 회원 검증
+     *
+     * @param userJoinRequestDto
+     */
+    private void validateDuplicateUser(UserJoinRequestDto userJoinRequestDto) {
+
+        if (userRepository.findByEmail(userJoinRequestDto.getEmail()).isPresent()) {
+            throw new IllegalStateException("already exist user. email = " + userJoinRequestDto.getEmail());
+        }
+    }
+
+    /**
+     * id로 유저 조회. 해당 유저가 존재하지 않으면 예외 발생
+     *
+     * @param id
+     * @return
+     */
+    public Optional<User> findById(Long id) {
+        Optional<User> user = Optional.ofNullable(userRepository.findById(id).orElseThrow(() ->
+                new UserNotFoundException("user not found. id = "+id)));
         return user;
     }
 
-    //사용자 정보 변경
-    public void updateUser(int userId, UpdateUserDto updateUserDto) {
-        Optional<User> optional = userRepository.findByUserId(userId);
-        User user = optional.get();
-        //DB에서 받은 entity를 수정한다.
-        user.setSensitivity(updateUserDto.getSensitivity());
-        user.setGender(updateUserDto.getGender());
-        user.setTimeGoOut(updateUserDto.getTimeGoOut());
-        user.setTimeGoIn(updateUserDto.getTimeGoIn());
-        userRepository.save(user);
+    /**
+     * email로 유저 조회. 해당 유저가 존재하지 않으면 예외 발생
+     *
+     * @param email
+     * @return
+     */
+    public Optional<User> findByEmail(String email) {
+        Optional<User> user = Optional.ofNullable(userRepository.findByEmail(email).orElseThrow(() ->
+                new UserNotFoundException("user not found. email = "+email)));
+        return user;
     }
+
+    /**
+     * 유저 정보 수정 (성별, 온도민감도)
+     * @param id
+     * @param userUpdateRequestDto
+     */
+    public void update(Long id,UserUpdateRequestDto userUpdateRequestDto){
+        Optional<User> findUser = Optional.ofNullable(userRepository.findById(id).orElseThrow(() ->
+                new UserNotFoundException("user not found. id = " + id)));
+
+        if(userUpdateRequestDto.getGender() == null && userUpdateRequestDto.getSensitivity() == null){
+            throw new IllegalArgumentException("Either gender or sensitivity must be selected.");
+        }
+        User user = findUser.get();
+        if(userUpdateRequestDto.getGender() != null){
+            user.changeGender(userUpdateRequestDto.getGender());
+        }
+        if(userUpdateRequestDto.getSensitivity() != null){
+            user.changeSensitivity(userUpdateRequestDto.getSensitivity());
+        }
+
+    }
+
 
 }
