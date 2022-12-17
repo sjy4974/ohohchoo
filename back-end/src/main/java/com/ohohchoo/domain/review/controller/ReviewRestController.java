@@ -1,6 +1,7 @@
 package com.ohohchoo.domain.review.controller;
 
 import com.ohohchoo.domain.review.dto.ReviewWriteRequestDto;
+import com.ohohchoo.domain.review.exception.ReviewNotFoundException;
 import com.ohohchoo.domain.review.service.ReviewService;
 import com.ohohchoo.global.config.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -8,10 +9,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,6 +44,26 @@ public class ReviewRestController {
         }
         return new ResponseEntity<String>(SUCCESS, HttpStatus.CREATED);
 
+    }
+
+    @DeleteMapping("/review/{reviewId}")
+    public ResponseEntity<String> delete(@PathVariable Long reviewId, HttpServletRequest req){
+        String message = SUCCESS;
+        HttpStatus status = HttpStatus.OK;
+
+        // 해당 유저가 삭제 권한을 가지고 있는지 검증하기 위해 토큰에서 userId를 가져옴
+        String token = req.getHeader(HEADER_AUTH);
+        Long userId = jwtUtil.getTokenInfo(token);
+
+        // delete 로직 실행중 예외가 발생하면
+        // 예외 메세지, HttpStatus 상태를 변경해서 return
+        try {
+            reviewService.delete(userId, reviewId);
+        } catch (Exception e){
+            message = e.getMessage();
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<String>(message, status);
     }
 
 }
