@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d584598-2682-4b8e-9b7e-59934c33af27" name="변경" comment="♻ refactor: refactor reviewDelete feature&#10;&#10;리뷰삭제 기능 수정, validationCheck 기능 추가">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/controller/ReviewRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/controller/ReviewRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/service/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/service/ReviewService.java" afterDir="false" />
+    <list default="true" id="1d584598-2682-4b8e-9b7e-59934c33af27" name="변경" comment="✅ test: test deleteReview validation&#10;&#10;리뷰 삭제 검증 테스트 (해당 유저가 없는경우, 해당 리뷰가 없는경우, 권한이 없는경우)">
       <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/ohohchoo/domain/review/service/ReviewServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/ohohchoo/domain/review/service/ReviewServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -344,7 +341,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671293555935</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="✅ test: test deleteReview validation&#10;&#10;리뷰 삭제 검증 테스트 (해당 유저가 없는경우, 해당 리뷰가 없는경우, 권한이 없는경우)">
+      <created>1671297336813</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1671297336813</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -380,6 +384,7 @@
     <MESSAGE value="⚡ update : update .idea" />
     <MESSAGE value="✨ feat : add reviewDelete feature&#10;&#10;리뷰삭제 기능과, 예외 추가" />
     <MESSAGE value="♻ refactor: refactor reviewDelete feature&#10;&#10;리뷰삭제 기능 수정, validationCheck 기능 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="♻ refactor: refactor reviewDelete feature&#10;&#10;리뷰삭제 기능 수정, validationCheck 기능 추가" />
+    <MESSAGE value="✅ test: test deleteReview validation&#10;&#10;리뷰 삭제 검증 테스트 (해당 유저가 없는경우, 해당 리뷰가 없는경우, 권한이 없는경우)" />
+    <option name="LAST_COMMIT_MESSAGE" value="✅ test: test deleteReview validation&#10;&#10;리뷰 삭제 검증 테스트 (해당 유저가 없는경우, 해당 리뷰가 없는경우, 권한이 없는경우)" />
   </component>
 </project>

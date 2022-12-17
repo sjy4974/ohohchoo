@@ -104,6 +104,20 @@ class ReviewServiceTest {
                 reviewService.validationCheck(userId2, reviewId));
     }
 
+    @Test
+    @DisplayName("리뷰 삭제 테스트")
+    public void 리뷰삭제_성공테스트()throws Exception {
+        //given
+        Long userId = createUser();
+        ReviewWriteRequestDto reviewDto = createReviewDto();
+        Long reviewId = reviewService.write(userId, reviewDto);
+        //when
+        reviewService.delete(userId, reviewId);
+        //then
+        assertThrows(ReviewNotFoundException.class, () ->
+                reviewService.delete(userId, reviewId), "리뷰 삭제를 다시 요청시 예외가 발생해야함");
+    }
+
 
 
 
