@@ -17,7 +17,7 @@ const Layout = () => {
 
 function App() {
   const location = useGeolocation();
-
+  console.log(location);
   return (
     <div className='app'>
       {location.loaded && (
