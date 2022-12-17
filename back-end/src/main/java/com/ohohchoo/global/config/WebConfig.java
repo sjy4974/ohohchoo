@@ -1,6 +1,6 @@
 package com.ohohchoo.global.config;
 
-import com.ohohchoo.domain.user.global.config.interceptor.JwtInterceptor;
+import com.ohohchoo.global.config.interceptor.JwtInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
