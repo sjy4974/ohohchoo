@@ -1,9 +1,6 @@
 package com.ohohchoo.domain.userLocations.Entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,10 +14,15 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "user_locations")
-@IdClass(userLocation.class)
-public class userLocation implements Serializable {
+@IdClass(UserLocations.class)
+public class UserLocations implements Serializable {
     @Id
     private Integer userId;
     @Id
     private Integer locationCode;
+    @Builder
+    public UserLocations(Integer userId, Integer locationCode) {
+        this.userId = userId;
+        this.locationCode = locationCode;
+    }
 }
