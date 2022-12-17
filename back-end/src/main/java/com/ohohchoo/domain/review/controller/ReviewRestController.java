@@ -47,14 +47,18 @@ public class ReviewRestController {
     }
 
     @DeleteMapping("/review/{reviewId}")
-    public ResponseEntity<String> delete(@PathVariable Long reviewId){
+    public ResponseEntity<String> delete(@PathVariable Long reviewId, HttpServletRequest req){
         String message = SUCCESS;
         HttpStatus status = HttpStatus.OK;
+
+        // 해당 유저가 삭제 권한을 가지고 있는지 검증하기 위해 토큰에서 userId를 가져옴
+        String token = req.getHeader(HEADER_AUTH);
+        Long userId = jwtUtil.getTokenInfo(token);
 
         // delete 로직 실행중 예외가 발생하면
         // 해당 예외 메세지, HttpStatus 상태를 변경해서 return
         try {
-            reviewService.delete(reviewId);
+            reviewService.delete(reviewId, userId);
         } catch (ReviewNotFoundException e) {
             message = e.getMessage();
             status = HttpStatus.BAD_REQUEST;
