@@ -1,7 +1,5 @@
 package com.ohohchoo.domain.review.dto;
 
-import com.ohohchoo.domain.review.Address;
-import com.ohohchoo.domain.review.entity.Review;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,13 +16,16 @@ public class ReviewWriteRequestDto {
     @Size(max = 200, message = "The number of characters must be 200 characters or less.")
     private String content;
 
-    private Address address;
+    private String city;
+    private String town;
+
 
     @Builder
-    public ReviewWriteRequestDto(String content, Address address) {
+    public ReviewWriteRequestDto(String content, String city, String town) {
         this.content = content;
-        this.address = address;
+        this.city = city;
+        this.town = town;
     }
-    
+
 
 }

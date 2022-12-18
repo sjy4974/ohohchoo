@@ -1,6 +1,5 @@
 package com.ohohchoo.domain.review.service;
 
-import com.ohohchoo.domain.review.Address;
 import com.ohohchoo.domain.review.dto.ReviewWriteRequestDto;
 import com.ohohchoo.domain.review.entity.Review;
 import com.ohohchoo.domain.review.exception.AccessDeniedException;
@@ -12,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -32,6 +30,15 @@ class ReviewServiceTest {
 
     @Autowired
     EntityManager em;
+
+    private static ReviewWriteRequestDto createReviewDto() {
+        return ReviewWriteRequestDto
+                .builder()
+                .content("테스트 내용 작성")
+                .city("서울시")
+                .town("강서구")
+                .build();
+    }
 
     @Test
     @DisplayName("리뷰작성 테스트")
@@ -60,7 +67,7 @@ class ReviewServiceTest {
 
     @Test
     @DisplayName(" 리뷰 삭제 검증 중 예외 발생 (userId가 없는 경우)")
-    public void 리뷰삭제검증_유저아이디없음_예외발생()throws Exception {
+    public void 리뷰삭제검증_유저아이디없음_예외발생() throws Exception {
         //given
         Long userId = 100L;
         Long savedId = createUser();
@@ -72,21 +79,22 @@ class ReviewServiceTest {
         assertThrows(UserNotFoundException.class, () ->
                 reviewService.validationCheck(userId, reviewId));
     }
+
     @Test
     @DisplayName(" 리뷰 삭제 검증 중 예외 발생 (review Id가 없는경우)")
-    public void 리뷰삭제검증_리뷰아이디가없음_예외발생()throws Exception {
+    public void 리뷰삭제검증_리뷰아이디가없음_예외발생() throws Exception {
         //given
-        Long userId = 100L;
         Long reviewId = 100L;
+        Long userId = createUser();
         // 유저는 존재하지만, 해당 리뷰가 없는 경우
         //when, then
         assertThrows(ReviewNotFoundException.class, () ->
-                reviewService.validationCheck(reviewId, userId));
+                reviewService.validationCheck(userId, reviewId));
     }
-    
+
     @Test
     @DisplayName(" 리뷰삭제 검증 중 예외 발생 (해당 리뷰의 작성자가 아닌경우)")
-    public void 리뷰삭제검증_권한없는유저_예외발생()throws Exception {
+    public void 리뷰삭제검증_권한없는유저_예외발생() throws Exception {
         //given
         Long userId1 = createUser();
         UserJoinRequestDto userDto = UserJoinRequestDto.builder()
@@ -106,7 +114,7 @@ class ReviewServiceTest {
 
     @Test
     @DisplayName("리뷰 삭제 테스트")
-    public void 리뷰삭제_성공테스트()throws Exception {
+    public void 리뷰삭제_성공테스트() throws Exception {
         //given
         Long userId = createUser();
         ReviewWriteRequestDto reviewDto = createReviewDto();
@@ -116,17 +124,6 @@ class ReviewServiceTest {
         //then
         assertThrows(ReviewNotFoundException.class, () ->
                 reviewService.delete(userId, reviewId), "리뷰 삭제를 다시 요청시 예외가 발생해야함");
-    }
-
-
-
-
-    private static ReviewWriteRequestDto createReviewDto() {
-        return ReviewWriteRequestDto
-                .builder()
-                .content("테스트 내용 작성")
-                .address(new Address("서울시", "강서구"))
-                .build();
     }
 
     // 유저 생성 후 userId 반환
