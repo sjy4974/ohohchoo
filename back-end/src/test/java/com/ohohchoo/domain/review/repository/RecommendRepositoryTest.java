@@ -36,7 +36,7 @@ class RecommendRepositoryTest {
 
     @Test
     @DisplayName(" 리뷰 좋아요 테스트")
-    @Rollback(false)
+//    @Rollback(false)
     public void 리뷰_좋아요_테스트() throws Exception {
         //given
         Review review = createReview();
@@ -52,10 +52,11 @@ class RecommendRepositoryTest {
 
     @Test
     @DisplayName(" 좋아요를 싫어요로 변경 테스트")
+    @Rollback(false)
     public void 리뷰_좋아요_싫어요_변경테스트() throws Exception {
         //given
         Review review = createReview();
-        User getUser = createUser();
+        User getUser = review.getUser();
 
         // 좋아요를 누름
         Recommend recommend = createRecommend(getUser, review);

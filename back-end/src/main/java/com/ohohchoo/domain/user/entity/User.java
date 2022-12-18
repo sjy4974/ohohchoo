@@ -10,7 +10,9 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(
+        name = "email_unique",
+        columnNames = {"email"})})
 @DynamicInsert
 public class User {
     @Id

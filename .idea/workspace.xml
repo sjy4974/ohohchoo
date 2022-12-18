@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d584598-2682-4b8e-9b7e-59934c33af27" name="변경" comment="✨ feat : add like Recommend feature">
+    <list default="true" id="1d584598-2682-4b8e-9b7e-59934c33af27" name="변경" comment="✅ test : test updateRecommend in RecommendRepositoryTest.java&#10;&#10;좋아요, 싫어요 변경 테스트">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/entity/Recommend.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/entity/Recommend.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/user/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/user/entity/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/ohohchoo/domain/review/repository/RecommendRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/ohohchoo/domain/review/repository/RecommendRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -409,7 +409,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671357857545</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="✅ test : test updateRecommend in RecommendRepositoryTest.java&#10;&#10;좋아요, 싫어요 변경 테스트">
+      <created>1671358806888</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1671358806888</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -447,6 +454,7 @@
     <MESSAGE value="♻ refactor: refactor reviewDelete feature&#10;&#10;리뷰삭제 기능 수정, validationCheck 기능 추가" />
     <MESSAGE value="✅ test: test deleteReview validation&#10;&#10;리뷰 삭제 검증 테스트 (해당 유저가 없는경우, 해당 리뷰가 없는경우, 권한이 없는경우)" />
     <MESSAGE value="✨ feat : add like Recommend feature" />
-    <option name="LAST_COMMIT_MESSAGE" value="✨ feat : add like Recommend feature" />
+    <MESSAGE value="✅ test : test updateRecommend in RecommendRepositoryTest.java&#10;&#10;좋아요, 싫어요 변경 테스트" />
+    <option name="LAST_COMMIT_MESSAGE" value="✅ test : test updateRecommend in RecommendRepositoryTest.java&#10;&#10;좋아요, 싫어요 변경 테스트" />
   </component>
 </project>
