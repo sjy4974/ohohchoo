@@ -77,6 +77,11 @@ public class RecommendService {
 
     }
 
+    /**
+     * 좋아요 or 싫어요 삭제
+     * @param userId
+     * @param recommendId
+     */
     public void delete(Long userId , Long recommendId){
         validationCheck(userId,recommendId);
         recommendRepository.deleteById(recommendId);

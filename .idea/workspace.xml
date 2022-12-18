@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d584598-2682-4b8e-9b7e-59934c33af27" name="변경" comment="✨ feat : add cancelRecommend feature&#10;&#10;좋아요 or 싫어요 취소 기능 추가">
+    <list default="true" id="1d584598-2682-4b8e-9b7e-59934c33af27" name="변경" comment="✅ test : test cancelRecommend&#10;&#10;좋아요 or 싫어요 취소 기능 테스트">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/ohohchoo/domain/review/service/RecommendServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/ohohchoo/domain/review/service/RecommendServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/service/RecommendService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/service/RecommendService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -399,7 +399,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671376349181</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="✅ test : test cancelRecommend&#10;&#10;좋아요 or 싫어요 취소 기능 테스트">
+      <created>1671376591936</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1671376591936</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -443,6 +450,7 @@
     <MESSAGE value="✅ test : test likeRecommend&#10;&#10;리뷰 좋아요 기능 테스트" />
     <MESSAGE value="✅ test : test updateLikeOrDisLike&#10;&#10;좋아요, 싫어요 변경 테스트" />
     <MESSAGE value="✨ feat : add cancelRecommend feature&#10;&#10;좋아요 or 싫어요 취소 기능 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="✨ feat : add cancelRecommend feature&#10;&#10;좋아요 or 싫어요 취소 기능 추가" />
+    <MESSAGE value="✅ test : test cancelRecommend&#10;&#10;좋아요 or 싫어요 취소 기능 테스트" />
+    <option name="LAST_COMMIT_MESSAGE" value="✅ test : test cancelRecommend&#10;&#10;좋아요 or 싫어요 취소 기능 테스트" />
   </component>
 </project>
