@@ -5,6 +5,7 @@ import com.ohohchoo.domain.review.dto.ReviewWriteRequestDto;
 import com.ohohchoo.domain.review.entity.Recommend;
 import com.ohohchoo.domain.review.entity.RecommendStatus;
 import com.ohohchoo.domain.review.exception.DuplicationRecommendException;
+import com.ohohchoo.domain.review.exception.RecommendNotFoundException;
 import com.ohohchoo.domain.user.dto.UserJoinRequestDto;
 import com.ohohchoo.domain.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;
@@ -73,7 +74,7 @@ class RecommendServiceTest {
         Long userId = createUser();
         Long reviewId = createReview(userId);
         RecommendRequestDto rrdto = createRecommend(userId, reviewId);
-        recommendService.likeOrDislike(rrdto); // 좋아요를 누름
+        recommendService.likeOrDislike(rrdto);
         RecommendRequestDto rrdto2= RecommendRequestDto.builder()
                 .userId(userId)
                 .reviewId(reviewId)
@@ -84,6 +85,21 @@ class RecommendServiceTest {
         Recommend findRecommend = em.find(Recommend.class, savedId);
         //then
         assertEquals(RecommendStatus.DISLIKE, findRecommend.getStatus());
+    }
+
+    @Test
+    @DisplayName("좋아요or 싫어요 취소 테스트")
+    public void 좋아요_싫어요_취소테스트()throws Exception {
+        //given
+        Long userId = createUser();
+        Long reviewId = createReview(userId);
+        RecommendRequestDto rrdto = createRecommend(userId, reviewId);
+        Long savedId = recommendService.likeOrDislike(rrdto);
+        //when
+        recommendService.delete(userId, savedId);
+        //then
+        assertThrows(RecommendNotFoundException.class, () ->
+                recommendService.delete(userId,savedId),"삭제후 다시 삭제 요청시 예외가 발생해야 한다.");
     }
 
     private RecommendRequestDto createRecommend(Long userId, Long reviewId) {

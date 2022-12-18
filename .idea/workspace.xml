@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1d584598-2682-4b8e-9b7e-59934c33af27" name="변경" comment="✨ feat : add cancelRecommend feature&#10;&#10;좋아요 or 싫어요 취소 기능 추가">
-      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/controller/RecommendRestController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/exception/RecommendNotFoundException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/controller/ReviewRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/controller/ReviewRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/service/RecommendService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/service/RecommendService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/ohohchoo/domain/review/service/RecommendServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/ohohchoo/domain/review/service/RecommendServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +106,7 @@
       <recent name="com.ohohchoo.domain.user.repository" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.RecommendServiceTest.좋아요_싫어요_변경테스트">
+  <component name="RunManager" selected="Gradle.RecommendServiceTest.좋아요_싫어요_취소테스트">
     <configuration name="RecommendServiceTest.좋아요_싫어요_테스트" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -179,7 +176,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ReviewServiceTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="RecommendServiceTest.좋아요_싫어요_취소테스트" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/back-end" />
@@ -192,7 +189,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;com.ohohchoo.domain.review.service.ReviewServiceTest&quot;" />
+            <option value="&quot;com.ohohchoo.domain.review.service.RecommendServiceTest.좋아요_싫어요_취소테스트&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -273,11 +270,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.RecommendServiceTest.좋아요_싫어요_취소테스트" />
         <item itemvalue="Gradle.RecommendServiceTest.좋아요_싫어요_변경테스트" />
         <item itemvalue="Gradle.RecommendServiceTest.좋아요_중복_예외테스트" />
         <item itemvalue="Gradle.RecommendServiceTest.좋아요_싫어요_테스트" />
         <item itemvalue="Gradle.ReviewServiceTest.리뷰삭제검증_리뷰아이디가없음_예외발생" />
-        <item itemvalue="Gradle.ReviewServiceTest" />
       </list>
     </recent_temporary>
   </component>
@@ -395,7 +392,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671373708637</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="✨ feat : add cancelRecommend feature&#10;&#10;좋아요 or 싫어요 취소 기능 추가">
+      <created>1671376349181</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1671376349181</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
