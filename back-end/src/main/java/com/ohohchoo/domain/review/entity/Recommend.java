@@ -45,7 +45,7 @@ public class Recommend {
     /**
      * dislike로 status 업데이트
      */
-    public void changeDislike(){
+    public void changeDisLike(){
         this.status = RecommendStatus.DISLIKE;
     }
 

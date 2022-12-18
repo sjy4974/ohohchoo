@@ -65,7 +65,7 @@ class RecommendRepositoryTest {
         // 좋아요를 싫어요로 변경
         //when
         Recommend findRecommend = recommendRepository.findById(savedId).get();
-        findRecommend.changeDislike();
+        findRecommend.changeDisLike();
         //then
         assertEquals(RecommendStatus.DISLIKE, findRecommend.getStatus());
     }

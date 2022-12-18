@@ -67,9 +67,9 @@ public class RecommendService {
 
         // db에 값이 존재하고, dto의 status가 다른경우 change (싫어요or좋아요를 누른상태에서 반대 버튼을 누른경우)
         if (dto.getStatus().equals(RecommendStatus.LIKE)) {
-            findRecommend.changeDislike();
-        } else {
             findRecommend.changeLike();
+        } else {
+            findRecommend.changeDisLike();
         }
         return findRecommend.getId();
 
