@@ -70,7 +70,22 @@ class RecommendRepositoryTest {
         assertEquals(RecommendStatus.DISLIKE, findRecommend.getStatus());
     }
 
+    @Test
+    @DisplayName("유저 식별자, 리뷰식별자에 대한 recommend 객체 가 존재하는지 검증")
+    public void 유저식별자_리뷰식별자_좋아요조회() throws Exception {
+        //given
+        Review review = createReview();
+        User user = review.getUser();
+        Recommend recommend = createRecommend(user, review);
+        Long savedId = recommendRepository.save(recommend).getId();
+        //when
+        Optional<Recommend> findRecommend = recommendRepository.findByUserIdAndReviewId(user.getId(), review.getId());
+        //then
+        assertEquals(recommend.getId(), findRecommend.get().getId());
+    }
 
+
+    // 생성 메서드
     private Recommend createRecommend(User getUser, Review review) {
         return Recommend
                 .builder()

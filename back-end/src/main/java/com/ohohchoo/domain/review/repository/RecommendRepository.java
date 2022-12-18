@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface RecommendRepository extends JpaRepository<Recommend, Long> {
 
     Optional<Recommend> findById(Long id);
+
+    Optional<Recommend> findByUserIdAndReviewId(Long userId, Long ReviewId);
 }
