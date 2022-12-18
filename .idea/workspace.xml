@@ -8,6 +8,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/dto/RecommendRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/dto/RecommendRequestDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/dto/ReviewWriteRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/dto/ReviewWriteRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/service/RecommendService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/service/RecommendService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/ohohchoo/domain/review/service/ReviewServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/ohohchoo/domain/review/service/ReviewServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +83,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.ohohchoo.domain.review.exception" />
       <recent name="com.ohohchoo.domain.review.entity" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -101,34 +104,12 @@
       <recent name="C:\jpa-workspace\ohohchoo\back-end\src\main\java\com\ohohchoo\domain\user\entity" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.ohohchoo.domain.review.service" />
       <recent name="com.ohohchoo.domain.review.repository" />
       <recent name="com.ohohchoo.domain.user.repository" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.ReviewServiceTest.리뷰삭제검증_리뷰아이디가없음_예외발생">
-    <configuration name="RecommendRepositoryTest.리뷰_좋아요_테스트" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/back-end" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;com.ohohchoo.domain.review.repository.RecommendRepositoryTest.리뷰_좋아요_테스트&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Gradle.RecommendServiceTest.좋아요_싫어요_테스트">
     <configuration name="RecommendRepositoryTest.리뷰_좋아요_싫어요_변경테스트" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -175,6 +156,29 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="RecommendServiceTest.좋아요_싫어요_테스트" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/back-end" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.ohohchoo.domain.review.service.RecommendServiceTest.좋아요_싫어요_테스트&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="ReviewServiceTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -189,29 +193,6 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;com.ohohchoo.domain.review.service.ReviewServiceTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="ReviewServiceTest.리뷰작성" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/back-end" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;com.ohohchoo.domain.review.service.ReviewServiceTest.리뷰작성&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -290,36 +271,13 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="UserRepositoryTest.온도민감도수정" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/back-end" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;com.ohohchoo.domain.user.repository.UserRepositoryTest.온도민감도수정&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.RecommendServiceTest.좋아요_싫어요_테스트" />
         <item itemvalue="Gradle.ReviewServiceTest.리뷰삭제검증_리뷰아이디가없음_예외발생" />
         <item itemvalue="Gradle.ReviewServiceTest" />
         <item itemvalue="Gradle.RecommendRepositoryTest.recommend존재검증" />
         <item itemvalue="Gradle.RecommendRepositoryTest.리뷰_좋아요_싫어요_변경테스트" />
-        <item itemvalue="Gradle.RecommendRepositoryTest.리뷰_좋아요_테스트" />
       </list>
     </recent_temporary>
   </component>

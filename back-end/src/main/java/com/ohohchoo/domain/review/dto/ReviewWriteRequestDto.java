@@ -1,6 +1,5 @@
 package com.ohohchoo.domain.review.dto;
 
-import com.ohohchoo.domain.review.entity.RecommendStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +26,8 @@ public class ReviewWriteRequestDto {
         this.city = city;
         this.town = town;
     }
+
+
 
 
 }

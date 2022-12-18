@@ -21,7 +21,7 @@ public class RecommendRequestDto {
     private RecommendStatus status;
 
     @Builder
-    public RecommendRequestDto(Long userId, Long reviewId, RecommendStatus status){
+    public RecommendRequestDto(Long userId, Long reviewId, RecommendStatus status) {
         this.userId = userId;
         this.reviewId = reviewId;
         this.status = status;

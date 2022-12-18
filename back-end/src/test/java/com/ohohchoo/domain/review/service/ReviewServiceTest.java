@@ -31,14 +31,7 @@ class ReviewServiceTest {
     @Autowired
     EntityManager em;
 
-    private static ReviewWriteRequestDto createReviewDto() {
-        return ReviewWriteRequestDto
-                .builder()
-                .content("테스트 내용 작성")
-                .city("서울시")
-                .town("강서구")
-                .build();
-    }
+
 
     @Test
     @DisplayName("리뷰작성 테스트")
@@ -126,6 +119,17 @@ class ReviewServiceTest {
                 reviewService.delete(userId, reviewId), "리뷰 삭제를 다시 요청시 예외가 발생해야함");
     }
 
+
+
+    private static ReviewWriteRequestDto createReviewDto() {
+        return ReviewWriteRequestDto
+                .builder()
+                .content("테스트 내용 작성")
+                .city("서울시")
+                .town("강서구")
+                .build();
+    }
+
     // 유저 생성 후 userId 반환
     private Long createUser() {
         UserJoinRequestDto dto = UserJoinRequestDto.builder()
@@ -135,4 +139,6 @@ class ReviewServiceTest {
                 .build();
         return userService.join(dto);
     }
+
+
 }
