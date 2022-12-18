@@ -4,7 +4,9 @@ import com.ohohchoo.domain.review.dto.RecommendRequestDto;
 import com.ohohchoo.domain.review.entity.Recommend;
 import com.ohohchoo.domain.review.entity.RecommendStatus;
 import com.ohohchoo.domain.review.entity.Review;
+import com.ohohchoo.domain.review.exception.AccessDeniedException;
 import com.ohohchoo.domain.review.exception.DuplicationRecommendException;
+import com.ohohchoo.domain.review.exception.RecommendNotFoundException;
 import com.ohohchoo.domain.review.exception.ReviewNotFoundException;
 import com.ohohchoo.domain.review.repository.RecommendRepository;
 import com.ohohchoo.domain.review.repository.ReviewRepository;
@@ -72,6 +74,35 @@ public class RecommendService {
             findRecommend.changeDisLike();
         }
         return findRecommend.getId();
+
+    }
+
+    public void delete(Long userId , Long recommendId){
+        validationCheck(userId,recommendId);
+        recommendRepository.deleteById(recommendId);
+    }
+
+
+    /**
+     * 삭제 검증
+     * @param userId
+     * @param recommendId
+     */
+    public void validationCheck(Long userId, Long recommendId) {
+
+        // 해당 유저가 존재 하는지 검증
+        Optional<User> user = Optional.ofNullable(userRepository.findById(userId).orElseThrow(() ->
+                new UserNotFoundException("user not found. id = " + userId)));
+
+        // 해당 좋아요가 존재하는지 검증
+        Optional<Recommend> recommend = Optional.ofNullable(recommendRepository.findById(recommendId).orElseThrow(() ->
+                new RecommendNotFoundException("recommend not found. reviewId = " + recommendId)));
+
+
+        // 좋아요를 누른 작성자와 넘어온 유저의 id값이 같은지 검증
+        if (recommend.get().getUser().getId() != user.get().getId()) {
+            throw new AccessDeniedException("You do not have permission");
+        }
 
     }
 
