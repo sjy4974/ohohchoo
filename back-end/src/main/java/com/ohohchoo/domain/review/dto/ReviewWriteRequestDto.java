@@ -20,14 +20,12 @@ public class ReviewWriteRequestDto {
     private String city;
     private String town;
 
-    private RecommendStatus status;
 
     @Builder
-    public ReviewWriteRequestDto(String content, String city, String town, RecommendStatus status) {
+    public ReviewWriteRequestDto(String content, String city, String town) {
         this.content = content;
         this.city = city;
         this.town = town;
-        this.status = status;
     }
 
 
