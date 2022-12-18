@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d584598-2682-4b8e-9b7e-59934c33af27" name="변경" comment="✅ test: test deleteReview &#10;&#10;리뷰 삭제 테스트">
+    <list default="true" id="1d584598-2682-4b8e-9b7e-59934c33af27" name="변경" comment="✨ feat : add like Recommend feature">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/entity/Review.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/entity/Review.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/entity/Recommend.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/entity/Recommend.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/ohohchoo/domain/review/repository/RecommendRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/ohohchoo/domain/review/repository/RecommendRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +105,7 @@
       <recent name="com.ohohchoo.domain.user.repository" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.RecommendRepositoryTest.리뷰_좋아요_테스트">
+  <component name="RunManager" selected="Gradle.RecommendRepositoryTest.리뷰_좋아요_싫어요_변경테스트">
     <configuration name="RecommendRepositoryTest.리뷰_좋아요_테스트" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -119,6 +120,29 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;com.ohohchoo.domain.review.repository.RecommendRepositoryTest.리뷰_좋아요_테스트&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="RecommendRepositoryTest.리뷰_좋아요_싫어요_변경테스트" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/back-end" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.ohohchoo.domain.review.repository.RecommendRepositoryTest.리뷰_좋아요_싫어요_변경테스트&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -291,11 +315,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.RecommendRepositoryTest.리뷰_좋아요_싫어요_변경테스트" />
         <item itemvalue="Gradle.RecommendRepositoryTest.리뷰_좋아요_테스트" />
         <item itemvalue="Gradle.UserRepositoryTest.성별수정" />
         <item itemvalue="Gradle.ReviewServiceTest.리뷰삭제검증_리뷰아이디가없음_예외발생" />
         <item itemvalue="Gradle.ReviewServiceTest.리뷰삭제" />
-        <item itemvalue="Gradle.ReviewServiceTest.리뷰삭제검증_리뷰아이디가없음_예외발생" />
       </list>
     </recent_temporary>
   </component>
@@ -378,7 +402,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671297336813</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="✨ feat : add like Recommend feature">
+      <created>1671357857545</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1671357857545</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -415,6 +446,7 @@
     <MESSAGE value="✨ feat : add reviewDelete feature&#10;&#10;리뷰삭제 기능과, 예외 추가" />
     <MESSAGE value="♻ refactor: refactor reviewDelete feature&#10;&#10;리뷰삭제 기능 수정, validationCheck 기능 추가" />
     <MESSAGE value="✅ test: test deleteReview validation&#10;&#10;리뷰 삭제 검증 테스트 (해당 유저가 없는경우, 해당 리뷰가 없는경우, 권한이 없는경우)" />
-    <option name="LAST_COMMIT_MESSAGE" value="✅ test: test deleteReview validation&#10;&#10;리뷰 삭제 검증 테스트 (해당 유저가 없는경우, 해당 리뷰가 없는경우, 권한이 없는경우)" />
+    <MESSAGE value="✨ feat : add like Recommend feature" />
+    <option name="LAST_COMMIT_MESSAGE" value="✨ feat : add like Recommend feature" />
   </component>
 </project>

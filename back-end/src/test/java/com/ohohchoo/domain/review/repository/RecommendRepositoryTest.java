@@ -1,7 +1,6 @@
 package com.ohohchoo.domain.review.repository;
 
 import com.ohohchoo.domain.review.Address;
-import com.ohohchoo.domain.review.dto.RecommendRequestDto;
 import com.ohohchoo.domain.review.entity.Recommend;
 import com.ohohchoo.domain.review.entity.RecommendStatus;
 import com.ohohchoo.domain.review.entity.Review;
@@ -14,12 +13,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import javax.persistence.EntityManager;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @Transactional
@@ -44,7 +41,7 @@ class RecommendRepositoryTest {
         //given
         Review review = createReview();
         User getUser = review.getUser();
-        Recommend recommend = createRecommend(review, getUser);
+        Recommend recommend = createRecommend(getUser, review);
         //when
         Long savedId = recommendRepository.save(recommend).getId();
         Optional<Recommend> findRecommend = recommendRepository.findById(savedId);
@@ -53,20 +50,27 @@ class RecommendRepositoryTest {
     }
 
 
-
     @Test
-    public void 리뷰_좋아요_싫어요_변경테스트()throws Exception {
+    @DisplayName(" 좋아요를 싫어요로 변경 테스트")
+    public void 리뷰_좋아요_싫어요_변경테스트() throws Exception {
         //given
         Review review = createReview();
         User getUser = createUser();
 
-        //when
+        // 좋아요를 누름
+        Recommend recommend = createRecommend(getUser, review);
+        Long savedId = recommendRepository.save(recommend).getId();
 
+        // 좋아요를 싫어요로 변경
+        //when
+        Recommend findRecommend = recommendRepository.findById(savedId).get();
+        findRecommend.changeDislike();
         //then
+        assertEquals(RecommendStatus.DISLIKE, findRecommend.getStatus());
     }
 
 
-    private Recommend createRecommend(Review review, User getUser) {
+    private Recommend createRecommend(User getUser, Review review) {
         return Recommend
                 .builder()
                 .user(getUser)
@@ -74,6 +78,7 @@ class RecommendRepositoryTest {
                 .status(RecommendStatus.LIKE)
                 .build();
     }
+
     private Review createReview() {
         Review review = Review.builder()
                 .user(createUser())

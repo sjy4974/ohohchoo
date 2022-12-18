@@ -14,7 +14,7 @@ public class Recommend {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 10)
-    public RecommendStatus status; // LIKE, DISLIKE
+    private RecommendStatus status; // LIKE, DISLIKE
     @Id
     @GeneratedValue
     @Column(name = "recommend_id")
