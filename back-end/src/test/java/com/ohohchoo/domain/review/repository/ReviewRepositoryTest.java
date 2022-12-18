@@ -4,14 +4,12 @@ import com.ohohchoo.domain.review.Address;
 import com.ohohchoo.domain.review.dto.ReviewWriteRequestDto;
 import com.ohohchoo.domain.review.entity.Review;
 import com.ohohchoo.domain.user.entity.User;
-import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -19,7 +17,6 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,14 +26,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Transactional
 class ReviewRepositoryTest {
 
-    @Autowired
-    EntityManager em;
-
-    @Autowired
-    ReviewRepository reviewRepository;
-
     private static ValidatorFactory vf;
     private static Validator validator;
+    @Autowired
+    EntityManager em;
+    @Autowired
+    ReviewRepository reviewRepository;
 
     @BeforeAll
     public static void init() {
@@ -64,7 +59,7 @@ class ReviewRepositoryTest {
 
     @Test
     @DisplayName(" 리뷰 내용 검증 테스트 테스트")
-    public void 리뷰입력검증()throws Exception {
+    public void 리뷰입력검증() throws Exception {
         //given
         // 검증할 에러 메세지
         String message = "The number of characters must be 200 characters or less.";
@@ -75,14 +70,16 @@ class ReviewRepositoryTest {
         ReviewWriteRequestDto dto = ReviewWriteRequestDto
                 .builder()
                 .content(content)
-                .address(new Address("서울", "강서구"))
+                .city("서울시")
+                .town("강서구")
                 .build();
 
         // 빈 문자열 테스트
         ReviewWriteRequestDto dto2 = ReviewWriteRequestDto
                 .builder()
                 .content("")
-                .address(new Address("서울", "강서구"))
+                .city("서울시")
+                .town("강서구")
                 .build();
         //when
         // 유효하지 않은경우 violations 값 존재
@@ -95,7 +92,7 @@ class ReviewRepositoryTest {
         assertTrue(!(violations2.isEmpty()));
         // 존재하는 에러메세지 검증
         violations.forEach(err -> {
-           assertEquals(err.getMessage(), message);
+            assertEquals(err.getMessage(), message);
         });
         violations2.forEach(err -> {
             assertEquals(err.getMessage(), message2);
@@ -106,12 +103,11 @@ class ReviewRepositoryTest {
 
     // 리뷰 생성 메서드
     private Review createReview() {
-        Review review = Review.builder()
+        return Review.builder()
                 .user(createUser())
                 .content("테스트용 내용작성")
                 .address(new Address("서울시", "강서구"))
                 .build();
-        return review;
     }
 
     // 유저 생성 메서드

@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d584598-2682-4b8e-9b7e-59934c33af27" name="변경" comment="✅ test: test deleteReview validation&#10;&#10;리뷰 삭제 검증 테스트 (해당 유저가 없는경우, 해당 리뷰가 없는경우, 권한이 없는경우)">
-      <change beforePath="$PROJECT_DIR$/back-end/src/test/java/com/ohohchoo/domain/review/service/ReviewServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/test/java/com/ohohchoo/domain/review/service/ReviewServiceTest.java" afterDir="false" />
+    <list default="true" id="1d584598-2682-4b8e-9b7e-59934c33af27" name="변경" comment="⚡ update : update recommenddto&#10;&#10;코드 수정">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/dto/ReviewWriteRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/dto/ReviewWriteRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/service/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/service/ReviewService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +71,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "last_opened_file_path": "C:/jpa-practice/jpashop",
+    "last_opened_file_path": "C:/jpa-workspace/ohohchoo/back-end/src/main/java/com/ohohchoo/domain/review/service",
     "project.structure.last.edited": "SDK",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0"
@@ -77,11 +79,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\jpa-workspace\ohohchoo\back-end\src\main\java\com\ohohchoo\domain\review\service" />
+      <recent name="C:\jpa-workspace\ohohchoo\back-end\src\main\java\com\ohohchoo\domain\review\dto" />
       <recent name="C:\jpa-workspace\ohohchoo\back-end\src\test\java\com\ohohchoo\domain\user\repository" />
       <recent name="C:\jpa-workspace\ohohchoo\back-end\src\main\java\com\ohohchoo\domain\user\repository" />
       <recent name="C:\jpa-workspace\ohohchoo\back-end\src\main\java\com\ohohchoo\domain\user\dto" />
-      <recent name="C:\jpa-workspace\ohohchoo\back-end\src\test\resources" />
-      <recent name="C:\jpa-workspace\ohohchoo\back-end\src\main\resources" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -97,7 +99,30 @@
       <recent name="com.ohohchoo.domain.user.repository" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.ReviewServiceTest.리뷰삭제검증_권한없는유저_예외발생">
+  <component name="RunManager" selected="Gradle.ReviewServiceTest">
+    <configuration name="ReviewServiceTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/back-end" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.ohohchoo.domain.review.service.ReviewServiceTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="ReviewServiceTest.리뷰삭제" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -261,10 +286,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.ReviewServiceTest.리뷰삭제검증_권한없는유저_예외발생" />
-        <item itemvalue="Gradle.ReviewServiceTest.리뷰삭제검증_유저아이디없음_예외발생" />
+        <item itemvalue="Gradle.ReviewServiceTest" />
         <item itemvalue="Gradle.ReviewServiceTest.리뷰삭제검증_리뷰아이디가없음_예외발생" />
-        <item itemvalue="Gradle.ReviewServiceTest.리뷰작성" />
         <item itemvalue="Gradle.ReviewServiceTest.리뷰삭제" />
       </list>
     </recent_temporary>

@@ -1,5 +1,6 @@
 package com.ohohchoo.domain.review.service;
 
+import com.ohohchoo.domain.review.Address;
 import com.ohohchoo.domain.review.dto.ReviewWriteRequestDto;
 import com.ohohchoo.domain.review.entity.Review;
 import com.ohohchoo.domain.review.exception.AccessDeniedException;
@@ -26,7 +27,7 @@ public class ReviewService {
      * 리뷰 작성
      *
      * @param reviewDto
-     * @return
+     * @return reviewId
      */
     @Transactional
     public Long write(Long userId, ReviewWriteRequestDto reviewDto) {
@@ -39,7 +40,7 @@ public class ReviewService {
         Review review = Review.builder()
                 .user(getUser.get())
                 .content(reviewDto.getContent())
-                .address(reviewDto.getAddress())
+                .address(new Address(reviewDto.getCity(), reviewDto.getTown()))
                 .build();
 
         return reviewRepository.save(review).getId();
