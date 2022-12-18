@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -30,6 +32,10 @@ public class Review {
 
     @Embedded
     private Address address;
+
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
+    private List<Recommend> recommends = new ArrayList<>();
+
 
     @Builder
     public Review(User user, String content, Address address) {
