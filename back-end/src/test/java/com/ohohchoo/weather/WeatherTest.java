@@ -18,15 +18,22 @@ public class WeatherTest {
     @Autowired
     WeatherService weatherService;
 
-    @Test
-    @DisplayName("온도 정보 리스트 반환하기")
-    void getWeatherList() {
-        WeatherRequest wthReq = new WeatherRequest(1, "20221216", "2300", "60", "127");
-        List<WeatherData> weatherList = weatherService.getWeather(wthReq);
+        @Test
+        @DisplayName("현재 온도 정보 반환하기")
+        void getWeatherToday() {
+            WeatherRequest wthReq = new WeatherRequest(1, "20221218", "2300", "60", "127");
+            WeatherData weatherToday = weatherService.getWeatherToday(wthReq);
+            System.out.println(weatherToday);
+        }
+
+        @Test
+        @DisplayName("온도 정보 리스트 반환하기")
+        void getWeatherList() {
+            WeatherRequest wthReq = new WeatherRequest(1, "20221218", "2300", "60", "127");
+            List<WeatherData> weatherList = weatherService.getWeatherHourly(wthReq);
         for(WeatherData weather: weatherList) {
             System.out.println(weather);
         }
-
     }
 
     @Test
@@ -41,7 +48,7 @@ public class WeatherTest {
     @DisplayName("날씨 정보 가져와서 저장하기")
     void storeWeather() {
         LocationData locData = new LocationData(1, "60", "127");
-        DateTime dateTime = new DateTime("20221216", "2300");
+        DateTime dateTime = new DateTime("20221218", "2300");
         weatherService.insertWeather(locData, dateTime);
     }
 
