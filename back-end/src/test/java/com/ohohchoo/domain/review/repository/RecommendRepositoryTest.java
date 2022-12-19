@@ -84,6 +84,23 @@ class RecommendRepositoryTest {
         assertEquals(recommend.getId(), findRecommend.get().getId());
     }
 
+    @Test
+    @DisplayName("좋아요_싫어요 수 가져오기")
+    public void 리뷰_좋아요_싫어요_수_가져오기()throws Exception {
+        //given
+        Review review = createReview();
+        User user = review.getUser();
+        Recommend recommend = createRecommend(user, review);
+        Long savedId = recommendRepository.save(recommend).getId();
+        //when
+        Long likeCnt = recommendRepository.countByReviewIdAndStatus(review.getId(), RecommendStatus.LIKE);
+        Long dislikeCnt = recommendRepository.countByReviewIdAndStatus(review.getId(),RecommendStatus.DISLIKE);
+
+        //then
+        assertEquals(1L,likeCnt);
+        assertEquals(0,dislikeCnt);
+    }
+
 
     // 생성 메서드
     private Recommend createRecommend(User getUser, Review review) {

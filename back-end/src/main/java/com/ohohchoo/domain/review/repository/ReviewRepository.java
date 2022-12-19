@@ -1,5 +1,6 @@
 package com.ohohchoo.domain.review.repository;
 
+import com.ohohchoo.domain.review.entity.RecommendStatus;
 import com.ohohchoo.domain.review.entity.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -56,6 +56,8 @@ public class RecommendService {
                     .review(review.get())
                     .status(dto.getStatus())
                     .build();
+            // 리뷰에 좋아요 등록
+            review.get().addRecommend(newRecommend);
             return recommendRepository.save(newRecommend).getId();
         }
 
@@ -82,6 +84,7 @@ public class RecommendService {
      * @param userId
      * @param recommendId
      */
+    @Transactional
     public void delete(Long userId , Long recommendId){
         validationCheck(userId,recommendId);
         recommendRepository.deleteById(recommendId);

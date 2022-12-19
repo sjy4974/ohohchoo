@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -59,6 +60,14 @@ public class ReviewService {
 
         reviewRepository.deleteById(reviewId);
 
+    }
+
+    /**
+     * 전체 리뷰 조회
+     * @return
+     */
+    public List<Review> findReviews(){
+        return reviewRepository.findAll();
     }
 
     /**

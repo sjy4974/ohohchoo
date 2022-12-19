@@ -36,6 +36,9 @@ public class Review {
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     private List<Recommend> recommends = new ArrayList<>();
 
+    private Long likeCnt;
+
+    private Long disLikeCnt;
 
     @Builder
     public Review(User user, String content, Address address) {
@@ -43,6 +46,22 @@ public class Review {
         this.content = content;
         this.address = address;
         this.regDate = LocalDate.now();
+    }
+
+
+    // 연관 관계 메서드
+    public void addRecommend(Recommend recommend){
+        this.recommends.add(recommend);
+    }
+
+    // likeCnt 셋팅
+    public void changeLikeCnt(Long likeCnt){
+        this.likeCnt = likeCnt;
+    }
+
+    // disLikeCnt 셋팅
+    public void changeDisLikeCnt(Long disLikeCnt){
+        this.disLikeCnt = disLikeCnt;
     }
 
 

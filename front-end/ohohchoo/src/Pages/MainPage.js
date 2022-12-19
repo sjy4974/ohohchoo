@@ -24,7 +24,7 @@ export default function MainPage({ location }) {
   const [gender, setGender] = useState(-1);
   const [sensitivity, setSensitivity] = useState(-1);
 
-  const API_KEY = "API_KEY";
+  const API_KEY = "832937308fc6c499782ede54ccf594ce";
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`;
 
   useEffect(() => {}, []);
