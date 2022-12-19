@@ -69,7 +69,7 @@ public class ReviewRestController {
 
     // 날짜와 지역에 따른 리뷰 리스트 조회
     @GetMapping("/reviews")
-    public ResponseEntity<List<ReviewListResponseDto>> getReviews(@RequestParam @DateTimeFormat(pattern = "yyyy-mm-dd") LocalDate regDate,
+    public ResponseEntity<List<ReviewListResponseDto>> getReviews(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate regDate,
                                                    @RequestParam String city,
                                                    @RequestParam String town){
         List<ReviewListResponseDto> reviews = reviewService.getReviewsByRegDateAndAddress(regDate, city, town);
