@@ -1,5 +1,6 @@
 package com.ohohchoo.domain.review.controller;
 
+import com.ohohchoo.domain.review.dto.ReviewListResponseDto;
 import com.ohohchoo.domain.review.dto.ReviewWriteRequestDto;
 import com.ohohchoo.domain.review.entity.Review;
 import com.ohohchoo.domain.review.service.ReviewService;
@@ -68,12 +69,12 @@ public class ReviewRestController {
 
     // 날짜와 지역에 따른 리뷰 리스트 조회
     @GetMapping("/reviews")
-    public ResponseEntity<List<Review>> getReviews(@RequestParam @DateTimeFormat(pattern = "yyyy-mm-dd") LocalDate regDate,
+    public ResponseEntity<List<ReviewListResponseDto>> getReviews(@RequestParam @DateTimeFormat(pattern = "yyyy-mm-dd") LocalDate regDate,
                                                    @RequestParam String city,
                                                    @RequestParam String town){
-        List<Review> result = reviewService.getReviewsByRegDateAndAddress(regDate, city, town);
+        List<ReviewListResponseDto> reviews = reviewService.getReviewsByRegDateAndAddress(regDate, city, town);
 
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 
 

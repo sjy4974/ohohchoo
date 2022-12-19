@@ -1,6 +1,7 @@
 package com.ohohchoo.domain.review.service;
 
 import com.ohohchoo.domain.review.Address;
+import com.ohohchoo.domain.review.dto.ReviewListResponseDto;
 import com.ohohchoo.domain.review.dto.ReviewWriteRequestDto;
 import com.ohohchoo.domain.review.entity.Review;
 import com.ohohchoo.domain.review.exception.AccessDeniedException;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -68,8 +70,11 @@ public class ReviewService {
      *
      * @return
      */
-    public List<Review> getReviewsByRegDateAndAddress(LocalDate regDate, String city, String town) {
-        return reviewRepository.findByRegDateAndAddress_CityAndAddress_TownOrderByLikeCntDesc(regDate, city, town);
+    public List<ReviewListResponseDto> getReviewsByRegDateAndAddress(LocalDate regDate, String city, String town) {
+        return reviewRepository.findByRegDateAndAddress_CityAndAddress_TownOrderByLikeCntDesc(regDate, city, town)
+                .stream()
+                .map(ReviewListResponseDto::new)
+                .collect(Collectors.toList());
     }
 
     /**

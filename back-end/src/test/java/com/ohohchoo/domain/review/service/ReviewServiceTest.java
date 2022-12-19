@@ -1,6 +1,7 @@
 package com.ohohchoo.domain.review.service;
 
 import com.ohohchoo.domain.review.dto.RecommendRequestDto;
+import com.ohohchoo.domain.review.dto.ReviewListResponseDto;
 import com.ohohchoo.domain.review.dto.ReviewWriteRequestDto;
 import com.ohohchoo.domain.review.entity.RecommendStatus;
 import com.ohohchoo.domain.review.entity.Review;
@@ -146,9 +147,9 @@ class ReviewServiceTest {
         recommendService.likeOrDislike(recommendDto);
 
         //when
-        List<Review> findReviews = reviewService.getReviewsByRegDateAndAddress(LocalDate.now(), "서울시", "강서구");
+        List<ReviewListResponseDto> reviews = reviewService.getReviewsByRegDateAndAddress(LocalDate.now(), "서울시", "강서구");
         //then
-        assertEquals(1, findReviews.get(0).getLikeCnt());
+        assertEquals(1, reviews.get(0).getLikeCnt());
     }
 
 
