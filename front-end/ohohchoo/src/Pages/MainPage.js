@@ -37,6 +37,7 @@ export default function MainPage({
   const [sensitivity, setSensitivity] = useState(-1);
   const [reviewData, setReviewData] = useState([]);
 
+
   const API_KEY = "011be7fcc3f5c002bed4737f3e97b02a";
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`;
 
