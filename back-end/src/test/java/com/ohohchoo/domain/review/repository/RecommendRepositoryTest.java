@@ -36,7 +36,7 @@ class RecommendRepositoryTest {
 
     @Test
     @DisplayName(" 리뷰 좋아요 테스트")
-//    @Rollback(false)
+    @Rollback(false)
     public void 리뷰_좋아요_테스트() throws Exception {
         //given
         Review review = createReview();

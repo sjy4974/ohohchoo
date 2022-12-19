@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 public class RecommendService {
 
     private final RecommendRepository recommendRepository;
@@ -32,10 +32,10 @@ public class RecommendService {
 
     /**
      * 좋아요, 싫어요 save Or update
+     *
      * @param dto
      * @return
      */
-    @Transactional
     public Long likeOrDislike(RecommendRequestDto dto) {
 
         // 유저 검증
@@ -56,9 +56,13 @@ public class RecommendService {
                     .review(review.get())
                     .status(dto.getStatus())
                     .build();
-            // 리뷰에 좋아요 등록
+            // 리뷰에 좋아요 or 싫어요 등록
+            Long savedId = recommendRepository.save(newRecommend).getId();
             review.get().addRecommend(newRecommend);
-            return recommendRepository.save(newRecommend).getId();
+            
+            // 좋아요 or 싫어요 수 갱신
+            updateLikeOrDislikeCnt(review.get());
+            return savedId;
         }
 
         // 이미 존재하는 경우 꺼냄
@@ -75,27 +79,41 @@ public class RecommendService {
         } else {
             findRecommend.changeDisLike();
         }
+        // 좋아요, 싫어요 수 갱신
+        updateLikeOrDislikeCnt(review.get());
         return findRecommend.getId();
 
     }
 
     /**
      * 좋아요 or 싫어요 삭제
+     *
      * @param userId
      * @param recommendId
      */
-    @Transactional
-    public void delete(Long userId , Long recommendId){
-        validationCheck(userId,recommendId);
+    public void delete(Long userId, Long recommendId) {
+        validationCheck(userId, recommendId);
+        Optional<Recommend> recommend = recommendRepository.findById(recommendId);
         recommendRepository.deleteById(recommendId);
+        // 삭제 후 좋아요 싫어요 수 갱신
+        updateLikeOrDislikeCnt(recommend.get().getReview());
+    }
+
+    public void updateLikeOrDislikeCnt(Review review) {
+        Long likeCnt = recommendRepository.countByReviewIdAndStatus(review.getId(), RecommendStatus.LIKE);
+        Long dislikeCnt = recommendRepository.countByReviewIdAndStatus(review.getId(), RecommendStatus.DISLIKE);
+        review.changeLikeCnt(likeCnt);
+        review.changeDislikeCnt(dislikeCnt);
     }
 
 
     /**
      * 삭제 검증
+     *
      * @param userId
      * @param recommendId
      */
+    @Transactional(readOnly = true)
     public void validationCheck(Long userId, Long recommendId) {
 
         // 해당 유저가 존재 하는지 검증

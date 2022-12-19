@@ -39,7 +39,7 @@ class RecommendServiceTest {
 
     @Test
     @DisplayName("좋아요 기능 테스트")
-//    @Rollback(false)
+    @Rollback(false)
     public void 좋아요_싫어요_테스트() throws Exception {
         //given
         Long userId = createUser();
@@ -69,6 +69,7 @@ class RecommendServiceTest {
 
     @Test
     @DisplayName("좋아요 or 싫어요 버튼을 누른상태에서 반대 버튼을 누를시 업데이트 테스트")
+    @Rollback(value = false)
     public void 좋아요_싫어요_변경테스트()throws Exception {
         //given
         Long userId = createUser();

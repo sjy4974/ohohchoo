@@ -36,9 +36,11 @@ public class Review {
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     private List<Recommend> recommends = new ArrayList<>();
 
+    @Column(columnDefinition = "INT default 0")
     private Long likeCnt;
 
-    private Long disLikeCnt;
+    @Column(columnDefinition = "INT default 0")
+    private Long dislikeCnt;
 
     @Builder
     public Review(User user, String content, Address address) {
@@ -60,8 +62,8 @@ public class Review {
     }
 
     // disLikeCnt 셋팅
-    public void changeDisLikeCnt(Long disLikeCnt){
-        this.disLikeCnt = disLikeCnt;
+    public void changeDislikeCnt(Long dislikeCnt){
+        this.dislikeCnt = dislikeCnt;
     }
 
 

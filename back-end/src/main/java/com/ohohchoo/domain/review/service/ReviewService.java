@@ -64,9 +64,10 @@ public class ReviewService {
 
     /**
      * 전체 리뷰 조회
+     *
      * @return
      */
-    public List<Review> findReviews(){
+    public List<Review> findReviews() {
         return reviewRepository.findAll();
     }
 
