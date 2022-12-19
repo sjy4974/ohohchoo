@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d584598-2682-4b8e-9b7e-59934c33af27" name="변경" comment="✅ test : test cancelRecommend&#10;&#10;좋아요 or 싫어요 취소 기능 테스트">
+    <list default="true" id="1d584598-2682-4b8e-9b7e-59934c33af27" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/service/RecommendService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/ohohchoo/domain/review/service/RecommendService.java" afterDir="false" />
     </list>
@@ -67,7 +67,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
+    &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
@@ -76,8 +76,8 @@
     &quot;project.structure.last.edited&quot;: &quot;SDK&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
-  }
-}</component>
+    }
+    }</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.ohohchoo.domain.review.exception" />
@@ -106,7 +106,7 @@
       <recent name="com.ohohchoo.domain.user.repository" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.RecommendServiceTest.좋아요_싫어요_취소테스트">
+  <component name="RunManager" selected="Gradle.RecommendServiceTest.좋아요_싫어요_테스트">
     <configuration name="RecommendServiceTest.좋아요_싫어요_테스트" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -270,9 +270,6 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.RecommendServiceTest.좋아요_싫어요_취소테스트" />
-        <item itemvalue="Gradle.RecommendServiceTest.좋아요_싫어요_변경테스트" />
-        <item itemvalue="Gradle.RecommendServiceTest.좋아요_중복_예외테스트" />
         <item itemvalue="Gradle.RecommendServiceTest.좋아요_싫어요_테스트" />
         <item itemvalue="Gradle.ReviewServiceTest.리뷰삭제검증_리뷰아이디가없음_예외발생" />
       </list>
