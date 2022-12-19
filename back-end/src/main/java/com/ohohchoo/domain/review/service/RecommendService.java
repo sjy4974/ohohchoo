@@ -99,6 +99,11 @@ public class RecommendService {
         updateLikeOrDislikeCnt(recommend.get().getReview());
     }
 
+
+    /**
+     * 해당 리뷰의 좋아요수 싫어요수 갱신
+     * @param review
+     */
     public void updateLikeOrDislikeCnt(Review review) {
         Long likeCnt = recommendRepository.countByReviewIdAndStatus(review.getId(), RecommendStatus.LIKE);
         Long dislikeCnt = recommendRepository.countByReviewIdAndStatus(review.getId(), RecommendStatus.DISLIKE);

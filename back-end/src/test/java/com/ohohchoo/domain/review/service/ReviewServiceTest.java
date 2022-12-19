@@ -1,6 +1,8 @@
 package com.ohohchoo.domain.review.service;
 
+import com.ohohchoo.domain.review.dto.RecommendRequestDto;
 import com.ohohchoo.domain.review.dto.ReviewWriteRequestDto;
+import com.ohohchoo.domain.review.entity.RecommendStatus;
 import com.ohohchoo.domain.review.entity.Review;
 import com.ohohchoo.domain.review.exception.AccessDeniedException;
 import com.ohohchoo.domain.review.exception.ReviewNotFoundException;
@@ -11,9 +13,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -29,8 +34,10 @@ class ReviewServiceTest {
     UserService userService;
 
     @Autowired
-    EntityManager em;
+    RecommendService recommendService;
 
+    @Autowired
+    EntityManager em;
 
 
     @Test
@@ -112,6 +119,7 @@ class ReviewServiceTest {
         Long userId = createUser();
         ReviewWriteRequestDto reviewDto = createReviewDto();
         Long reviewId = reviewService.write(userId, reviewDto);
+
         //when
         reviewService.delete(userId, reviewId);
         //then
@@ -119,9 +127,40 @@ class ReviewServiceTest {
                 reviewService.delete(userId, reviewId), "리뷰 삭제를 다시 요청시 예외가 발생해야함");
     }
 
+    @Test
+    @DisplayName(" 날짜로리뷰조회 정렬은 추천순으로 테스트")
+    @Rollback(value = false)
+    public void 리뷰조회테스트() throws Exception {
+        //given
+        Long userId = createUser();
+        ReviewWriteRequestDto reviewDto = createReviewDto();
+        Long reviewId = reviewService.write(userId, reviewDto);
+        ReviewWriteRequestDto rDto = ReviewWriteRequestDto
+                .builder()
+                .content("테스트 내용 작성")
+                .city("서울시")
+                .town("강서구")
+                .build();
+        Long savedId = reviewService.write(userId, rDto);// 리뷰 다시 생성
+        RecommendRequestDto recommendDto = createRecommend(userId, savedId);// 좋아요 누른 리뷰
+        recommendService.likeOrDislike(recommendDto);
+
+        //when
+        List<Review> findReviews = reviewService.getReviewsByRegDateAndAddress(LocalDate.now(), "서울시", "강서구");
+        //then
+        assertEquals(1, findReviews.get(0).getLikeCnt());
+    }
 
 
-    private static ReviewWriteRequestDto createReviewDto() {
+    private RecommendRequestDto createRecommend(Long userId, Long reviewId) {
+        return RecommendRequestDto.builder()
+                .userId(userId)
+                .reviewId(reviewId)
+                .status(RecommendStatus.LIKE)
+                .build();
+    }
+
+    private ReviewWriteRequestDto createReviewDto() {
         return ReviewWriteRequestDto
                 .builder()
                 .content("테스트 내용 작성")

@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,12 +64,12 @@ public class ReviewService {
     }
 
     /**
-     * 전체 리뷰 조회
+     * 날짜와 지역에 따른 리뷰리스트조회 (좋아요, 싫어요 수 포함) 정렬은 추천순
      *
      * @return
      */
-    public List<Review> findReviews() {
-        return reviewRepository.findAll();
+    public List<Review> getReviewsByRegDateAndAddress(LocalDate regDate, String city, String town) {
+        return reviewRepository.findByRegDateAndAddress_CityAndAddress_TownOrderByLikeCntDesc(regDate, city, town);
     }
 
     /**
