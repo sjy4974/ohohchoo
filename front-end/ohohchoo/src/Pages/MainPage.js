@@ -8,31 +8,42 @@ import RecommendClothes from "../Components/RecommendClothes";
 import OptionButton from "../Components/OptionButton";
 import Review from "../Components/Review";
 import { dummy } from "../OptionDummy";
+
+import axios2 from "../API/axios";
+import requests from "../API/request";
 // MainPage에서
 // 시간정보, 주소 정보를 back에 요청할 수 있도록 데이터를 가공....
 
-Geocode.setApiKey("API_KEY");
+Geocode.setApiKey("AIzaSyAoKq3Uq6CfDSQ91bccZ17H4-DGo-SnTQw");
 Geocode.setLanguage("en");
 Geocode.setRegion("en");
 
-export default function MainPage({ location }) {
+export default function MainPage({
+  location,
+  user,
+  city,
+  setCity,
+  result,
+  setResult,
+}) {
+  // const [CurrLoc, setCurrLoc] = useState(location);
   // const [weather, setWeather] = useState({});
+  // const [city, setCity] = useState("");
+  // const [result, setResult] = useState({});
+  // const [user, setUser] = useState(false)
+
   const [isModal, setIsModal] = useState(false);
-  const [city, setCity] = useState("");
-  const [result, setResult] = useState({});
-  const [user, setUser] = useState(false);
   const [gender, setGender] = useState(-1);
   const [sensitivity, setSensitivity] = useState(-1);
+  const [reviewData, setReviewData] = useState([]);
 
-  const API_KEY = "API_KEY";
+  const API_KEY = "011be7fcc3f5c002bed4737f3e97b02a";
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`;
 
-  useEffect(() => {}, []);
-
   useEffect(() => {
-    console.log("getWeather function");
+    console.log("getWeather 함수 실행");
     getWeather();
-  }, [city]);
+  }, [location, city]);
 
   useEffect(() => {
     console.log("user : ", user);
@@ -48,13 +59,12 @@ export default function MainPage({ location }) {
   }, [sensitivity]);
 
   const getWeather = () => {
+    console.log(location.coordinates.lat);
     Geocode.fromLatLng(location.coordinates.lat, location.coordinates.lng).then(
       async (response) => {
         const address = response.results[0].formatted_address.split(",");
+        console.log("address : ", address);
         setCity(address[2]);
-        // console.log("address: ", address[2]);
-        // console.log(typeof address[2]);
-        // console.log("city: ", city);
 
         if (city !== "") {
           const data = await axios({
@@ -75,7 +85,13 @@ export default function MainPage({ location }) {
     setIsModal((prev) => !prev);
   };
 
-  // 현재 시간 정보 받기
+  const pullReviewData = async () => {
+    // 여기서 리뷰 데이터를 가지고 있자.
+    const data = await axios2.get(requests.fetchActionMovies);
+
+    setReviewData(data);
+    console.log(reviewData);
+  };
 
   return (
     <div>
@@ -112,7 +128,7 @@ export default function MainPage({ location }) {
               <ModalBackground>
                 <ModalBox>
                   <ModalBtn onClick={ModalHandler}>X</ModalBtn>
-                  <Review></Review>
+                  <Review city={city} user={user} />
                 </ModalBox>
               </ModalBackground>
             ) : (
