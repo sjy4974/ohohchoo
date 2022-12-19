@@ -6,27 +6,31 @@ import axios from "axios";
 import CurrWeather from "../Components/CurrWeather";
 import RecommendClothes from "../Components/RecommendClothes";
 import OptionButton from "../Components/OptionButton";
+import Review from "../Components/Review";
 import { dummy } from "../OptionDummy";
 // MainPage에서
 // 시간정보, 주소 정보를 back에 요청할 수 있도록 데이터를 가공....
 
-Geocode.setApiKey("AIzaSyAoKq3Uq6CfDSQ91bccZ17H4-DGo-SnTQw");
+Geocode.setApiKey("API_KEY");
 Geocode.setLanguage("en");
 Geocode.setRegion("en");
 
 export default function MainPage({ location }) {
   // const [weather, setWeather] = useState({});
+  const [isModal, setIsModal] = useState(false);
   const [city, setCity] = useState("");
   const [result, setResult] = useState({});
   const [user, setUser] = useState(false);
   const [gender, setGender] = useState(-1);
   const [sensitivity, setSensitivity] = useState(-1);
 
-  const API_KEY = "011be7fcc3f5c002bed4737f3e97b02a";
+  const API_KEY = "API_KEY";
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`;
 
+  useEffect(() => {}, []);
+
   useEffect(() => {
-    console.log("나는 ", city);
+    console.log("getWeather function");
     getWeather();
   }, [city]);
 
@@ -67,6 +71,10 @@ export default function MainPage({ location }) {
     );
   };
 
+  const ModalHandler = () => {
+    setIsModal((prev) => !prev);
+  };
+
   // 현재 시간 정보 받기
 
   return (
@@ -98,6 +106,19 @@ export default function MainPage({ location }) {
 
           {/* <Clothes temp={}></Clothes> */}
           {/* 리뷰 : pros: location */}
+          <ModalWrapper>
+            <h2>review</h2>
+            {isModal ? (
+              <ModalBackground>
+                <ModalBox>
+                  <ModalBtn onClick={ModalHandler}>X</ModalBtn>
+                  <Review></Review>
+                </ModalBox>
+              </ModalBackground>
+            ) : (
+              <OpenModal onClick={ModalHandler}>x</OpenModal>
+            )}
+          </ModalWrapper>
           {/* <Review location={city}></Review> */}
 
           {/* <Review location={location}></Review> */}
@@ -122,3 +143,13 @@ const RootWrap = styled.div`
 
   // padding: 20px;
 `;
+
+const ModalWrapper = styled.div``;
+
+const ModalBackground = styled.div``;
+
+const ModalBox = styled.div``;
+
+const ModalBtn = styled.button``;
+
+const OpenModal = styled.div``;
