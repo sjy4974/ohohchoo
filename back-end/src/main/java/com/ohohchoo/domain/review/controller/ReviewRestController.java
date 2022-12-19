@@ -1,15 +1,19 @@
 package com.ohohchoo.domain.review.controller;
 
 import com.ohohchoo.domain.review.dto.ReviewWriteRequestDto;
+import com.ohohchoo.domain.review.entity.Review;
 import com.ohohchoo.domain.review.service.ReviewService;
 import com.ohohchoo.global.config.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -41,7 +45,7 @@ public class ReviewRestController {
         return new ResponseEntity<String>(SUCCESS, HttpStatus.CREATED);
 
     }
-
+    // 리뷰 삭제
     @DeleteMapping("/review/{reviewId}")
     public ResponseEntity<String> delete(@PathVariable Long reviewId, HttpServletRequest req) {
         String message = SUCCESS;
@@ -61,5 +65,17 @@ public class ReviewRestController {
         }
         return new ResponseEntity<String>(message, status);
     }
+
+    // 날짜와 지역에 따른 리뷰 리스트 조회
+    @GetMapping("/reviews")
+    public ResponseEntity<List<Review>> getReviews(@RequestParam @DateTimeFormat(pattern = "yyyy-mm-dd") LocalDate regDate,
+                                                   @RequestParam String city,
+                                                   @RequestParam String town){
+        List<Review> result = reviewService.getReviewsByRegDateAndAddress(regDate, city, town);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
 
 }
