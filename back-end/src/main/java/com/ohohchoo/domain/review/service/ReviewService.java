@@ -68,7 +68,7 @@ public class ReviewService {
     /**
      * 날짜와 지역에 따른 리뷰리스트조회 (좋아요, 싫어요 수 포함) 정렬은 추천순
      *
-     * @return
+     * @return List<ReviewListResponseDto>
      */
     public List<ReviewListResponseDto> getReviewsByRegDateAndAddress(LocalDate regDate, String city, String town) {
         return reviewRepository.findByRegDateAndAddress_CityAndAddress_TownOrderByLikeCntDesc(regDate, city, town)
