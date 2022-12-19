@@ -1,27 +1,20 @@
-import { Routes, Route } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import "./App.css";
+import { Routes, Route } from "react-router-dom";
+
 import Nav from "./Components/Nav";
 import MainPage from "./Pages/MainPage";
-// import useGeolocation from "./hooks/useGeolocation";
 import SelectLocationPage from "./Pages/SelectLocationPage";
 
-// const Layout = () => {
-//   return (
-//     <div>
-//       <Nav />
-
-//       <Outlet />
-//     </div>
-//   );
-// };
+import "./App.css";
 
 function App() {
   const [location, setLocation] = useState({
     loaded: false,
     coordinates: { lat: 0, lng: 0 },
   });
-  // const [user, setUser] = useState(false);
+  const [user, setUser] = useState("김현수");
+  const [city, setCity] = useState("");
+  const [result, setResult] = useState({});
 
   useEffect(() => {
     // navigator 객체 안에 geolocation이 없다면
@@ -32,6 +25,7 @@ function App() {
         message: "Geolocation not supported",
       });
     }
+
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
     console.log("geoLocation 실행");
   }, []);
@@ -62,13 +56,30 @@ function App() {
       <Nav></Nav>
       {location.loaded && (
         <Routes>
-          <Route path='/' element={<MainPage location={location} />} />
+          <Route
+            path='/'
+            element={
+              <MainPage
+                location={location}
+                user={user}
+                city={city}
+                setCity={setCity}
+                result={result}
+                setResult={setResult}
+              />
+            }
+          />
           <Route
             path='/location'
             element={
               <SelectLocationPage
                 location={location}
                 setLocation={setLocation}
+                user={user}
+                city={city}
+                setCity={setCity}
+                result={result}
+                setResult={setResult}
               />
             }
           />
