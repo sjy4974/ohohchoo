@@ -14,7 +14,7 @@ import requests from "../API/request";
 // MainPage에서
 // 시간정보, 주소 정보를 back에 요청할 수 있도록 데이터를 가공....
 
-Geocode.setApiKey("AIzaSyAoKq3Uq6CfDSQ91bccZ17H4-DGo-SnTQw");
+Geocode.setApiKey("API_KEY");
 Geocode.setLanguage("en");
 Geocode.setRegion("en");
 
@@ -38,7 +38,7 @@ export default function MainPage({
   const [reviewData, setReviewData] = useState([]);
 
 
-  const API_KEY = "011be7fcc3f5c002bed4737f3e97b02a";
+  const API_KEY = "API_kEY";
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`;
 
   useEffect(() => {
