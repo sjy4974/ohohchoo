@@ -8,43 +8,32 @@ import RecommendClothes from "../Components/RecommendClothes";
 import OptionButton from "../Components/OptionButton";
 import Review from "../Components/Review";
 import { dummy } from "../OptionDummy";
-
-import axios2 from "../API/axios";
-import requests from "../API/request";
 // MainPage에서
 // 시간정보, 주소 정보를 back에 요청할 수 있도록 데이터를 가공....
 
 Geocode.setApiKey("AIzaSyAoKq3Uq6CfDSQ91bccZ17H4-DGo-SnTQw");
-Geocode.setLanguage("en");
-Geocode.setRegion("en");
+Geocode.setLanguage("ko");
+Geocode.setRegion("ko");
 
-export default function MainPage({
-  location,
-  user,
-  city,
-  setCity,
-  result,
-  setResult,
-}) {
-  // const [CurrLoc, setCurrLoc] = useState(location);
+export default function MainPage({ location }) {
   // const [weather, setWeather] = useState({});
-  // const [city, setCity] = useState("");
-  // const [result, setResult] = useState({});
-  // const [user, setUser] = useState(false)
-
   const [isModal, setIsModal] = useState(false);
+  const [city, setCity] = useState("");
+  const [town, setTown] = useState("");
+  const [result, setResult] = useState({});
+  const [user, setUser] = useState(false);
   const [gender, setGender] = useState(-1);
   const [sensitivity, setSensitivity] = useState(-1);
-  const [reviewData, setReviewData] = useState([]);
-
 
   const API_KEY = "011be7fcc3f5c002bed4737f3e97b02a";
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`;
+  const url = `http://localhost:8080/`;
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
-    console.log("getWeather 함수 실행");
+    console.log("getWeather function");
     getWeather();
-  }, [location, city]);
+  }, [city]);
 
   useEffect(() => {
     console.log("user : ", user);
@@ -60,20 +49,24 @@ export default function MainPage({
   }, [sensitivity]);
 
   const getWeather = () => {
-    console.log(location.coordinates.lat);
     Geocode.fromLatLng(location.coordinates.lat, location.coordinates.lng).then(
       async (response) => {
-        const address = response.results[0].formatted_address.split(",");
-        console.log("address : ", address);
-        setCity(address[2]);
-
-        if (city !== "") {
-          const data = await axios({
-            method: "get",
-            url: url,
+        const address = response.results[0].formatted_address.split(" ");
+        setCity(address[1]);
+        setTown(address[2]);
+        if (city !== "" && town !== "") {
+          const reqLoc = {
+            city: city,
+            town: town,
+          };
+          const wthToday = await axios({
+            url: `${url}/weather/today`,
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            data: reqLoc,
           });
-          setResult(data);
-          console.log(data);
+          console.log(wthToday.data);
+          setResult(wthToday.data);
         }
       },
       (error) => {
@@ -86,13 +79,7 @@ export default function MainPage({
     setIsModal((prev) => !prev);
   };
 
-  const pullReviewData = async () => {
-    // 여기서 리뷰 데이터를 가지고 있자.
-    const data = await axios2.get(requests.fetchActionMovies);
-
-    setReviewData(data);
-    console.log(reviewData);
-  };
+  // 현재 시간 정보 받기
 
   return (
     <div>
@@ -100,9 +87,11 @@ export default function MainPage({
         <div>
           {/* 현재 날씨 정보 props: current-weather-info */}
           <CurrWeather
-            address={city}
-            weather={result.data.weather[0].main}
-            temp={result.data.main.temp}
+            city={city}
+            town={town}
+            tmp={result.tmp}
+            pty={result.pty}
+            sky={result.sky}
           ></CurrWeather>
 
           {/* 남자 여자 선택하는 버튼 만들기, props={ gender, setGender } */}
@@ -119,7 +108,7 @@ export default function MainPage({
           </RootWrap>
 
           {/* 옷 추천 props: temperature */}
-          <RecommendClothes temp={result.data.main.temp}></RecommendClothes>
+          {/* <RecommendClothes temp={result.data.main.temp}></RecommendClothes> */}
 
           {/* <Clothes temp={}></Clothes> */}
           {/* 리뷰 : pros: location */}
@@ -129,7 +118,7 @@ export default function MainPage({
               <ModalBackground>
                 <ModalBox>
                   <ModalBtn onClick={ModalHandler}>X</ModalBtn>
-                  <Review city={city} user={user} />
+                  <Review></Review>
                 </ModalBox>
               </ModalBackground>
             ) : (
