@@ -55,8 +55,8 @@ public class WeatherService {
         System.out.println("여기!" + currDate+" "+currTime);
         // DB에서 해당 날짜의 예보를 찾아 반환
         Weather today = weatherRepository.findByLocationCodeAndBaseDateAndBaseTimeAndFcstDateAndFcstTime(wthReq.getLocationCode(), wthReq.getBaseDate(), wthReq.getBaseTime(), currDate, currTime);
-        System.out.println(today);
-        return new WeatherData(today.getFcstDate(), today.getFcstTime(), today.getPty(), today.getSky(), today.getTmp());
+        Integer ptySky = getSkyPty(today.getPty(), today.getSky());
+        return new WeatherData(today.getFcstDate(), today.getFcstTime(), ptySky, today.getTmp());
     }
 
     // WeatherRequest 기준 +3일 까지의 시간별 온도 정보 리스트 반환
@@ -73,9 +73,21 @@ public class WeatherService {
         // DB에 있는 날씨 리스트 반환
         List<Weather> weathers = weatherRepository.findAllByLocationCodeAndBaseDateAndBaseTime(wthReq.getLocationCode(), wthReq.getBaseDate(), wthReq.getBaseTime());
         for(Weather weather : weathers){
-            res.add(new WeatherData(weather.getFcstDate(), weather.getFcstTime(), weather.getPty(), weather.getSky(), weather.getTmp()));
+            Integer ptySky = getSkyPty(weather.getPty(), weather.getSky());
+            res.add(new WeatherData(weather.getFcstDate(), weather.getFcstTime(), ptySky , weather.getTmp()));
         }
         return res;
+    }
+
+    public Integer getSkyPty(Integer pty, Integer sky) {
+        // pty 0: 강수없음 1: 비 2: 비 또는 눈 3: 눈 4: 소나기
+        if(pty != 0) {
+            return pty;
+        // 강수 없을 경우, 구름상태로 반환 (sky 1: 맑음 3: 구름 4: 흐림)
+        } else {
+            return sky+4;
+        }
+        // 0: 강수없음 1: 비 2: 비 또는 눈 3: 눈 4: 소나기 5: 맑음 7: 구름 8: 흐림
     }
 
     // WeatherRequest 기준 최저 최고기온 정보 반환
