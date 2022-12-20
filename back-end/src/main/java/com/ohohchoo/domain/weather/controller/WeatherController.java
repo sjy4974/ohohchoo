@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 /*
@@ -34,11 +33,9 @@ public class WeatherController {
     private final LocationService locationService;
     private final DateTimeService dateTimeService;
 
-
-    // 최신버전의 3일치 날씨 예보를 반환
-    @GetMapping("/data")
-    @Transactional
-    public ResponseEntity<List<WeatherData>> getWeather(@Validated @RequestBody LocationRequest reqLoc) {
+    // 현재 날씨 정보 반환
+    @GetMapping("/today")
+    public ResponseEntity<WeatherData> getWeatherToday(@Validated @RequestBody LocationRequest reqLoc) {
         // 요청 받은 city, town의 location data 받아옴.
         LocationData locData = locationService.getLocationData(reqLoc);
         // 현재 시간 기준 baseDate, baseTime 받아옴
@@ -46,13 +43,27 @@ public class WeatherController {
         String baseDate = baseDateTime.getBaseDate();
         String baseTime = baseDateTime.getBaseTime();
         WeatherRequest wthReq = new WeatherRequest(locData.getLocationCode(), baseDate, baseTime, locData.getNx(), locData.getNy());
-        List<WeatherData> weatherDataList = weatherService.getWeather(wthReq);
+        WeatherData weatherToday = weatherService.getWeatherToday(wthReq);
+        return new ResponseEntity<>(weatherToday, HttpStatus.OK);
+    }
+
+
+    // 최신버전의 3일치 날씨 예보를 반환
+    @GetMapping("/hourly")
+    public ResponseEntity<List<WeatherData>> getWeatherHourly(@Validated @RequestBody LocationRequest reqLoc) {
+        // 요청 받은 city, town의 location data 받아옴.
+        LocationData locData = locationService.getLocationData(reqLoc);
+        // 현재 시간 기준 baseDate, baseTime 받아옴
+        DateTime baseDateTime = dateTimeService.getBaseDateTime();
+        String baseDate = baseDateTime.getBaseDate();
+        String baseTime = baseDateTime.getBaseTime();
+        WeatherRequest wthReq = new WeatherRequest(locData.getLocationCode(), baseDate, baseTime, locData.getNx(), locData.getNy());
+        List<WeatherData> weatherDataList = weatherService.getWeatherHourly(wthReq);
         return new ResponseEntity<>(weatherDataList, HttpStatus.OK);
     }
 
     // 현재 날짜의 일교차 정보를 반환
     @GetMapping("/range")
-    @Transactional
     public ResponseEntity<WeatherRangeData> getWeatherRange(@Validated @RequestBody LocationRequest reqLoc) {
         // 요청 받은 city, town의 location data 받아옴.
         LocationData locData = locationService.getLocationData(reqLoc);
