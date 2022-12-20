@@ -13,10 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,7 +31,7 @@ public class WeatherController {
     private final DateTimeService dateTimeService;
 
     // 현재 날씨 정보 반환
-    @GetMapping("/today")
+    @PostMapping("/today")
     public ResponseEntity<WeatherData> getWeatherToday(@Validated @RequestBody LocationRequest reqLoc) {
         // 요청 받은 city, town의 location data 받아옴.
         LocationData locData = locationService.getLocationData(reqLoc);
@@ -49,8 +46,9 @@ public class WeatherController {
 
 
     // 최신버전의 3일치 날씨 예보를 반환
-    @GetMapping("/hourly")
+    @PostMapping("/hourly")
     public ResponseEntity<List<WeatherData>> getWeatherHourly(@Validated @RequestBody LocationRequest reqLoc) {
+        System.out.println(reqLoc);
         // 요청 받은 city, town의 location data 받아옴.
         LocationData locData = locationService.getLocationData(reqLoc);
         // 현재 시간 기준 baseDate, baseTime 받아옴
@@ -63,7 +61,7 @@ public class WeatherController {
     }
 
     // 현재 날짜의 일교차 정보를 반환
-    @GetMapping("/range")
+    @PostMapping("/range")
     public ResponseEntity<WeatherRangeData> getWeatherRange(@Validated @RequestBody LocationRequest reqLoc) {
         // 요청 받은 city, town의 location data 받아옴.
         LocationData locData = locationService.getLocationData(reqLoc);
