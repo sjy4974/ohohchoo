@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
-
-import Nav from "./Components/Nav";
 import MainPage from "./Pages/MainPage";
-import SelectLocationPage from "./Pages/SelectLocationPage";
-
-import "./App.css";
+import styled from "styled-components";
 
 function App() {
   const [location, setLocation] = useState({
     loaded: false,
     coordinates: { lat: 0, lng: 0 },
   });
-  const [user, setUser] = useState("김현수");
-  const [city, setCity] = useState("");
-  const [result, setResult] = useState({});
 
   useEffect(() => {
     // navigator 객체 안에 geolocation이 없다면
@@ -26,11 +18,9 @@ function App() {
       });
     }
 
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
     console.log("geoLocation 실행");
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
   }, []);
-
-  console.log("useGeolocation: ", location);
 
   // 성공에 대한 로직
   const onSuccess = (location) => {
@@ -51,42 +41,22 @@ function App() {
     });
   };
 
+  console.log("useGeolocation: ", location);
+
   return (
-    <div className='app'>
-      <Nav></Nav>
-      {location.loaded && (
-        <Routes>
-          <Route
-            path='/'
-            element={
-              <MainPage
-                location={location}
-                user={user}
-                city={city}
-                setCity={setCity}
-                result={result}
-                setResult={setResult}
-              />
-            }
-          />
-          <Route
-            path='/location'
-            element={
-              <SelectLocationPage
-                location={location}
-                setLocation={setLocation}
-                user={user}
-                city={city}
-                setCity={setCity}
-                result={result}
-                setResult={setResult}
-              />
-            }
-          />
-        </Routes>
-      )}
-    </div>
+    <AppContainer>
+      {location.loaded && <MainPage location={location} />}
+    </AppContainer>
   );
 }
 
 export default App;
+
+const AppContainer = styled.div`
+  @media only screen and (min-width: 375px) and (max-width: 480px) {
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+    align-items: center;
+  }
+`;

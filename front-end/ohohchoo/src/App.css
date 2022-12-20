@@ -1,7 +1,15 @@
-.App {
+/* * {
   text-align: center;
-}
+  align-items: center;
+  max-width: 480px;
+} */
 
+.App {
+  @media only screen and (min-width: 375px) and (max-width: 480px) {
+    text-align: center;
+    align-items: center;
+  }
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
