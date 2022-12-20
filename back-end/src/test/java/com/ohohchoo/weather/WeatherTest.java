@@ -18,22 +18,29 @@ public class WeatherTest {
     @Autowired
     WeatherService weatherService;
 
-        @Test
-        @DisplayName("현재 온도 정보 반환하기")
-        void getWeatherToday() {
-            WeatherRequest wthReq = new WeatherRequest(1, "20221218", "2300", "60", "127");
-            WeatherData weatherToday = weatherService.getWeatherToday(wthReq);
-            System.out.println(weatherToday);
-        }
+    @Test
+    @DisplayName("현재 온도 정보 반환하기")
+    void getWeatherToday() {
+        WeatherRequest wthReq = new WeatherRequest(1, "20221218", "2300", "60", "127");
+        WeatherData weatherToday = weatherService.getWeatherToday(wthReq);
+        System.out.println(weatherToday);
+    }
 
-        @Test
-        @DisplayName("온도 정보 리스트 반환하기")
-        void getWeatherList() {
-            WeatherRequest wthReq = new WeatherRequest(1, "20221218", "2300", "60", "127");
-            List<WeatherData> weatherList = weatherService.getWeatherHourly(wthReq);
+    @Test
+    @DisplayName("온도 정보 리스트 반환하기")
+    void getWeatherList() {
+        WeatherRequest wthReq = new WeatherRequest(1, "20221218", "2300", "60", "127");
+        List<WeatherData> weatherList = weatherService.getWeatherHourly(wthReq);
         for(WeatherData weather: weatherList) {
             System.out.println(weather);
         }
+    }
+
+    @Test
+    @DisplayName("하늘/기상 정보 반환하기")
+    void getPtySky() {
+        Integer skyPty = weatherService.getSkyPty(0, 3);
+        System.out.println(skyPty);
     }
 
     @Test
