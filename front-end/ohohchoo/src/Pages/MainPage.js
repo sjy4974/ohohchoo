@@ -19,6 +19,7 @@ Geocode.setLanguage("ko");
 Geocode.setRegion("ko");
 
 export default function MainPage({ location }) {
+
   // const [CurrLoc, setCurrLoc] = useState(location);
   // const [weather, setWeather] = useState({});
   const [city, setCity] = useState("서울");
@@ -29,6 +30,7 @@ export default function MainPage({ location }) {
   const [gender, setGender] = useState(-1);
   const [sensitivity, setSensitivity] = useState(-1);
   const [reviewData, setReviewData] = useState([]);
+
 
   const API_KEY = "API_KEY";
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`;
