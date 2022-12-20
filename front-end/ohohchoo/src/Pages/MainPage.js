@@ -14,12 +14,11 @@ import requests from "../API/request";
 // MainPage에서
 // 시간정보, 주소 정보를 back에 요청할 수 있도록 데이터를 가공....
 
-Geocode.setApiKey("API_KEY");
+Geocode.setApiKey("AIzaSyAoKq3Uq6CfDSQ91bccZ17H4-DGo-SnTQw");
 Geocode.setLanguage("ko");
 Geocode.setRegion("ko");
 
 export default function MainPage({ location }) {
-
   // const [CurrLoc, setCurrLoc] = useState(location);
   // const [weather, setWeather] = useState({});
   const [city, setCity] = useState("");
@@ -31,9 +30,8 @@ export default function MainPage({ location }) {
   const [gender, setGender] = useState(-1);
   const [sensitivity, setSensitivity] = useState(-1);
 
-  const API_KEY = "API_KEY";
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`;
-
+  const API_KEY = "011be7fcc3f5c002bed4737f3e97b02a";
+  const url = `http://localhost:8080`;
 
   console.log("location Info : ", location);
   useEffect(() => {
@@ -102,8 +100,7 @@ export default function MainPage({ location }) {
             city={city}
             town={town}
             tmp={result.tmp}
-            pty={result.pty}
-            sky={result.sky}
+            ptySky={result.ptySky}
           ></CurrWeather>
 
           {/* 남자 여자 선택하는 버튼 만들기, props={ gender, setGender } */}
