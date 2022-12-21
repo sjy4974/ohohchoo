@@ -145,10 +145,10 @@ class ReviewServiceTest {
         Long savedId = reviewService.write(userId, rDto);// 리뷰 다시 생성
         RecommendRequestDto recommendDto = createRecommend(userId, savedId);// 좋아요 누른 리뷰
         recommendService.likeOrDislike(recommendDto);
-
         //when
-        List<ReviewListResponseDto> reviews = reviewService.getReviewsByRegDateAndAddress(LocalDate.now(), "서울시", "강서구");
+        List<ReviewListResponseDto> reviews = reviewService.getReviewsByRegDateAndAddress(userId ,LocalDate.now(), "서울시", "강서구");
         //then
+        System.out.println(reviews);
         assertEquals(1, reviews.get(0).getLikeCnt());
     }
 
