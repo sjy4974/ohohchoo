@@ -12,7 +12,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     Optional<Review> findById(Long id);
 
-    @EntityGraph(attributePaths = "recommends")
     List<Review> findByRegDateAndAddress_CityAndAddress_TownOrderByLikeCntDesc(LocalDate regDate, String city, String town);
 
 }
