@@ -1,11 +1,10 @@
 package com.ohohchoo.domain.weather.controller;
 
 import com.ohohchoo.domain.weather.dto.request.LocationRequest;
+import com.ohohchoo.domain.weather.dto.request.OutTimeRequest;
+import com.ohohchoo.domain.weather.dto.request.OutTimeWeatherRequest;
 import com.ohohchoo.domain.weather.dto.request.WeatherRequest;
-import com.ohohchoo.domain.weather.dto.response.DateTime;
-import com.ohohchoo.domain.weather.dto.response.LocationData;
-import com.ohohchoo.domain.weather.dto.response.WeatherData;
-import com.ohohchoo.domain.weather.dto.response.WeatherRangeData;
+import com.ohohchoo.domain.weather.dto.response.*;
 import com.ohohchoo.domain.weather.service.DateTimeService;
 import com.ohohchoo.domain.weather.service.LocationService;
 import com.ohohchoo.domain.weather.service.WeatherService;
@@ -35,7 +34,6 @@ public class WeatherController {
     @Transactional
     @PostMapping("/today")
     public ResponseEntity<WeatherData> getWeatherToday(@Validated @RequestBody LocationRequest reqLoc) {
-        System.out.println("여기!"+reqLoc);
         // 요청 받은 city, town의 location data 받아옴.
         LocationData locData = locationService.getLocationData(reqLoc);
         // 현재 시간 기준 baseDate, baseTime 받아옴
@@ -47,12 +45,23 @@ public class WeatherController {
         return new ResponseEntity<>(weatherToday, HttpStatus.OK);
     }
 
+    // 외출온도에 따른 최저, 평균온도 반환
+    @Transactional
+    @PostMapping("/outtime")
+    public ResponseEntity<OutTimeTmpData> getOutTimeTmp(@Validated @RequestBody OutTimeWeatherRequest outTimeWthReq) {
+        LocationData locData = locationService.getLocationData(new LocationRequest(outTimeWthReq.getCity(), outTimeWthReq.getTown()));
+        String baseDate = dateTimeService.getCurrBaseDate();
+        String baseTime = dateTimeService.getBaseTime(outTimeWthReq.getGoOutHour(), outTimeWthReq.getGoInHour());
+        WeatherRequest wthReq = new WeatherRequest(locData.getLocationCode(), baseDate, baseTime, locData.getNx(), locData.getNy());
+        OutTimeRequest outTimeReq = new OutTimeRequest(outTimeWthReq.getGoOutHour(), outTimeWthReq.getGoInHour());
+        OutTimeTmpData outTimeTmp = weatherService.getOutTimeTmp(wthReq, outTimeReq);
+        return new ResponseEntity<>(outTimeTmp, HttpStatus.OK);
+    }
 
     // 최신버전의 3일치 날씨 예보를 반환
     @Transactional
     @PostMapping("/hourly")
     public ResponseEntity<List<WeatherData>> getWeatherHourly(@Validated @RequestBody LocationRequest reqLoc) {
-        System.out.println(reqLoc);
         // 요청 받은 city, town의 location data 받아옴.
         LocationData locData = locationService.getLocationData(reqLoc);
         // 현재 시간 기준 baseDate, baseTime 받아옴

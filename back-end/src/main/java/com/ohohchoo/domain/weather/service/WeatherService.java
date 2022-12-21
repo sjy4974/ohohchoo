@@ -1,10 +1,8 @@
 package com.ohohchoo.domain.weather.service;
 
+import com.ohohchoo.domain.weather.dto.request.OutTimeRequest;
 import com.ohohchoo.domain.weather.dto.request.WeatherRequest;
-import com.ohohchoo.domain.weather.dto.response.DateTime;
-import com.ohohchoo.domain.weather.dto.response.LocationData;
-import com.ohohchoo.domain.weather.dto.response.WeatherData;
-import com.ohohchoo.domain.weather.dto.response.WeatherRangeData;
+import com.ohohchoo.domain.weather.dto.response.*;
 import com.ohohchoo.domain.weather.entity.Weather;
 import com.ohohchoo.domain.weather.repository.WeatherRepository;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +49,44 @@ public class WeatherService {
         Weather today = weatherRepository.findByLocationCodeAndBaseDateAndBaseTimeAndFcstDateAndFcstTime(wthReq.getLocationCode(), wthReq.getBaseDate(), wthReq.getBaseTime(), currDate, currTime);
         Integer ptySky = getSkyPty(today.getPty(), today.getSky());
         return new WeatherData(today.getFcstDate(), today.getFcstTime(), ptySky, today.getTmp());
+    }
+
+    // 외출시간에 맞춰 최저온도, 평균온도 반환
+    public OutTimeTmpData getOutTimeTmp(WeatherRequest wthReq, OutTimeRequest outTimeReq) {
+
+        // DB에 조회가능한 데이터가 있는지 확인
+        if(!weatherRepository.existsByLocationCodeAndBaseDateAndBaseTime(wthReq.getLocationCode(), wthReq.getBaseDate(), wthReq.getBaseTime())) {
+            // 없으면 업데이트 진행
+            LocationData locationData = new LocationData(wthReq.getLocationCode(), wthReq.getNx(), wthReq.getNy());
+            DateTime dateTime = new DateTime(wthReq.getBaseDate(), wthReq.getBaseTime());
+            insertWeather(locationData, dateTime);
+        }
+
+        // 최저온도, 평균온도 계산을 위한 값 저장
+        Double outTimeTmn = Double.MAX_VALUE;
+        Double outTimeSum = 0.0;
+        int outTimeCnt = 0;
+
+        // 예보 날짜는 현재 기준으로 설정
+        LocalDate dateNow = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        String fcstDate = dateNow.format(formatter);
+        String fcstTime;
+
+        for(int i = outTimeReq.getGoOutHour(); i <= outTimeReq.getGoInHour(); i++) {
+            if(i < 10) {
+                fcstTime = "0" + i + "00";
+            } else {
+                fcstTime = i + "00";
+            }
+            Weather fcstWth = weatherRepository.findByLocationCodeAndBaseDateAndBaseTimeAndFcstDateAndFcstTime(wthReq.getLocationCode(), wthReq.getBaseDate(), wthReq.getBaseTime(), fcstDate, fcstTime);
+
+            outTimeTmn = Math.min(outTimeTmn, fcstWth.getTmp());
+            outTimeSum += fcstWth.getTmp();
+            outTimeCnt++;
+        }
+        return new OutTimeTmpData(outTimeTmn, (outTimeSum/outTimeCnt));
+
     }
 
     // WeatherRequest 기준 +3일 까지의 시간별 온도 정보 리스트 반환
