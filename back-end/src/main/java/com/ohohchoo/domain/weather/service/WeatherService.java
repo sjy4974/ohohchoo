@@ -33,9 +33,7 @@ public class WeatherService {
 
     // 현재 시간 기준 날씨 정보 반환
     public WeatherData getWeatherToday(WeatherRequest wthReq) {
-        System.out.println("여기!1!" + wthReq);
         // DB에 조회가능한 데이터가 있는지 확인
-        System.out.println("여기!2"+weatherRepository.existsByLocationCodeAndBaseDateAndBaseTime(wthReq.getLocationCode(), wthReq.getBaseDate(), wthReq.getBaseTime()));
         if(!weatherRepository.existsByLocationCodeAndBaseDateAndBaseTime(wthReq.getLocationCode(), wthReq.getBaseDate(), wthReq.getBaseTime())) {
             // 없으면 업데이트 진행
             LocationData locationData = new LocationData(wthReq.getLocationCode(), wthReq.getNx(), wthReq.getNy());
@@ -49,12 +47,9 @@ public class WeatherService {
         LocalDateTime timeNow = LocalDateTime.now();
         int hour = timeNow.getHour();
         String currTime = hour + "00";
-        System.out.println("여기!3" + currDate+" "+currTime);
         // DB에서 해당 날짜의 예보를 찾아 반환
         Weather today = weatherRepository.findByLocationCodeAndBaseDateAndBaseTimeAndFcstDateAndFcstTime(wthReq.getLocationCode(), wthReq.getBaseDate(), wthReq.getBaseTime(), currDate, currTime);
-        System.out.println("여기!4"+today);
         Integer ptySky = getSkyPty(today.getPty(), today.getSky());
-        System.out.println("여기!5"+ptySky);
         return new WeatherData(today.getFcstDate(), today.getFcstTime(), ptySky, today.getTmp());
     }
 
