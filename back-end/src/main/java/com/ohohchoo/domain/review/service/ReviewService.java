@@ -70,9 +70,12 @@ public class ReviewService {
     }
 
     /**
-     * 날짜와 지역에 따른 리뷰리스트조회 (좋아요, 싫어요 수 포함) 정렬은 추천순
-     *
-     * @return List<ReviewListResponseDto>
+     * 날짜, 지역 정보를 입력받아 리뷰리스트 조회
+     * @param userId
+     * @param regDate
+     * @param city
+     * @param town
+     * @return
      */
     public List<ReviewListResponseDto> getReviewsByRegDateAndAddress(Long userId, LocalDate regDate, String city, String town) {
 
