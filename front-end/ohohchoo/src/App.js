@@ -5,6 +5,8 @@ import Nav from "./Components/Nav";
 import MainPage from "./Pages/MainPage";
 // import useGeolocation from "./hooks/useGeolocation";
 import SelectLocationPage from "./Pages/SelectLocationPage";
+import LoginPage from "./Pages/LoginPage";
+import LoginLoading from "./Pages/LoginLoadingPage";
 
 // const Layout = () => {
 //   return (
@@ -63,6 +65,8 @@ function App() {
       {location.loaded && (
         <Routes>
           <Route path='/' element={<MainPage location={location} />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/login-request' element={<LoginLoading />} />
           <Route
             path='/location'
             element={

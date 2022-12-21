@@ -11,9 +11,11 @@ import { dummy } from "../OptionDummy";
 // MainPage에서
 // 시간정보, 주소 정보를 back에 요청할 수 있도록 데이터를 가공....
 
-Geocode.setApiKey("API_KEY");
-Geocode.setLanguage("en");
-Geocode.setRegion("en");
+
+Geocode.setApiKey("AlzaSyAoKq3Uq6CfDSQ91bccZ17H4-DGo-SnTQw");
+Geocode.setLanguage("ko");
+Geocode.setRegion("ko");
+
 
 export default function MainPage({ location }) {
   // const [weather, setWeather] = useState({});
@@ -24,7 +26,7 @@ export default function MainPage({ location }) {
   const [gender, setGender] = useState(-1);
   const [sensitivity, setSensitivity] = useState(-1);
 
-  const API_KEY = "API_KEY";
+  const API_KEY = "011be7fcc3f5c002bed4737f3e97b02a";
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`;
 
   useEffect(() => {}, []);
