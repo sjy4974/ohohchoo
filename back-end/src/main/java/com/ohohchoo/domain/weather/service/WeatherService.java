@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -28,6 +29,9 @@ import java.util.List;
 public class WeatherService {
 
     private final WeatherRepository weatherRepository;
+
+    @Value("${weatherServiceKey}")
+    private String weatherServiceKey;
 
     // 현재 시간 기준 날씨 정보 반환
     public WeatherData getWeatherToday(WeatherRequest wthReq) {
@@ -151,8 +155,7 @@ public class WeatherService {
     public void insertWeather(LocationData locData, DateTime dateTime) {
         String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
 
-        // git에 비공개 해야함!!!//
-        String serviceKey = "vvjOiuxzurH8tt1NIBCtefiyDHnSAMFTa8khyKk%2BN8hXziKFerVlgdM%2F1NsMMsUG3LF3SiPGdR60nOqYJ%2BUH9g%3D%3D";
+        String serviceKey = weatherServiceKey;
 
         Integer locationCode = locData.getLocationCode();
         String nx = locData.getNx();
