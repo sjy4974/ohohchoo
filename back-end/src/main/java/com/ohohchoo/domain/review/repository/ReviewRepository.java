@@ -1,7 +1,6 @@
 package com.ohohchoo.domain.review.repository;
 
 import com.ohohchoo.domain.review.entity.Review;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
