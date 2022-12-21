@@ -14,7 +14,7 @@ public class DateTimeTest {
     DateTimeService dateTimeService;
 
     @Test
-    @DisplayName("현재 날짜, 현재 시간 가져오기")
+    @DisplayName("현재 날짜, 현재 시간 기준 BaseDateTime 가져오기")
     void getCurrDateTime() {
         DateTime currBaseDateTime = dateTimeService.getCurrBaseDateTime();
         System.out.println(currBaseDateTime);
@@ -41,9 +41,9 @@ public class DateTimeTest {
     @Test
     @DisplayName("입력 받은 시간, 분 기준으로 baseTime반환")
     void getBaseTime() {
-        String baseTime1 = dateTimeService.getBaseTime(12, 0);
-        String baseTime2 = dateTimeService.getBaseTime(2, 9);
-        String baseTime3 = dateTimeService.getBaseTime(2, 10);
+        String baseTime1 = dateTimeService.getBaseTime(12);
+        String baseTime2 = dateTimeService.getBaseTime(2);
+        String baseTime3 = dateTimeService.getBaseTime(3);
         System.out.println(baseTime1);
         System.out.println(baseTime2);
         System.out.println(baseTime3);

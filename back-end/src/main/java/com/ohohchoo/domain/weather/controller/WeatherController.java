@@ -50,9 +50,8 @@ public class WeatherController {
     @PostMapping("/outtime")
     public ResponseEntity<OutTimeTmpData> getOutTimeTmp(@Validated @RequestBody OutTimeWeatherRequest outTimeWthReq) {
         LocationData locData = locationService.getLocationData(new LocationRequest(outTimeWthReq.getCity(), outTimeWthReq.getTown()));
-        String baseDate = dateTimeService.getCurrBaseDate();
-        String baseTime = dateTimeService.getBaseTime(outTimeWthReq.getGoOutHour(), outTimeWthReq.getGoInHour());
-        WeatherRequest wthReq = new WeatherRequest(locData.getLocationCode(), baseDate, baseTime, locData.getNx(), locData.getNy());
+        DateTime outBaseDateTime = dateTimeService.getOutBaseDateTime(outTimeWthReq.getGoOutHour());
+        WeatherRequest wthReq = new WeatherRequest(locData.getLocationCode(), outBaseDateTime.getBaseDate(), outBaseDateTime.getBaseTime(), locData.getNx(), locData.getNy());
         OutTimeRequest outTimeReq = new OutTimeRequest(outTimeWthReq.getGoOutHour(), outTimeWthReq.getGoInHour());
         OutTimeTmpData outTimeTmp = weatherService.getOutTimeTmp(wthReq, outTimeReq);
         return new ResponseEntity<>(outTimeTmp, HttpStatus.OK);

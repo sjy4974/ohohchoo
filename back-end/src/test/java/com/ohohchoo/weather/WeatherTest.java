@@ -19,7 +19,7 @@ public class WeatherTest {
     @Test
     @DisplayName("현재 온도 정보 반환하기")
     void getWeatherToday() {
-        WeatherRequest wthReq = new WeatherRequest(1, "20221218", "2300", "60", "127");
+        WeatherRequest wthReq = new WeatherRequest(1, "20221221", "2000", "60", "127");
         WeatherData weatherToday = weatherService.getWeatherToday(wthReq);
         System.out.println(weatherToday);
     }
