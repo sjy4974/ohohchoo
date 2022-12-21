@@ -39,7 +39,7 @@ public class WeatherController {
         // 요청 받은 city, town의 location data 받아옴.
         LocationData locData = locationService.getLocationData(reqLoc);
         // 현재 시간 기준 baseDate, baseTime 받아옴
-        DateTime baseDateTime = dateTimeService.getBaseDateTime();
+        DateTime baseDateTime = dateTimeService.getCurrBaseDateTime();
         String baseDate = baseDateTime.getBaseDate();
         String baseTime = baseDateTime.getBaseTime();
         WeatherRequest wthReq = new WeatherRequest(locData.getLocationCode(), baseDate, baseTime, locData.getNx(), locData.getNy());
@@ -56,7 +56,7 @@ public class WeatherController {
         // 요청 받은 city, town의 location data 받아옴.
         LocationData locData = locationService.getLocationData(reqLoc);
         // 현재 시간 기준 baseDate, baseTime 받아옴
-        DateTime baseDateTime = dateTimeService.getBaseDateTime();
+        DateTime baseDateTime = dateTimeService.getCurrBaseDateTime();
         String baseDate = baseDateTime.getBaseDate();
         String baseTime = baseDateTime.getBaseTime();
         WeatherRequest wthReq = new WeatherRequest(locData.getLocationCode(), baseDate, baseTime, locData.getNx(), locData.getNy());
