@@ -1,10 +1,8 @@
 package com.ohohchoo.weather;
 
+import com.ohohchoo.domain.weather.dto.request.OutTimeRequest;
 import com.ohohchoo.domain.weather.dto.request.WeatherRequest;
-import com.ohohchoo.domain.weather.dto.response.DateTime;
-import com.ohohchoo.domain.weather.dto.response.LocationData;
-import com.ohohchoo.domain.weather.dto.response.WeatherData;
-import com.ohohchoo.domain.weather.dto.response.WeatherRangeData;
+import com.ohohchoo.domain.weather.dto.response.*;
 import com.ohohchoo.domain.weather.service.WeatherService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,6 +22,15 @@ public class WeatherTest {
         WeatherRequest wthReq = new WeatherRequest(1, "20221218", "2300", "60", "127");
         WeatherData weatherToday = weatherService.getWeatherToday(wthReq);
         System.out.println(weatherToday);
+    }
+
+    @Test
+    @DisplayName("외출시간에 따른 최저, 평균온도 반환하기")
+    void getOutTimeTmp() {
+        WeatherRequest wthReq = new WeatherRequest(1, "20221221", "0200", "60", "127");
+        OutTimeRequest outTimeReq = new OutTimeRequest(21, 23);
+        OutTimeTmpData outTimeTmp = weatherService.getOutTimeTmp(wthReq, outTimeReq);
+        System.out.println(outTimeTmp);
     }
 
     @Test
