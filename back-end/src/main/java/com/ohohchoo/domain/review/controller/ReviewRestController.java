@@ -76,10 +76,9 @@ public class ReviewRestController {
         String token = req.getHeader(HEADER_AUTH);
         Long userId = null;
         if (token != null) {
-            jwtUtil.getTokenInfo(token);
+            userId = jwtUtil.getTokenInfo(token);
         }
         List<ReviewListResponseDto> reviews = reviewService.getReviewsByRegDateAndAddress(userId, regDate, city, town);
-        System.out.println(reviews);
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 

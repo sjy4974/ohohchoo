@@ -89,6 +89,7 @@ public class ReviewService {
                 // 해당 리뷰에 유저가 공감을 눌렀는지 아닌지 판별
                 // 공감이나 비공감을 눌렀다면 해당 변수의 값은 true로 초기화
                 isLike = recommendRepository.existsByUserIdAndReviewIdAndStatus(userId, review.getId(), RecommendStatus.LIKE);
+                System.out.println("isLike" + isLike);
                 isDislike = recommendRepository.existsByUserIdAndReviewIdAndStatus(userId, review.getId(), RecommendStatus.DISLIKE);
             }
             result.add(new ReviewListResponseDto(review, isLike, isDislike));

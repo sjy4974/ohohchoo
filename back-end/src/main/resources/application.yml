@@ -25,3 +25,8 @@ kakao:
   login:
     api_key: 32b01baf85e405c00cffe1d59f22fd1b
     redirect_uri: http://localhost:3000/login-request
+
+jwt:
+  salt: ohohchoo
+  validTime : 3600000
+
