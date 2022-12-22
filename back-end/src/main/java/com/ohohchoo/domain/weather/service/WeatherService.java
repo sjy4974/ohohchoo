@@ -1,19 +1,17 @@
 package com.ohohchoo.domain.weather.service;
 
+import com.ohohchoo.domain.weather.dto.request.OutTimeRequest;
 import com.ohohchoo.domain.weather.dto.request.WeatherRequest;
-import com.ohohchoo.domain.weather.dto.response.DateTime;
-import com.ohohchoo.domain.weather.dto.response.LocationData;
-import com.ohohchoo.domain.weather.dto.response.WeatherData;
-import com.ohohchoo.domain.weather.dto.response.WeatherRangeData;
+import com.ohohchoo.domain.weather.dto.response.*;
 import com.ohohchoo.domain.weather.entity.Weather;
 import com.ohohchoo.domain.weather.repository.WeatherRepository;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -32,35 +30,70 @@ public class WeatherService {
 
     private final WeatherRepository weatherRepository;
 
+    @Value("${weatherServiceKey}")
+    private String weatherServiceKey;
+
     // 현재 시간 기준 날씨 정보 반환
-    @Transactional
     public WeatherData getWeatherToday(WeatherRequest wthReq) {
-        System.out.println("여기!!" + wthReq);
         // DB에 조회가능한 데이터가 있는지 확인
         if(!weatherRepository.existsByLocationCodeAndBaseDateAndBaseTime(wthReq.getLocationCode(), wthReq.getBaseDate(), wthReq.getBaseTime())) {
             // 없으면 업데이트 진행
-            System.out.println("여기안옴?");
             LocationData locationData = new LocationData(wthReq.getLocationCode(), wthReq.getNx(), wthReq.getNy());
             DateTime dateTime = new DateTime(wthReq.getBaseDate(), wthReq.getBaseTime());
             insertWeather(locationData, dateTime);
         }
         // 먼저 현재 시간 설정
-        System.out.println("왜안됨~");
         LocalDate dateNow = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String currDate = dateNow.format(formatter);
         LocalDateTime timeNow = LocalDateTime.now();
         int hour = timeNow.getHour();
         String currTime = hour + "00";
-        System.out.println("여기!" + currDate+" "+currTime);
         // DB에서 해당 날짜의 예보를 찾아 반환
         Weather today = weatherRepository.findByLocationCodeAndBaseDateAndBaseTimeAndFcstDateAndFcstTime(wthReq.getLocationCode(), wthReq.getBaseDate(), wthReq.getBaseTime(), currDate, currTime);
-        System.out.println(today);
-        return new WeatherData(today.getFcstDate(), today.getFcstTime(), today.getPty(), today.getSky(), today.getTmp());
+        Integer ptySky = getSkyPty(today.getPty(), today.getSky());
+        return new WeatherData(today.getFcstDate(), today.getFcstTime(), ptySky, today.getTmp());
+    }
+
+    // 외출시간에 맞춰 최저온도, 평균온도 반환
+    public OutTimeTmpData getOutTimeTmp(WeatherRequest wthReq, OutTimeRequest outTimeReq) {
+
+        // DB에 조회가능한 데이터가 있는지 확인
+        if(!weatherRepository.existsByLocationCodeAndBaseDateAndBaseTime(wthReq.getLocationCode(), wthReq.getBaseDate(), wthReq.getBaseTime())) {
+            // 없으면 업데이트 진행
+            LocationData locationData = new LocationData(wthReq.getLocationCode(), wthReq.getNx(), wthReq.getNy());
+            DateTime dateTime = new DateTime(wthReq.getBaseDate(), wthReq.getBaseTime());
+            insertWeather(locationData, dateTime);
+        }
+
+        // 최저온도, 평균온도 계산을 위한 값 저장
+        Double outTimeTmn = Double.MAX_VALUE;
+        Double outTimeSum = 0.0;
+        int outTimeCnt = 0;
+
+        // 예보 날짜는 현재 기준으로 설정
+        LocalDate dateNow = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        String fcstDate = dateNow.format(formatter);
+        String fcstTime;
+
+        for(int i = outTimeReq.getGoOutHour(); i <= outTimeReq.getGoInHour(); i++) {
+            if(i < 10) {
+                fcstTime = "0" + i + "00";
+            } else {
+                fcstTime = i + "00";
+            }
+            Weather fcstWth = weatherRepository.findByLocationCodeAndBaseDateAndBaseTimeAndFcstDateAndFcstTime(wthReq.getLocationCode(), wthReq.getBaseDate(), wthReq.getBaseTime(), fcstDate, fcstTime);
+
+            outTimeTmn = Math.min(outTimeTmn, fcstWth.getTmp());
+            outTimeSum += fcstWth.getTmp();
+            outTimeCnt++;
+        }
+        return new OutTimeTmpData(outTimeTmn, (outTimeSum/outTimeCnt));
+
     }
 
     // WeatherRequest 기준 +3일 까지의 시간별 온도 정보 리스트 반환
-    @Transactional
     public List<WeatherData> getWeatherHourly(WeatherRequest wthReq) {
         List<WeatherData> res = new ArrayList<>();
         // DB에 조회가능한 데이터가 있는지 확인
@@ -73,15 +106,26 @@ public class WeatherService {
         // DB에 있는 날씨 리스트 반환
         List<Weather> weathers = weatherRepository.findAllByLocationCodeAndBaseDateAndBaseTime(wthReq.getLocationCode(), wthReq.getBaseDate(), wthReq.getBaseTime());
         for(Weather weather : weathers){
-            res.add(new WeatherData(weather.getFcstDate(), weather.getFcstTime(), weather.getPty(), weather.getSky(), weather.getTmp()));
+            Integer ptySky = getSkyPty(weather.getPty(), weather.getSky());
+            res.add(new WeatherData(weather.getFcstDate(), weather.getFcstTime(), ptySky , weather.getTmp()));
         }
         return res;
+    }
+
+    public Integer getSkyPty(Integer pty, Integer sky) {
+        // pty 0: 강수없음 1: 비 2: 비 또는 눈 3: 눈 4: 소나기
+        if(pty != 0) {
+            return pty;
+        // 강수 없을 경우, 구름상태로 반환 (sky 1: 맑음 3: 구름 4: 흐림)
+        } else {
+            return sky+4;
+        }
+        // 0: 강수없음 1: 비 2: 비 또는 눈 3: 눈 4: 소나기 5: 맑음 7: 구름 8: 흐림
     }
 
     // WeatherRequest 기준 최저 최고기온 정보 반환
     // 최저, 최고기온 데이터는 전 날 23시 기준으로 조회해야 함
     // 최저 기온은 새벽 6시 기준, 최고 기온은 15시 기준 날씨 정보에만 입력되어 있음
-    @Transactional
     public WeatherRangeData getWeatherRangeData(LocationData locData) {
         LocalDate dateNow = LocalDate.now();
         LocalDate yesterday = LocalDate.now().minusDays( 1 );
@@ -108,12 +152,10 @@ public class WeatherService {
 
 
     // weather 정보 api로부터 받아와 DB에 삽입
-    @Transactional
     public void insertWeather(LocationData locData, DateTime dateTime) {
         String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
 
-        // git에 비공개 해야함!!!//
-        String serviceKey = "vvjOiuxzurH8tt1NIBCtefiyDHnSAMFTa8khyKk%2BN8hXziKFerVlgdM%2F1NsMMsUG3LF3SiPGdR60nOqYJ%2BUH9g%3D%3D";
+        String serviceKey = weatherServiceKey;
 
         Integer locationCode = locData.getLocationCode();
         String nx = locData.getNx();
@@ -173,12 +215,14 @@ public class WeatherService {
 
             for(int i = 0; i < jArray.length(); i++) {
                 JSONObject obj = jArray.getJSONObject(i);
+                System.out.println("데이터"+obj);
                 String objFcstDate = (String)obj.get("fcstDate");
                 String objFcstTime = (String)obj.get("fcstTime");
 
                 if(!objFcstDate.equals(fcstDate) || !objFcstTime.equals(fcstTime)) {
                     if(pty != null && sky != null && tmp != null ) {
                         Weather weather = new Weather(1, locationCode, baseDate, baseTime, fcstDate, fcstTime, pty, sky, tmp, tmn, tmx);
+                        System.out.println(weather);
                         weatherRepository.save(weather);
                     }
                     fcstDate = objFcstDate;

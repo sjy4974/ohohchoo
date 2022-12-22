@@ -9,7 +9,6 @@ public class WeatherData {
 
     private String fcstDate;
     private String fcstTime;
-    private Integer pty;
-    private Integer sky;
+    private Integer ptySky;
     private Double tmp;
 }

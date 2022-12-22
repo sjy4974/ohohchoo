@@ -1,10 +1,8 @@
 package com.ohohchoo.weather;
 
+import com.ohohchoo.domain.weather.dto.request.OutTimeRequest;
 import com.ohohchoo.domain.weather.dto.request.WeatherRequest;
-import com.ohohchoo.domain.weather.dto.response.DateTime;
-import com.ohohchoo.domain.weather.dto.response.LocationData;
-import com.ohohchoo.domain.weather.dto.response.WeatherData;
-import com.ohohchoo.domain.weather.dto.response.WeatherRangeData;
+import com.ohohchoo.domain.weather.dto.response.*;
 import com.ohohchoo.domain.weather.service.WeatherService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,22 +16,38 @@ public class WeatherTest {
     @Autowired
     WeatherService weatherService;
 
-        @Test
-        @DisplayName("현재 온도 정보 반환하기")
-        void getWeatherToday() {
-            WeatherRequest wthReq = new WeatherRequest(1, "20221218", "2300", "60", "127");
-            WeatherData weatherToday = weatherService.getWeatherToday(wthReq);
-            System.out.println(weatherToday);
-        }
+    @Test
+    @DisplayName("현재 온도 정보 반환하기")
+    void getWeatherToday() {
+        WeatherRequest wthReq = new WeatherRequest(1, "20221221", "2000", "60", "127");
+        WeatherData weatherToday = weatherService.getWeatherToday(wthReq);
+        System.out.println(weatherToday);
+    }
 
-        @Test
-        @DisplayName("온도 정보 리스트 반환하기")
-        void getWeatherList() {
-            WeatherRequest wthReq = new WeatherRequest(1, "20221218", "2300", "60", "127");
-            List<WeatherData> weatherList = weatherService.getWeatherHourly(wthReq);
+    @Test
+    @DisplayName("외출시간에 따른 최저, 평균온도 반환하기")
+    void getOutTimeTmp() {
+        WeatherRequest wthReq = new WeatherRequest(1, "20221221", "0200", "60", "127");
+        OutTimeRequest outTimeReq = new OutTimeRequest(21, 23);
+        OutTimeTmpData outTimeTmp = weatherService.getOutTimeTmp(wthReq, outTimeReq);
+        System.out.println(outTimeTmp);
+    }
+
+    @Test
+    @DisplayName("온도 정보 리스트 반환하기")
+    void getWeatherList() {
+        WeatherRequest wthReq = new WeatherRequest(1, "20221218", "2300", "60", "127");
+        List<WeatherData> weatherList = weatherService.getWeatherHourly(wthReq);
         for(WeatherData weather: weatherList) {
             System.out.println(weather);
         }
+    }
+
+    @Test
+    @DisplayName("하늘/기상 정보 반환하기")
+    void getPtySky() {
+        Integer skyPty = weatherService.getSkyPty(0, 3);
+        System.out.println(skyPty);
     }
 
     @Test
