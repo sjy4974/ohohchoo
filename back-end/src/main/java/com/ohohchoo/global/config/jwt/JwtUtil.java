@@ -41,7 +41,7 @@ public class JwtUtil {
         Jws<Claims> claims = null;
         Long userId = null;
         claims = Jwts.parser().setSigningKey(SALT.getBytes()).parseClaimsJws(token);
-        userId = (Long) claims.getBody().get("userId");
+        userId = Long.valueOf((int) claims.getBody().get("userId"));
 
         return userId;
     }
