@@ -37,7 +37,7 @@ export default function MainPage({ location }) {
 
   const [reviewData, setReviewData] = useState([]);
 
-  const API_KEY = "011be7fcc3f5c002bed4737f3e97b02a";
+  const API_KEY = "API_KEY";
   const url = `http://localhost:8080`;
 
   // 현재 날씨 불러오기
