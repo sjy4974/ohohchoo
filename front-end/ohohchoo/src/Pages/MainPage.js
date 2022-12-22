@@ -18,9 +18,11 @@ Geocode.setLanguage("ko");
 Geocode.setRegion("ko");
 
 export default function MainPage({ location }) {
+
   const [mode, setMode] = useState(0);
   const [town, setTown] = useState("");
-  const [city, setCity] = useState("서울");
+  const [city, setCity] = useState("");
+
   const [result, setResult] = useState({});
   const [user, setUser] = useState("김현수");
 
@@ -30,12 +32,13 @@ export default function MainPage({ location }) {
 
   const [reviewData, setReviewData] = useState([]);
 
+
   const API_KEY = "011be7fcc3f5c002bed4737f3e97b02a";
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`;
+  const url = `http://localhost:8080`;
 
   // console.log("location Info : ", location);
   useEffect(() => {
-    console.log("getWeather 함수 실행");
+    console.log("getWeather function");
     getWeather();
   }, [city]);
 
@@ -84,13 +87,7 @@ export default function MainPage({ location }) {
     setReviewModal((prev) => !prev);
   };
 
-  const pullReviewData = async () => {
-    // 여기서 리뷰 데이터를 가지고 있자.
-    const data = await axios2.get(requests.fetchActionMovies);
-
-    setReviewData(data);
-    console.log(reviewData);
-  };
+  // 현재 시간 정보 받기
 
   return (
     <div>
@@ -101,6 +98,7 @@ export default function MainPage({ location }) {
         //   <RecommendClothes temp={10} />
         //   <div>{city}</div>
         <div>
+
           {Object.keys(result).length !== 0 && (
             <div>
               {/* <Nav city={city} user={user}>
@@ -163,6 +161,7 @@ export default function MainPage({ location }) {
               {/* <Row weatherInfo={}></Row> */}
             </div>
           )}
+
         </div>
       )}
       {/* mode === 1 => 위치 선택창 */}

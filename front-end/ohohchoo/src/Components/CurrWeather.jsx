@@ -3,7 +3,7 @@ import styled from "styled-components";
 function CurrWeather({ city, town, tmp, ptySky }) {
   let ptySkyTxt = "";
   console.log(ptySky);
-  // eslint-disable-next-line default-case
+
   switch (ptySky) {
     case 1:
       ptySkyTxt = "비";
@@ -39,6 +39,7 @@ function CurrWeather({ city, town, tmp, ptySky }) {
         {tmp}℃ <br />
         {ptySkyTxt}
       </div>
+
     </WeatherInfo>
   );
 }
