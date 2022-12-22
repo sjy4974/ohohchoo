@@ -3,6 +3,7 @@ package com.ohohchoo.global.config.jwt;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
@@ -17,8 +18,11 @@ import io.jsonwebtoken.UnsupportedJwtException;
 @Component
 public class JwtUtil {
 
-    private static final String SALT = "ohohchoo";
-    private static final long TOKEN_VALID_TIME = 60 * 60 * 1000L;
+    @Value("${jwt.salt}")
+    private String SALT;
+
+    @Value("${jwt.validTime}")
+    private long TOKEN_VALID_TIME;
 
     // 토큰 생성
     public String createToken(String claimId, Long userId) throws UnsupportedEncodingException {
