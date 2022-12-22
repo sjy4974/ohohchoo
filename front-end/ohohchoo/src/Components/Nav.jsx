@@ -1,76 +1,80 @@
-import React, { useState } from "react";
-import LocationComp from "../Components/LocationComp";
+import { BsHouseDoor, BsPersonCircle } from "react-icons/bs";
 import styled from "styled-components";
 
-export default function Nav({ city, setCity, user }) {
-  const [locationModal, setLocationModal] = useState(false);
-  const [loginModal, setLoginModal] = useState(false);
+export default function Nav({ user, mode, setMode }) {
+  const onChangeMainPageBtn = () => {
+    setMode(0);
+  };
 
   const onChangeLocationBtn = () => {
-    setLocationModal(true);
+    setMode(1);
   };
+
+  const onChangeLoginBtn = () => {
+    setMode(2);
+  };
+
   return (
     <NavWrap>
       <NavContent>
-        <div>
-          {locationModal ? (
-            <LocationComp
-              city={city}
-              setCity={setCity}
-              user={user}
-              setLocationModal={setLocationModal}
-            />
-          ) : (
-            <LocationWrap
-              props={loginModal}
-              onClick={onChangeLocationBtn}
-              src='https://cdn-icons-png.flaticon.com/128/3916/3916996.png'
-              alt=''
-            ></LocationWrap>
-          )}
-        </div>
-        <div>outFit Forecast</div>
-        <div>
-          {loginModal ? (
-            <LocationComp
-              city={city}
-              setCity={setCity}
-              user={user}
-              setLocationModal={setLocationModal}
-            />
-          ) : (
-            <LoginWrap props={locationModal} onClick={onChangeLocationBtn}>
-              login page open
-            </LoginWrap>
-          )}
-        </div>
+        <LocationWrap onClick={onChangeLocationBtn}>
+          <BsHouseDoor size='24' />
+        </LocationWrap>
+
+        <TitleWrap onClick={onChangeMainPageBtn}>
+          <span>Outfit</span> Forecast
+        </TitleWrap>
+
+        <LoginWrap onClick={onChangeLoginBtn}>
+          <BsPersonCircle size='24' />
+        </LoginWrap>
       </NavContent>
     </NavWrap>
   );
 }
 
 const NavWrap = styled.nav`
+  height: 5vh;
+  line-height: 5vh;
   margin: 0px;
   padding: 0px;
-  // background-color: black;
+  background-color: black;
 `;
 const NavContent = styled.div`
   display: flex;
-  justify-content: space-between;
-`;
-
-const LocationWrap = styled.img`
-  color: white;
-  width: 8vw;
-  margin: 5px;
-  padding: 5px;
-  display: ${(props) => (props.props ? "none" : "flex")};
+  // text-align: center;
+  justify-content: center;
 `;
 
 const LoginWrap = styled.div`
   color: white;
-  width: 10vw;
-  margin: 5px;
-  padding: 5px;
-  display: ${(props) => (props.props ? "none" : "flex")};
+  margin: 0;
+  padding: 0;
+
+  position: absolute;
+  top: 1vh;
+  right: 5vw;
+`;
+
+const LocationWrap = styled.div`
+  color: white;
+  margin: 0;
+  padding: 0;
+
+  position: absolute;
+  top: 1vh;
+  left: 5vw;
+`;
+
+const TitleWrap = styled.div`
+  color: white;
+  font-size: 3vh;
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  text-align: center;
+
+  span {
+    color: red;
+  }
 `;

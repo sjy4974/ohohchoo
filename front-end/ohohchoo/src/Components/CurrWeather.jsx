@@ -17,8 +17,8 @@ function CurrWeather({ address, weather, temp }) {
 export default CurrWeather;
 
 const WeatherInfo = styled.div`
-  width: 100vw;
-  heigth: 100vh;
+  height: 23vh;
+  border: solid;
 
   h2 {
     left: 50%;

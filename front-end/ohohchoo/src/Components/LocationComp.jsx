@@ -3,7 +3,7 @@ import axios from "../API/axios";
 import requests from "../API/request";
 import styled from "styled-components";
 
-function Location({ city, setCity, setLocationModal }) {
+function Location({ city, setCity, setMode }) {
   const [locationList, setLocationList] = useState([]);
 
   useEffect(() => {
@@ -17,31 +17,47 @@ function Location({ city, setCity, setLocationModal }) {
     setLocationList(request.data.results);
   };
 
-  const ModalHandler = () => {
-    setLocationModal(false);
+  const ModeHandler = () => {
+    setMode(0);
   };
 
   const SelectLocation = (title) => {
     setCity(title);
   };
+
+  const handleSubmit = (e) => {
+    e.previentDefault();
+    /////////////////////////////////////
+
+    // location 정보 등록 관련 코드 작성 //
+
+    /////////////////////////////////////
+    console.log(e);
+  };
+
   return (
     <LocationWrap>
+      <Form onSubmit={handleSubmit}>
+        <input type='text' name='locationSearch' placeholder='...'></input>
+      </Form>
       <LocationContent>
-        <LocationContainer onClick={ModalHandler}>{city}</LocationContainer>
+        <h5>선택 위치</h5>
+        <LocationContainer onClick={ModeHandler}>{city}</LocationContainer>
       </LocationContent>
-      {locationList.map((location, index) => (
-        <LocationContainer
-          key={index}
-          onClick={() => {
-            ModalHandler();
-            SelectLocation(location.title);
-          }}
-        >
-          <div>{index}</div>
-        </LocationContainer>
-      ))}
-      <LocationContent></LocationContent>
-      uselocation page
+      <LocationContent>
+        <h5>관심 위치</h5>
+        {locationList.map((location, index) => (
+          <LocationContainer
+            key={index}
+            onClick={() => {
+              ModeHandler();
+              SelectLocation(location.title);
+            }}
+          >
+            <div>{location.original_title}</div>
+          </LocationContainer>
+        ))}
+      </LocationContent>
     </LocationWrap>
   );
 }
@@ -52,7 +68,43 @@ const LocationWrap = styled.div`
   width: 100vw;
   height: 100vh;
 `;
+const Form = styled.form``;
 
-const LocationContent = styled.div``;
+const LocationContent = styled.div`
+  margin-top: 10px;
+  text-align: center;
 
-const LocationContainer = styled.button``;
+  h5 {
+    margin: 0 10%;
+    text-align: left;
+  }
+`;
+
+const LocationContainer = styled.button`
+  width: 80vw;
+  height: 5vh;
+  background-color: #ded7d7;
+  opacity: 90%;
+  margin-bottom: 2vh;
+  display: inline-block;
+
+  @media (hover: none) {
+    &:active {
+      background-color: black;
+      width: 90%;
+    }
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: white;
+      width: 85vw;
+      height: 6vh;
+    }
+  }
+
+  // &:hover {
+  //   background-color: black;
+  //   width: 85%;
+  // }
+`;
