@@ -2,7 +2,6 @@ package com.ohohchoo.domain.review.controller;
 
 import com.ohohchoo.domain.review.dto.ReviewListResponseDto;
 import com.ohohchoo.domain.review.dto.ReviewWriteRequestDto;
-import com.ohohchoo.domain.review.entity.Review;
 import com.ohohchoo.domain.review.service.ReviewService;
 import com.ohohchoo.global.config.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +45,7 @@ public class ReviewRestController {
         return new ResponseEntity<String>(SUCCESS, HttpStatus.CREATED);
 
     }
+
     // 리뷰 삭제
     @DeleteMapping("/review/{reviewId}")
     public ResponseEntity<String> delete(@PathVariable Long reviewId, HttpServletRequest req) {
@@ -70,13 +70,18 @@ public class ReviewRestController {
     // 날짜와 지역에 따른 리뷰 리스트 조회
     @GetMapping("/reviews")
     public ResponseEntity<List<ReviewListResponseDto>> getReviews(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate regDate,
-                                                   @RequestParam String city,
-                                                   @RequestParam String town){
-        List<ReviewListResponseDto> reviews = reviewService.getReviewsByRegDateAndAddress(regDate, city, town);
-
+                                                                  @RequestParam String city,
+                                                                  @RequestParam String town,
+                                                                  HttpServletRequest req) {
+        String token = req.getHeader(HEADER_AUTH);
+        Long userId = null;
+        if (token != null) {
+            jwtUtil.getTokenInfo(token);
+        }
+        List<ReviewListResponseDto> reviews = reviewService.getReviewsByRegDateAndAddress(userId, regDate, city, town);
+        System.out.println(reviews);
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
-
 
 
 }
