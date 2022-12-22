@@ -13,7 +13,7 @@ import axios2 from "../API/axios";
 import requests from "../API/request";
 import LocationComp from "../Components/LocationComp";
 
-Geocode.setApiKey("AIzaSyAoKq3Uq6CfDSQ91bccZ17H4-DGo-SnTQw");
+Geocode.setApiKey("API_KEY");
 Geocode.setLanguage("ko");
 Geocode.setRegion("ko");
 
