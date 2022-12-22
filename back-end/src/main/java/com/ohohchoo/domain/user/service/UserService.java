@@ -64,8 +64,9 @@ public class UserService {
      * @return
      */
     public Optional<User> findByEmail(String email) {
-        Optional<User> user = Optional.ofNullable(userRepository.findByEmail(email).orElseThrow(() ->
-                new UserNotFoundException("user not found. email = "+email)));
+//        Optional<User> user = Optional.ofNullable(userRepository.findByEmail(email).orElseThrow(() ->
+//                new UserNotFoundException("user not found. email = "+email)));
+        Optional<User> user = userRepository.findByEmail(email);
         return user;
     }
 
