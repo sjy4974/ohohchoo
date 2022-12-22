@@ -1,10 +1,13 @@
 package com.ohohchoo.domain.review.service;
 
 import com.ohohchoo.domain.review.Address;
+import com.ohohchoo.domain.review.dto.ReviewListResponseDto;
 import com.ohohchoo.domain.review.dto.ReviewWriteRequestDto;
+import com.ohohchoo.domain.review.entity.RecommendStatus;
 import com.ohohchoo.domain.review.entity.Review;
 import com.ohohchoo.domain.review.exception.AccessDeniedException;
 import com.ohohchoo.domain.review.exception.ReviewNotFoundException;
+import com.ohohchoo.domain.review.repository.RecommendRepository;
 import com.ohohchoo.domain.review.repository.ReviewRepository;
 import com.ohohchoo.domain.user.entity.User;
 import com.ohohchoo.domain.user.exception.UserNotFoundException;
@@ -13,6 +16,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +28,8 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
+
+    private final RecommendRepository recommendRepository;
 
     /**
      * 리뷰 작성
@@ -58,6 +66,36 @@ public class ReviewService {
         validationCheck(userId, reviewId);
 
         reviewRepository.deleteById(reviewId);
+
+    }
+
+    /**
+     * 날짜, 지역 정보를 입력받아 리뷰리스트 조회
+     * @param userId
+     * @param regDate
+     * @param city
+     * @param town
+     * @return
+     */
+    public List<ReviewListResponseDto> getReviewsByRegDateAndAddress(Long userId, LocalDate regDate, String city, String town) {
+
+        List<ReviewListResponseDto> result = new ArrayList<>();
+        boolean isLike = false;
+        boolean isDislike = false;
+
+        for (Review review : reviewRepository.findByRegDateAndAddress_CityAndAddress_TownOrderByLikeCntDesc(regDate, city, town)) {
+            // 로그인한 유저인 경우
+            if (userId != null) {
+                // 해당 리뷰에 유저가 공감을 눌렀는지 아닌지 판별
+                // 공감이나 비공감을 눌렀다면 해당 변수의 값은 true로 초기화
+                isLike = recommendRepository.existsByUserIdAndReviewIdAndStatus(userId, review.getId(), RecommendStatus.LIKE);
+                isDislike = recommendRepository.existsByUserIdAndReviewIdAndStatus(userId, review.getId(), RecommendStatus.DISLIKE);
+            }
+            result.add(new ReviewListResponseDto(review, isLike, isDislike));
+        }
+
+        return result;
+
 
     }
 

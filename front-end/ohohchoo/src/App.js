@@ -1,29 +1,12 @@
-import { Routes, Route } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import "./App.css";
-import Nav from "./Components/Nav";
 import MainPage from "./Pages/MainPage";
-// import useGeolocation from "./hooks/useGeolocation";
-import SelectLocationPage from "./Pages/SelectLocationPage";
-import LoginPage from "./Pages/LoginPage";
-import LoginLoading from "./Pages/LoginLoadingPage";
-
-// const Layout = () => {
-//   return (
-//     <div>
-//       <Nav />
-
-//       <Outlet />
-//     </div>
-//   );
-// };
+import styled from "styled-components";
 
 function App() {
   const [location, setLocation] = useState({
     loaded: false,
     coordinates: { lat: 0, lng: 0 },
   });
-  // const [user, setUser] = useState(false);
 
   useEffect(() => {
     // navigator 객체 안에 geolocation이 없다면
@@ -34,11 +17,10 @@ function App() {
         message: "Geolocation not supported",
       });
     }
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
-    console.log("geoLocation 실행");
-  }, []);
 
-  console.log("useGeolocation: ", location);
+    console.log("geoLocation 실행");
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+  }, []);
 
   // 성공에 대한 로직
   const onSuccess = (location) => {
@@ -59,27 +41,22 @@ function App() {
     });
   };
 
+  console.log("useGeolocation: ", location);
+
   return (
-    <div className='app'>
-      <Nav></Nav>
-      {location.loaded && (
-        <Routes>
-          <Route path='/' element={<MainPage location={location} />} />
-          <Route path='/login' element={<LoginPage />} />
-          <Route path='/login-request' element={<LoginLoading />} />
-          <Route
-            path='/location'
-            element={
-              <SelectLocationPage
-                location={location}
-                setLocation={setLocation}
-              />
-            }
-          />
-        </Routes>
-      )}
-    </div>
+    <AppContainer>
+      {location.loaded && <MainPage location={location} />}
+    </AppContainer>
   );
 }
 
 export default App;
+
+const AppContainer = styled.div`
+  @media only screen and (min-width: 375px) and (max-width: 480px) {
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+    align-items: center;
+  }
+`;

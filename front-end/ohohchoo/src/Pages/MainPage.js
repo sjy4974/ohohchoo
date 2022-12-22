@@ -8,29 +8,35 @@ import RecommendClothes from "../Components/RecommendClothes";
 import OptionButton from "../Components/OptionButton";
 import Review from "../Components/Review";
 import { dummy } from "../OptionDummy";
-// MainPage에서
-// 시간정보, 주소 정보를 back에 요청할 수 있도록 데이터를 가공....
+import Nav from "../Components/Nav";
+import axios2 from "../API/axios";
+import requests from "../API/request";
+import LocationComp from "../Components/LocationComp";
 
-
-Geocode.setApiKey("AlzaSyAoKq3Uq6CfDSQ91bccZ17H4-DGo-SnTQw");
+Geocode.setApiKey("AIzaSyAoKq3Uq6CfDSQ91bccZ17H4-DGo-SnTQw");
 Geocode.setLanguage("ko");
 Geocode.setRegion("ko");
 
-
 export default function MainPage({ location }) {
-  // const [weather, setWeather] = useState({});
-  const [isModal, setIsModal] = useState(false);
+
+  const [mode, setMode] = useState(0);
+  const [town, setTown] = useState("");
   const [city, setCity] = useState("");
+
   const [result, setResult] = useState({});
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState("김현수");
+
+  const [reviewModal, setReviewModal] = useState(false);
   const [gender, setGender] = useState(-1);
   const [sensitivity, setSensitivity] = useState(-1);
 
+  const [reviewData, setReviewData] = useState([]);
+
+
   const API_KEY = "011be7fcc3f5c002bed4737f3e97b02a";
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`;
+  const url = `http://localhost:8080`;
 
-  useEffect(() => {}, []);
-
+  // console.log("location Info : ", location);
   useEffect(() => {
     console.log("getWeather function");
     getWeather();
@@ -52,19 +58,22 @@ export default function MainPage({ location }) {
   const getWeather = () => {
     Geocode.fromLatLng(location.coordinates.lat, location.coordinates.lng).then(
       async (response) => {
-        const address = response.results[0].formatted_address.split(",");
-        setCity(address[2]);
-        // console.log("address: ", address[2]);
-        // console.log(typeof address[2]);
-        // console.log("city: ", city);
-
-        if (city !== "") {
-          const data = await axios({
-            method: "get",
-            url: url,
+        const address = response.results[0].formatted_address.split(" ");
+        setCity(address[1]);
+        setTown(address[2]);
+        if (city !== "" && town !== "") {
+          const reqLoc = {
+            city: city,
+            town: town,
+          };
+          const wthToday = await axios({
+            url: `${url}/weather/today`,
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            data: reqLoc,
           });
-          setResult(data);
-          console.log(data);
+          console.log(wthToday.data);
+          setResult(wthToday.data);
         }
       },
       (error) => {
@@ -73,66 +82,101 @@ export default function MainPage({ location }) {
     );
   };
 
+  // ReviewModal Handler
   const ModalHandler = () => {
-    setIsModal((prev) => !prev);
+    setReviewModal((prev) => !prev);
   };
 
   // 현재 시간 정보 받기
 
   return (
     <div>
-      {Object.keys(result).length !== 0 && (
+      <Nav user={"김현수"} city={city} mode={mode} setMode={setMode}></Nav>
+      {/* mode === 0 => 날씨 정보 제공창 */}
+      {mode === 0 && (
+        // <div>
+        //   <RecommendClothes temp={10} />
+        //   <div>{city}</div>
         <div>
-          {/* 현재 날씨 정보 props: current-weather-info */}
-          <CurrWeather
-            address={city}
-            weather={result.data.weather[0].main}
-            temp={result.data.main.temp}
-          ></CurrWeather>
 
-          {/* 남자 여자 선택하는 버튼 만들기, props={ gender, setGender } */}
-          {/* 온도 민감도 선택하는 버튼 만들기 props={ sensitivity, setsensitivity }*/}
-          <RootWrap>
-            {dummy.map((item) => (
-              <OptionButton
-                key={item.idx}
-                title={item.title}
-                OptionList={item.OptionList}
-                setOption={item.title === "성별" ? setGender : setSensitivity}
-              />
-            ))}
-          </RootWrap>
+          {Object.keys(result).length !== 0 && (
+            <div>
+              {/* <Nav city={city} user={user}>
+                {console.log("Nav bar 생성")}
+              </Nav> */}
+              {/* 현재 날씨 정보 props: current-weather-info */}
+              <CurrWeather
+                city={city}
+                town={town}
+                tmp={result.tmp}
+                ptySky={result.ptySky}
+              ></CurrWeather>
 
-          {/* 옷 추천 props: temperature */}
-          <RecommendClothes temp={result.data.main.temp}></RecommendClothes>
+              {/* 남자 여자 선택하는 버튼 만들기, props={ gender, setGender } */}
+              {/* 온도 민감도 선택하는 버튼 만들기 props={ sensitivity, setsensitivity }*/}
+              <RootWrap>
+                {dummy.map((item) => (
+                  <OptionButton
+                    key={item.idx}
+                    title={item.title}
+                    OptionList={item.OptionList}
+                    setOption={
+                      item.title === "성별" ? setGender : setSensitivity
+                    }
+                  />
+                ))}
+              </RootWrap>
 
-          {/* <Clothes temp={}></Clothes> */}
-          {/* 리뷰 : pros: location */}
-          <ModalWrapper>
-            <h2>review</h2>
-            {isModal ? (
-              <ModalBackground>
-                <ModalBox>
-                  <ModalBtn onClick={ModalHandler}>X</ModalBtn>
-                  <Review></Review>
-                </ModalBox>
-              </ModalBackground>
-            ) : (
-              <OpenModal onClick={ModalHandler}>x</OpenModal>
-            )}
-          </ModalWrapper>
-          {/* <Review location={city}></Review> */}
+              {/* 옷 추천 props: temperature */}
+              <RootWrap>
+                <RecommendClothes
+                  temp={result.data.main.temp}
+                ></RecommendClothes>
+              </RootWrap>
+              {/* <Clothes temp={}></Clothes> */}
+              {/* 리뷰 : pros: location */}
+              <ModalWrapper>
+                {reviewModal ? (
+                  <ModalBackground>
+                    <ModalBox>
+                      {/* <ModalBtn onClick={ModalHandler}>X</ModalBtn> */}
+                      <Review
+                        city={city}
+                        user={user}
+                        setReviewModal={setReviewModal}
+                        ModalHandler={ModalHandler}
+                      />
+                    </ModalBox>
+                  </ModalBackground>
+                ) : (
+                  <OpenModal onClick={ModalHandler}>
+                    Click! 오늘의 날씨와 옷차림 후기
+                  </OpenModal>
+                )}
+              </ModalWrapper>
+              {/* <Review location={city}></Review> */}
 
-          {/* <Review location={location}></Review> */}
-          {/* 시간별 날씨 정보 hourly-weather-info  */}
-          {/* <Row weatherInfo={}></Row> */}
+              {/* <Review location={location}></Review> */}
+              {/* 시간별 날씨 정보 hourly-weather-info  */}
+              {/* <Row weatherInfo={}></Row> */}
+            </div>
+          )}
+
         </div>
       )}
+      {/* mode === 1 => 위치 선택창 */}
+      {mode === 1 && (
+        <LocationComp city={city} setCity={setCity} setMode={setMode} />
+      )}
+      {/* mode === 2 => 로그인 창 */}
     </div>
   );
 }
 
 const RootWrap = styled.div`
+  border: solid;
+  text-align: center;
+  // margin-top: 2vh;
   // position: absolute;
   // top: 0;
   // bottom: 0;
@@ -146,7 +190,9 @@ const RootWrap = styled.div`
   // padding: 20px;
 `;
 
-const ModalWrapper = styled.div``;
+const ModalWrapper = styled.div`
+  border: solid;
+`;
 
 const ModalBackground = styled.div``;
 
@@ -154,4 +200,17 @@ const ModalBox = styled.div``;
 
 const ModalBtn = styled.button``;
 
-const OpenModal = styled.div``;
+const OpenModal = styled.div`
+  background-color: black;
+  color: white;
+  margin 0 5vw;
+  // border: solid;
+  border-radius: 0 0 1vw 1vw;
+  padding: 0;
+  height: 3vh;
+  line-height: 3vh;
+  // padding-top: 1vw;
+  // padding-bottom: 1vw;
+  font-size: 10px;
+  text-align: center;
+`;

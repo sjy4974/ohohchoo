@@ -10,9 +10,13 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class LocationRequest {
+public class OutTimeWeatherRequest {
     @NotNull
     private String city;
     @NotNull
     private String town;
+    @NotNull
+    private int goOutHour;
+    @NotNull
+    private int goInHour;
 }

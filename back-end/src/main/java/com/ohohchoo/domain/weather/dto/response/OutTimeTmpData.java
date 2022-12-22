@@ -2,12 +2,11 @@ package com.ohohchoo.domain.weather.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.ToString;
 
 @AllArgsConstructor
-@ToString
 @Data
-public class DateTime {
-    private String baseDate;
-    private String baseTime;
+public class OutTimeTmpData {
+
+    private Double outTimeTmn; // 최저온도
+    private Double outTimeAvg; // 평균온도
 }

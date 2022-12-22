@@ -1,25 +1,80 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { BsHouseDoor, BsPersonCircle } from "react-icons/bs";
+import styled from "styled-components";
 
-export default function Nav() {
+export default function Nav({ user, mode, setMode }) {
+  const onChangeMainPageBtn = () => {
+    setMode(0);
+  };
+
+  const onChangeLocationBtn = () => {
+    setMode(1);
+  };
+
+  const onChangeLoginBtn = () => {
+    setMode(2);
+  };
+
   return (
-    <nav>
-      <Link to='/location'>
-        <img
-          alt='Netflix logo'
-          src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/170px-Netflix_2015_logo.svg.png'
-          className='nav__logo'
-        />
-      </Link>
+    <NavWrap>
+      <NavContent>
+        <LocationWrap onClick={onChangeLocationBtn}>
+          <BsHouseDoor size='24' />
+        </LocationWrap>
 
-      <Link to='/login'>
-        <img
-          alt='User logged'
-          src='public/public_assets/login-btn.png'
-          className='nav__avatar'
-        />
-      </Link>
+        <TitleWrap onClick={onChangeMainPageBtn}>
+          <span>Outfit</span> Forecast
+        </TitleWrap>
 
-    </nav>
+        <LoginWrap onClick={onChangeLoginBtn}>
+          <BsPersonCircle size='24' />
+        </LoginWrap>
+      </NavContent>
+    </NavWrap>
   );
 }
+
+const NavWrap = styled.nav`
+  height: 5vh;
+  line-height: 5vh;
+  margin: 0px;
+  padding: 0px;
+  background-color: black;
+`;
+const NavContent = styled.div`
+  display: flex;
+  // text-align: center;
+  justify-content: center;
+`;
+
+const LoginWrap = styled.div`
+  color: white;
+  margin: 0;
+  padding: 0;
+
+  position: absolute;
+  top: 1vh;
+  right: 5vw;
+`;
+
+const LocationWrap = styled.div`
+  color: white;
+  margin: 0;
+  padding: 0;
+
+  position: absolute;
+  top: 1vh;
+  left: 5vw;
+`;
+
+const TitleWrap = styled.div`
+  color: white;
+  font-size: 3vh;
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  text-align: center;
+
+  span {
+    color: red;
+  }
+`;

@@ -1,30 +1,30 @@
 package com.ohohchoo.domain.review.controller;
 
+import com.ohohchoo.domain.review.dto.ReviewListResponseDto;
 import com.ohohchoo.domain.review.dto.ReviewWriteRequestDto;
-import com.ohohchoo.domain.review.exception.ReviewNotFoundException;
 import com.ohohchoo.domain.review.service.ReviewService;
 import com.ohohchoo.global.config.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpRequest;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("reviewApi")
+@RequestMapping("/reviewApi")
 public class ReviewRestController {
-
-    private final ReviewService reviewService;
-    private final JwtUtil jwtUtil;
 
     private static final String HEADER_AUTH = "access-token";
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
+    private final ReviewService reviewService;
+    private final JwtUtil jwtUtil;
 
     // 리뷰 작성
     @PostMapping("/review")
@@ -37,8 +37,8 @@ public class ReviewRestController {
         Long userId = jwtUtil.getTokenInfo(token);
 
         try {
-            reviewService.write(userId,reviewDto);
-        } catch (Exception e){
+            reviewService.write(userId, reviewDto);
+        } catch (Exception e) {
             // validation 통과하지 못하거나, userId가 잘못된경우 해당 에러메세지를 리턴
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -46,8 +46,9 @@ public class ReviewRestController {
 
     }
 
+    // 리뷰 삭제
     @DeleteMapping("/review/{reviewId}")
-    public ResponseEntity<String> delete(@PathVariable Long reviewId, HttpServletRequest req){
+    public ResponseEntity<String> delete(@PathVariable Long reviewId, HttpServletRequest req) {
         String message = SUCCESS;
         HttpStatus status = HttpStatus.OK;
 
@@ -59,11 +60,28 @@ public class ReviewRestController {
         // 예외 메세지, HttpStatus 상태를 변경해서 return
         try {
             reviewService.delete(userId, reviewId);
-        } catch (Exception e){
+        } catch (Exception e) {
             message = e.getMessage();
             status = HttpStatus.BAD_REQUEST;
         }
         return new ResponseEntity<String>(message, status);
     }
+
+    // 날짜와 지역에 따른 리뷰 리스트 조회
+    @GetMapping("/reviews")
+    public ResponseEntity<List<ReviewListResponseDto>> getReviews(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate regDate,
+                                                                  @RequestParam String city,
+                                                                  @RequestParam String town,
+                                                                  HttpServletRequest req) {
+        String token = req.getHeader(HEADER_AUTH);
+        Long userId = null;
+        if (token != null) {
+            jwtUtil.getTokenInfo(token);
+        }
+        List<ReviewListResponseDto> reviews = reviewService.getReviewsByRegDateAndAddress(userId, regDate, city, town);
+        System.out.println(reviews);
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
+    }
+
 
 }
