@@ -19,6 +19,7 @@ Geocode.setRegion("ko");
 
 export default function MainPage({ location }) {
   const [mode, setMode] = useState(0);
+  const [town, setTown] = useState("");
   const [city, setCity] = useState("서울");
   const [result, setResult] = useState({});
   const [user, setUser] = useState("김현수");
@@ -26,6 +27,7 @@ export default function MainPage({ location }) {
   const [reviewModal, setReviewModal] = useState(false);
   const [gender, setGender] = useState(-1);
   const [sensitivity, setSensitivity] = useState(-1);
+
   const [reviewData, setReviewData] = useState([]);
 
   const API_KEY = "011be7fcc3f5c002bed4737f3e97b02a";
@@ -51,20 +53,24 @@ export default function MainPage({ location }) {
   }, [sensitivity]);
 
   const getWeather = () => {
-    console.log(location.coordinates.lat);
     Geocode.fromLatLng(location.coordinates.lat, location.coordinates.lng).then(
       async (response) => {
         const address = response.results[0].formatted_address.split(" ");
-        console.log("address : ", address);
-        setCity(address[2]);
-
-        if (city !== "") {
-          const data = await axios({
-            method: "get",
-            url: url,
+        setCity(address[1]);
+        setTown(address[2]);
+        if (city !== "" && town !== "") {
+          const reqLoc = {
+            city: city,
+            town: town,
+          };
+          const wthToday = await axios({
+            url: `${url}/weather/today`,
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            data: reqLoc,
           });
-          setResult(data);
-          console.log(data);
+          console.log(wthToday.data);
+          setResult(wthToday.data);
         }
       },
       (error) => {
@@ -88,7 +94,7 @@ export default function MainPage({ location }) {
 
   return (
     <div>
-      <Nav user={"김현수"} mode={mode} setMode={setMode}></Nav>
+      <Nav user={"김현수"} city={city} mode={mode} setMode={setMode}></Nav>
       {/* mode === 0 => 날씨 정보 제공창 */}
       {mode === 0 && (
         // <div>
@@ -102,9 +108,10 @@ export default function MainPage({ location }) {
               </Nav> */}
               {/* 현재 날씨 정보 props: current-weather-info */}
               <CurrWeather
-                address={city}
-                weather={result.data.weather[0].main}
-                temp={result.data.main.temp}
+                city={city}
+                town={town}
+                tmp={result.tmp}
+                ptySky={result.ptySky}
               ></CurrWeather>
 
               {/* 남자 여자 선택하는 버튼 만들기, props={ gender, setGender } */}
