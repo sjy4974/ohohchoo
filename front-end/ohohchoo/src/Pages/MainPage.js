@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Geocode from "react-geocode";
 import axios from "axios";
 import CurrWeather from "../Components/CurrWeather";
+import HourlyWeather from "../Components/HourlyWeather";
 import RecommendClothes from "../Components/RecommendClothes";
 import OptionButton from "../Components/OptionButton";
 import Review from "../Components/Review";
@@ -18,12 +19,16 @@ Geocode.setLanguage("ko");
 Geocode.setRegion("ko");
 
 export default function MainPage({ location }) {
-
   const [mode, setMode] = useState(0);
   const [town, setTown] = useState("");
   const [city, setCity] = useState("");
 
-  const [result, setResult] = useState({});
+  // 날씨 관련
+  const [currWth, setCurrWth] = useState({}); // 현재날씨
+  const [tmpRange, setTmpRange] = useState({}); // 최저, 최고온도
+  const [outTmp, setOutTmp] = useState({}); // 외출시간 온도
+  const [hourlyWth, setHourlyWth] = useState([]); // 시간별날씨
+
   const [user, setUser] = useState("김현수");
 
   const [reviewModal, setReviewModal] = useState(false);
@@ -32,15 +37,26 @@ export default function MainPage({ location }) {
 
   const [reviewData, setReviewData] = useState([]);
 
-
   const API_KEY = "011be7fcc3f5c002bed4737f3e97b02a";
   const url = `http://localhost:8080`;
 
-  // console.log("location Info : ", location);
+  // 현재 날씨 불러오기
   useEffect(() => {
-    console.log("getWeather function");
-    getWeather();
-  }, [city]);
+    console.log("getCurrWeather function");
+    getCurrWeather();
+  }, [city, town]);
+
+  // 외출시간에 따른 온도 불러오기
+  useEffect(() => {
+    console.log("getTmpRange function");
+    getTmpRange();
+  }, [city, town]);
+
+  // 시간별 날씨 불러오기
+  useEffect(() => {
+    console.log("getHoulryWeather function");
+    getHourlyWth();
+  }, [city, town]);
 
   useEffect(() => {
     console.log("user : ", user);
@@ -55,7 +71,7 @@ export default function MainPage({ location }) {
     console.log("sensitivity", sensitivity);
   }, [sensitivity]);
 
-  const getWeather = () => {
+  const getCurrWeather = () => {
     Geocode.fromLatLng(location.coordinates.lat, location.coordinates.lng).then(
       async (response) => {
         const address = response.results[0].formatted_address.split(" ");
@@ -73,13 +89,51 @@ export default function MainPage({ location }) {
             data: reqLoc,
           });
           console.log(wthToday.data);
-          setResult(wthToday.data);
+          setCurrWth(wthToday.data);
         }
       },
       (error) => {
         console.error("error", error);
       }
     );
+  };
+
+  // 오늘의 최저, 최고온도 가져오기
+  const getTmpRange = () => {
+    if (city !== "" && town !== "") {
+      const reqLoc = {
+        city: city,
+        town: town,
+      };
+      axios({
+        url: `${url}/weather/range`,
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        data: reqLoc,
+      }).then((res) => {
+        setTmpRange(res.data);
+        console.log(tmpRange);
+      });
+    }
+  };
+
+  // 시간별 온도 가져오기
+  const getHourlyWth = () => {
+    if (city !== "" && town != "") {
+      const reqLoc = {
+        city: city,
+        town: town,
+      };
+      axios({
+        url: `${url}/weather/hourly`,
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        data: reqLoc,
+      }).then((res) => {
+        setHourlyWth(res.data);
+        console.log(hourlyWth);
+      });
+    }
   };
 
   // ReviewModal Handler
@@ -98,8 +152,7 @@ export default function MainPage({ location }) {
         //   <RecommendClothes temp={10} />
         //   <div>{city}</div>
         <div>
-
-          {Object.keys(result).length !== 0 && (
+          {Object.keys(currWth).length !== 0 && (
             <div>
               {/* <Nav city={city} user={user}>
                 {console.log("Nav bar 생성")}
@@ -108,8 +161,10 @@ export default function MainPage({ location }) {
               <CurrWeather
                 city={city}
                 town={town}
-                tmp={result.tmp}
-                ptySky={result.ptySky}
+                tmp={currWth.tmp}
+                ptySky={currWth.ptySky}
+                tmn={tmpRange.tmn}
+                tmx={tmpRange.tmx}
               ></CurrWeather>
 
               {/* 남자 여자 선택하는 버튼 만들기, props={ gender, setGender } */}
@@ -129,9 +184,7 @@ export default function MainPage({ location }) {
 
               {/* 옷 추천 props: temperature */}
               <RootWrap>
-                <RecommendClothes
-                  temp={result.data.main.temp}
-                ></RecommendClothes>
+                <RecommendClothes temp={currWth.tmp}></RecommendClothes>
               </RootWrap>
               {/* <Clothes temp={}></Clothes> */}
               {/* 리뷰 : pros: location */}
@@ -158,10 +211,9 @@ export default function MainPage({ location }) {
 
               {/* <Review location={location}></Review> */}
               {/* 시간별 날씨 정보 hourly-weather-info  */}
-              {/* <Row weatherInfo={}></Row> */}
+              <HourlyWeather hourlyWth={hourlyWth}></HourlyWeather>
             </div>
           )}
-
         </div>
       )}
       {/* mode === 1 => 위치 선택창 */}

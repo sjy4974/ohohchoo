@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-function CurrWeather({ city, town, tmp, ptySky }) {
+function CurrWeather({ city, town, tmp, ptySky, tmn, tmx }) {
   let ptySkyTxt = "";
   console.log(ptySky);
 
@@ -37,14 +37,14 @@ function CurrWeather({ city, town, tmp, ptySky }) {
       <div>
         {/* 여기에는 weader데이터에 따른 그림을 출력해보자 크흠... */}
         {tmp}℃ <br />
-        {ptySkyTxt}
+        {ptySkyTxt} <br />
+        최저: {tmn}℃ 최고: {tmx} ℃
       </div>
-
     </WeatherInfo>
   );
 }
 
-export default CurrWeather;
+export default React.memo(CurrWeather);
 
 const WeatherInfo = styled.div`
   width: 100vw;
