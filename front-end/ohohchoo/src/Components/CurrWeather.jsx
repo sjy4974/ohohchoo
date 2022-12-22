@@ -3,6 +3,7 @@ import styled from "styled-components";
 function CurrWeather({ city, town, tmp, ptySky }) {
   let ptySkyTxt = "";
   console.log(ptySky);
+
   switch (ptySky) {
     case 1:
       ptySkyTxt = "비";
@@ -38,7 +39,7 @@ function CurrWeather({ city, town, tmp, ptySky }) {
         {tmp}℃ <br />
         {ptySkyTxt}
       </div>
-      <h3></h3>
+
     </WeatherInfo>
   );
 }
@@ -48,7 +49,6 @@ export default CurrWeather;
 const WeatherInfo = styled.div`
   width: 100vw;
   heigth: 100vh;
-
   h2 {
     left: 50%;
     top: 50%;
