@@ -104,7 +104,7 @@ public class UserRestController {
                 .gender(gender)
                 .build();
 
-        //해당 nickname으로 가입된 사용자가 있다면, 로그인을 진행하고
+        //해당 email으로 가입된 사용자가 있다면, 로그인을 진행하고
         //없다면, DB에 저장하는 과정을 거쳐 로그인을 진행한다.
         if(userService.findByEmail(email).isEmpty()) {
             userService.join(userDto);
