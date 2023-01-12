@@ -30,10 +30,10 @@ public class WeatherService {
 
     private final WeatherRepository weatherRepository;
 
-    @Value("${weatherServiceKey}")
+    // 현재 시간 기준 날씨 정보 반환
+//    @Value("${weatherServiceKey}")
     private String weatherServiceKey;
 
-    // 현재 시간 기준 날씨 정보 반환
     public WeatherData getWeatherToday(WeatherRequest wthReq) {
         // DB에 조회가능한 데이터가 있는지 확인
         if(!weatherRepository.existsByLocationCodeAndBaseDateAndBaseTime(wthReq.getLocationCode(), wthReq.getBaseDate(), wthReq.getBaseTime())) {

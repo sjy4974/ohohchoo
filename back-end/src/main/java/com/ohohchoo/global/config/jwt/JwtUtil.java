@@ -18,11 +18,8 @@ import io.jsonwebtoken.UnsupportedJwtException;
 @Component
 public class JwtUtil {
 
-    @Value("${jwt.salt}")
-    private String SALT;
-
-    @Value("${jwt.validTime}")
-    private long TOKEN_VALID_TIME;
+    private static final String SALT = "testSALT";
+    private static final long TOKEN_VALID_TIME = 7200000L;
 
     // 토큰 생성
     public String createToken(String claimId, Long userId) throws UnsupportedEncodingException {

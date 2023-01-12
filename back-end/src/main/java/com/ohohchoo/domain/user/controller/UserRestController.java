@@ -8,6 +8,7 @@ import com.ohohchoo.domain.user.dto.UserUpdateRequestDto;
 import com.ohohchoo.domain.user.entity.User;
 import com.ohohchoo.domain.user.exception.UserNotFoundException;
 import com.ohohchoo.domain.user.service.UserService;
+import com.ohohchoo.global.config.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.http.*;
@@ -16,6 +17,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,15 +47,16 @@ public class UserRestController {
     }
 
     // 유저 정보 등록 or 조회
-    @GetMapping
+    @GetMapping("/kakaoLogin")
     public ResponseEntity<Map<String, Object>> RequestAccessToken(@RequestParam String code) {
         //카카오 서버에 POST 방식으로 엑세스 토큰을 요청
         //RestTemplate를 이용
         RestTemplate rt = new RestTemplate();
+
         //HttpHeader 오브젝트 생성
         HttpHeaders headers = new HttpHeaders();
 
-        System.out.println(code);
+        System.out.println("인가 코드 확인 :"+code);
         System.out.println(env.getProperty("kakao.login.api_key"));
 
         //HttpBody 오브젝트 생성
@@ -94,27 +97,21 @@ public class UserRestController {
         JsonObject userAccountObject = jp.parse(userJsonObject.get("kakao_account").toString()).getAsJsonObject();
         String nickname = jp.parse(userAccountObject.get("profile").toString()).getAsJsonObject().get("nickname").getAsString();
         String email = userAccountObject.get("email").getAsString();
-        String gender = null;
-        if(userAccountObject.get("has_gender").getAsBoolean()) {
-            gender = userAccountObject.get("gender").getAsString();
-        }
-        UserJoinRequestDto userDto = UserJoinRequestDto.builder()
-                .email(email)
-                .nickname(nickname)
-                .gender(gender)
-                .build();
 
-        //해당 email으로 가입된 사용자가 있다면, 로그인을 진행하고
-        //없다면, DB에 저장하는 과정을 거쳐 로그인을 진행한다.
-        if(userService.findByEmail(email).isEmpty()) {
-            userService.join(userDto);
-        }
+        System.out.println("=========================================");
+        System.out.println("토큰에서 꺼내온 값 확인하기");
+        System.out.println("닉네임 : "+nickname);
+        System.out.println("email : "+email);
 
-        //로그인을 진행
         HashMap<String, Object> result = new HashMap<>();
-        User loginUser = userService.findByEmail(email).get();
-        //jwt 토큰 추가 필요
-        result.put("current-user", loginUser);
+        JwtUtil jwtUtil = new JwtUtil();
+        try {
+            String token = jwtUtil.createToken("userId", 1L);
+            result.put("access-token", token);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
